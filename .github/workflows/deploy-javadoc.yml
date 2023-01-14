@@ -16,6 +16,7 @@ jobs:
           java-version: 11
           java-package: jdk+fx
       - name: Generate Javadoc
+        run: chmod +x gradlew
         run: ./gradlew javadoc
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4.3.0
