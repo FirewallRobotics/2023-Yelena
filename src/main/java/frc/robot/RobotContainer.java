@@ -57,17 +57,15 @@ public class RobotContainer {
   //Trigger lbButton = new JoystickButton(m_driverController, XboxController.Button.kLB.value);
  
 
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
-  public RobotContainer() {
-    // Configure the button bindings
-    configureButtonBindings();
-    joystickButton1.whileHeld(
-        new ArmExtendMedCommand());
+ 
+//   public RobotContainer() {
+//     // Configure the button bindings
+//     configureButtonBindings();
+//    aButton.whileTrue(
+//         new ArmExtendMedCommand());
 
-    joystickButton2.whileTrue(
-        new ArmExtendHighCommand());
+//     bButton.whileTrue(
+//         new ArmExtendHighCommand());
 
     
     
