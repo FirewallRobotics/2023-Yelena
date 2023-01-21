@@ -1,5 +1,3 @@
 package frc.robot.commands;
 
-public class ArmJointRise {
-    
-}
+public class ArmJointRise {}
