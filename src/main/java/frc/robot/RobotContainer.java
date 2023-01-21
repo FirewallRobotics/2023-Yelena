@@ -26,7 +26,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
 import java.util.List;
 import frc.robot.commands.*;
 import edu.wpi.first.math.controller.PIDController;
@@ -44,7 +43,7 @@ public class RobotContainer {
   // The robot's subsystems
 
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final PIDController m_robotArm = new ArmSubsystem();
+  private final ArmSubsystem m_robotArm = new ArmSubsystem();
     
 
   // The driver's controller
@@ -58,9 +57,9 @@ public class RobotContainer {
  
 
  
-//   public RobotContainer() {
-//     // Configure the button bindings
-//     configureButtonBindings();
+  public RobotContainer() {
+    // Configure the button bindings
+    configureButtonBindings();
 //    aButton.whileTrue(
 //         new ArmExtendMedCommand());
 
@@ -75,7 +74,7 @@ public class RobotContainer {
   
 
     // Configure default commands
-    m_robotDrive.setDefaultCommand(
+    m_robotDrive.setDefaultCommand (
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
@@ -87,6 +86,10 @@ public class RobotContainer {
             m_robotDrive));
   }
 
+  
+        
+  
+    
   /**
    * Use this method to define your button->command mappings. Buttons can be
    * created by
