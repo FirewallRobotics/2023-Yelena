@@ -1,5 +1,5 @@
 package frc.robot.commands;
 
-public class HandRelease {
+public class HandReleaseCommand {
     
 }

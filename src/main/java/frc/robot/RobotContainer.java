@@ -13,17 +13,26 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.PS4Controller.Button;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+
 import java.util.List;
+import frc.robot.commands.*;
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+
+
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -33,10 +42,20 @@ import java.util.List;
  */
 public class RobotContainer {
   // The robot's subsystems
+
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final PIDController m_robotArm = new ArmSubsystem();
+    
 
   // The driver's controller
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  private final XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  Trigger aButton = new JoystickButton(m_driverController, XboxController.Button.kA.value);
+  Trigger bButton = new JoystickButton(m_driverController, XboxController.Button.kB.value);
+  Trigger xButton = new JoystickButton(m_driverController, XboxController.Button.kX.value);
+  Trigger ybutton = new JoystickButton(m_driverController, XboxController.Button.kY.value);
+  //Trigger rtButton = new JoystickButton(m_driverController, XboxController.Button.kRT.value);
+  //Trigger lbButton = new JoystickButton(m_driverController, XboxController.Button.kLB.value);
+ 
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -44,6 +63,18 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+    joystickButton1.whileHeld(
+        new ArmExtendMedCommand());
+
+    joystickButton2.whileTrue(
+        new ArmExtendHighCommand());
+
+    
+    
+
+    
+    
+  
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(

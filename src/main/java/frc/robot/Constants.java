@@ -134,4 +134,21 @@ public final class Constants {
   public static final class NeoMotorConstants {
     public static final double kFreeSpeedRpm = 5676;
   }
+  public static final class ArmConstants {
+
+    public static final int kArmExtendMotor = 0;
+    public static final int kArmLiftMotor = 0;
+    public static final int kMidPosition = 0;
+    public static final int kMidLength = 0;
+    public static final int kHighPosition = 0;
+    public static final int kHighLength = 0;
+    public static final double kDefaultPosition = 0;
+    public static final double kP = 0;
+    public static final double kI = 0;
+    public static final double kD = 0;
+    
+    
+
+  }
+  
 }
