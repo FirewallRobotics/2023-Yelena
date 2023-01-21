@@ -12,7 +12,7 @@ import frc.robot.Constants.ArmConstants;
 public class ArmSubsystem extends PIDSubsystem {
     private WPI_TalonSRX talonSRXext; 
     private WPI_TalonSRX talonSRXlift; 
-    public ArmSubsystem(PIDController controller) {
+    public ArmSubsystem() {
         super( new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
         new TalonSRX(ArmConstants.kArmExtendMotor); 
         new TalonSRX(ArmConstants.kArmLiftMotor); 
