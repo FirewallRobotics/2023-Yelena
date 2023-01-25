@@ -36,16 +36,15 @@ public class ArmSubsystem extends PIDSubsystem {
         System.out.println("Returning to default position...");
     }
 
-    @Override
-    protected void useOutput(double output, double setpoint) {
-        // TODO Auto-generated method stub
-        
-    }
+  @Override
+  protected void useOutput(double output, double setpoint) {
+    // TODO Auto-generated method stub
 
-    @Override
-    protected double getMeasurement() {
-        // TODO Auto-generated method stub
-        return 0;
-    }
-    
+  }
+
+  @Override
+  protected double getMeasurement() {
+    // TODO Auto-generated method stub
+    return 0;
+  }
 }
