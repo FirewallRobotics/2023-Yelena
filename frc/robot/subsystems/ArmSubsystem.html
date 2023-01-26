@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -184,7 +184,7 @@ extends edu.wpi.first.wpilibj2.command.PIDSubsystem</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(edu.wpi.first.math.controller.PIDController)">ArmSubsystem</a></span>&#8203;(edu.wpi.first.math.controller.PIDController&nbsp;controller)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">ArmSubsystem</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -206,11 +206,26 @@ extends edu.wpi.first.wpilibj2.command.PIDSubsystem</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ArmDefaultPositionCommand()">ArmDefaultPositionCommand</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ArmExtendHighCommand()">ArmExtendHighCommand</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ArmExtendMedCommand()">ArmExtendMedCommand</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>protected double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMeasurement()">getMeasurement</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i1" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>protected void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#useOutput(double,double)">useOutput</a></span>&#8203;(double&nbsp;output,
          double&nbsp;setpoint)</code></th>
@@ -261,13 +276,13 @@ extends edu.wpi.first.wpilibj2.command.PIDSubsystem</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(edu.wpi.first.math.controller.PIDController)">
+<a id="&lt;init&gt;()">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ArmSubsystem</h4>
-<pre>public&nbsp;ArmSubsystem&#8203;(edu.wpi.first.math.controller.PIDController&nbsp;controller)</pre>
+<pre>public&nbsp;ArmSubsystem()</pre>
 </li>
 </ul>
 </li>
@@ -280,6 +295,33 @@ extends edu.wpi.first.wpilibj2.command.PIDSubsystem</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
+<a id="ArmExtendMedCommand()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ArmExtendMedCommand</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;ArmExtendMedCommand()</pre>
+</li>
+</ul>
+<a id="ArmExtendHighCommand()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ArmExtendHighCommand</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;ArmExtendHighCommand()</pre>
+</li>
+</ul>
+<a id="ArmDefaultPositionCommand()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ArmDefaultPositionCommand</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;ArmDefaultPositionCommand()</pre>
+</li>
+</ul>
 <a id="useOutput(double,double)">
 <!--   -->
 </a>
