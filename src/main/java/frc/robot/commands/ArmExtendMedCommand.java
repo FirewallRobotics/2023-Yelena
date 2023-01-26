@@ -1,5 +1,3 @@
 package frc.robot.commands;
 
-public class ArmExtendMedCommand {
-    
-}
+public class ArmExtendMedCommand {}
