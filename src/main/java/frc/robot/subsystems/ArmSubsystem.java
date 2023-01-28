@@ -1,19 +1,18 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants.ArmConstants;
 
-public class ArmSubsystem extends PIDSubsystem {
-  private WPI_TalonSRX talonSRXext;
-  private WPI_TalonSRX talonSRXlift;
+public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
+  public WPI_TalonSRX talonSRXext;
+  public WPI_TalonSRX talonSRXlift;
 
   public ArmSubsystem() {
     super(new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
-    new TalonSRX(ArmConstants.kArmExtendMotor);
-    new TalonSRX(ArmConstants.kArmLiftMotor);
+    talonSRXext = new WPI_TalonSRX(ArmConstants.kArmExtendMotor);
+    talonSRXlift = new WPI_TalonSRX(ArmConstants.kArmLiftMotor);
   }
 
   public void ArmExtendMedCommand() {
@@ -43,5 +42,11 @@ public class ArmSubsystem extends PIDSubsystem {
   protected double getMeasurement() {
     // TODO Auto-generated method stub
     return 0;
+  }
+
+  @Override
+  public void close() throws Exception {
+    talonSRXlift.close();
+    talonSRXext.close();
   }
 }
