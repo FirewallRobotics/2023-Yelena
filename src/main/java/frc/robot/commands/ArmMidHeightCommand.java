@@ -2,7 +2,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class ArmRetractCommand extends CommandBase {
+public class ArmMidHeightCommand extends CommandBase {
 
     @Override
 public void initialize() {}
@@ -10,14 +10,14 @@ public void initialize() {}
 @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
 private final ArmSubsystem m_Arm;  
 
-public ArmRetractCommand(ArmSubsystem subsystem) {
+public ArmMidHeightCommand(ArmSubsystem subsystem) {
     m_Arm = subsystem;
     addRequirements(subsystem);
 }
 
 @Override
 public void execute() {
-    m_Arm.ArmRetractCommand();
+    m_Arm.ArmMidHeightCommand();
 }
 
 @Override
