@@ -17,17 +17,17 @@ public class ArmSubsystem extends PIDSubsystem {
   }
 
   public void ArmExtendMedCommand() {
-    
+
     System.out.println("Extending to moderate length...");
   }
 
   public void ArmExtendFarCommand() {
-    
+
     System.out.println("Extending to maximum length...");
   }
 
   public void ArmRetractCommand() {
-   
+
     System.out.println("Returning to default length...");
   }
 
@@ -42,7 +42,7 @@ public class ArmSubsystem extends PIDSubsystem {
   }
 
   public void ArmDefaultHeightCommand() {
-    
+
     System.out.println("Returning to default position...");
   }
 
@@ -55,8 +55,6 @@ public class ArmSubsystem extends PIDSubsystem {
 
     System.out.println("Releasing claw...");
   }
-
-  
 
   @Override
   protected void useOutput(double output, double setpoint) {
