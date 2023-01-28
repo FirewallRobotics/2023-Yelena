@@ -19,6 +19,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LEDSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -34,6 +35,7 @@ import java.util.List;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final LEDSubsystem m_LEDSubsystem = new LEDSubsystem();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -56,7 +58,13 @@ public class RobotContainer {
                 MathUtil.applyDeadband(-m_driverController.getRightX(), 0.06),
                 true),
             m_robotDrive));
-  }
+
+    m_LEDSubsystem.setDefaultCommand(
+        // The robot will display the scrolling purple lights by default
+        new RunCommand(
+            () -> m_LEDSubsystem.LightScroll(), 
+            m_LEDSubsystem));   
+    }
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
@@ -72,6 +80,24 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
+
+
+    // The buttons created below were meant for LED testing, feel free to change
+
+    new JoystickButton(m_driverController, Button.kCircle.value)
+        .whileTrue(new RunCommand(
+            () -> m_LEDSubsystem.WarningLight(),
+            m_LEDSubsystem));
+
+    new JoystickButton(m_driverController, Button.kCross.value)
+        .whileTrue(new RunCommand(
+            () -> m_LEDSubsystem.ReadyLight(),
+            m_LEDSubsystem));
+
+    new JoystickButton(m_driverController, Button.kSquare.value)
+        .whileTrue(new RunCommand(
+            () -> m_LEDSubsystem.LightOff(),
+            m_LEDSubsystem));
   }
 
   /**
