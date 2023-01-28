@@ -13,23 +13,47 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
     super(new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
     talonSRXext = new WPI_TalonSRX(ArmConstants.kArmExtendMotor);
     talonSRXlift = new WPI_TalonSRX(ArmConstants.kArmLiftMotor);
+
   }
 
   public void ArmExtendMedCommand() {
-    talonSRXlift.set(ArmConstants.kMidPosition);
-    talonSRXext.set(ArmConstants.kMidLength);
-    System.out.println("Extending to medium height...");
+
+    System.out.println("Extending to moderate length...");
   }
 
-  public void ArmExtendHighCommand() {
-    talonSRXlift.set(ArmConstants.kHighPosition);
-    talonSRXext.set(ArmConstants.kHighLength);
-    System.out.println("Extending to maximum height...");
+  public void ArmExtendFarCommand() {
+
+    System.out.println("Extending to maximum length...");
   }
 
-  public void ArmDefaultPositionCommand() {
-    talonSRXlift.set(ArmConstants.kDefaultPosition);
+  public void ArmRetractCommand() {
+
+    System.out.println("Returning to default length...");
+  }
+
+  public void ArmMidHeightCommand() {
+
+    System.out.println("Raising arm to moderate elevation...");
+  }
+
+  public void ArmMaxHeightCommand() {
+
+    System.out.println("Raising arm to maximum elevation...");
+  }
+
+  public void ArmDefaultHeightCommand() {
+
     System.out.println("Returning to default position...");
+  }
+
+  public void ClawGraspCommand() {
+
+    System.out.println("Closing claw...");
+  }
+
+  public void ClawReleaseCommand() {
+
+    System.out.println("Releasing claw...");
   }
 
   @Override
