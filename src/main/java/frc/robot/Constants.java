@@ -138,8 +138,8 @@ public final class Constants {
 
   public static final class ArmConstants {
 
-    public static final int kArmExtendMotor = 0;
-    public static final int kArmLiftMotor = 0;
+    public static final int kArmMotor1 = 0;
+    public static final int kArmMotor2 = 0;
     public static final int kMidPosition = 0;
     public static final int kMidLength = 0;
     public static final int kHighPosition = 0;
