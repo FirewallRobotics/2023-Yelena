@@ -4,25 +4,17 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.revrobotics.EncoderType;
-
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants.ArmConstants;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import edu.wpi.first.hal.EncoderJNI;
-import edu.wpi.first.hal.simulation.EncoderDataJNI;
-import edu.wpi.first.wpilibj.simulation.EncoderSim;
-import java.lang.Math;
-import java.math.MathContext;
-
 
 public class ArmSubsystem extends PIDSubsystem {
   private static WPI_TalonSRX ArmTalon1;
   private static WPI_TalonSRX ArmTalon2;
   private static Encoder encoder;
-  
+
   public ArmSubsystem() {
     super(new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
     new TalonSRX(ArmConstants.kArmMotor1);
@@ -31,29 +23,33 @@ public class ArmSubsystem extends PIDSubsystem {
   }
 
   public void GravityOffset(int ktargetPos) {
-    int kMeasuredPosHorizontal = 840; //position measured when arm is horizontal (with Pheonix Tuner)
-    double kTicksPerDegree = 4092 / 360; //sensor is 1:1 with arm rotation
-    double currentPos = ArmTalon1.getSelectedSensorPosition(); 
+    int kMeasuredPosHorizontal =
+        840; // position measured when arm is horizontal (with Pheonix Tuner)
+    double kTicksPerDegree = 4092 / 360; // sensor is 1:1 with arm rotation
+    double currentPos = ArmTalon1.getSelectedSensorPosition();
     double degrees = (currentPos - kMeasuredPosHorizontal) / kTicksPerDegree;
     double radians = java.lang.Math.toRadians(degrees);
     double cosineScalar = java.lang.Math.cos(radians);
     double maxGravityFF = 0.7;
-    ArmSubsystem.ArmTalon1.set(ControlMode.MotionMagic, ktargetPos, DemandType.ArbitraryFeedForward, maxGravityFF * cosineScalar);
-
+    ArmSubsystem.ArmTalon1.set(
+        ControlMode.MotionMagic,
+        ktargetPos,
+        DemandType.ArbitraryFeedForward,
+        maxGravityFF * cosineScalar);
   }
 
   public void ArmExtendMedCommand() {
-     //will likely use pneumatics
+    // will likely use pneumatics
     System.out.println("Extending to moderate length...");
   }
 
   public void ArmExtendFarCommand() {
-    //will likely use pneumatics
+    // will likely use pneumatics
     System.out.println("Extending to maximum length...");
   }
 
   public void ArmRetractCommand() {
-    //will likely use pneumatics
+    // will likely use pneumatics
     System.out.println("Returning to default length...");
   }
 
@@ -79,18 +75,18 @@ public class ArmSubsystem extends PIDSubsystem {
   }
 
   public void ClawGraspCommand() {
-    //will likely use pneumatics 
+    // will likely use pneumatics
     System.out.println("Closing claw...");
   }
 
   public void ClawReleaseCommand() {
-    //will likely use pneumatics
+    // will likely use pneumatics
     System.out.println("Releasing claw...");
   }
 
   @Override
   public void periodic() {
-    encoder.getDistance(); 
+    encoder.getDistance();
   }
 
   @Override
