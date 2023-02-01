@@ -9,6 +9,10 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.hal.EncoderJNI;
+import edu.wpi.first.hal.simulation.EncoderDataJNI;
+import edu.wpi.first.wpilibj.simulation.EncoderSim;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -140,13 +144,15 @@ public final class Constants {
 
     public static final int kArmMotor1 = 0;
     public static final int kArmMotor2 = 0;
-    public static final int kMidPosition = 0;
+    public static final int kMidHeight = 0;
     public static final int kMidLength = 0;
-    public static final int kHighPosition = 0;
-    public static final int kHighLength = 0;
-    public static final double kDefaultPosition = 0;
+    public static final int kMaxHeight = 0;
+    public static final int kMaxLength = 0;
+    public static final int kDefaultHeight = 0;
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;
+   
+
   }
 }
