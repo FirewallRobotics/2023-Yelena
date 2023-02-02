@@ -55,22 +55,19 @@ public class ArmSubsystem extends PIDSubsystem {
 
   public void ArmMidHeightCommand() {
     GravityOffset(ArmConstants.kMidHeight);
-    ArmTalon1.set(ArmConstants.kMidHeight);
-    ArmTalon2.set(ArmConstants.kMidHeight);
+
     System.out.println("Raising arm to moderate elevation...");
   }
 
   public void ArmMaxHeightCommand() {
     GravityOffset(ArmConstants.kMaxHeight);
-    ArmTalon1.set(ArmConstants.kMaxHeight);
-    ArmTalon2.set(ArmConstants.kMaxHeight);
+
     System.out.println("Raising arm to maximum elevation...");
   }
 
   public void ArmDefaultHeightCommand() {
     GravityOffset(ArmConstants.kDefaultHeight);
-    ArmTalon1.set(ArmConstants.kDefaultHeight);
-    ArmTalon2.set(ArmConstants.kDefaultHeight);
+
     System.out.println("Returning to default elevation...");
   }
 
