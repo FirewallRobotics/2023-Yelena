@@ -11,9 +11,8 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
 
   public ArmSubsystem() {
     super(new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
-    talonSRXext = new WPI_TalonSRX(ArmConstants.kArmExtendMotor);
-    talonSRXlift = new WPI_TalonSRX(ArmConstants.kArmLiftMotor);
-
+    talonSRXext = new WPI_TalonSRX(ArmConstants.kArmMotor1);
+    talonSRXlift = new WPI_TalonSRX(ArmConstants.kArmMotor2);
   }
 
   public void ArmExtendMedCommand() {

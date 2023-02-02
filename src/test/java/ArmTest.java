@@ -1,9 +1,8 @@
-package frc.robot.subsystems;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.ctre.phoenix.motorcontrol.TalonSRXSimCollection;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.subsystems.ArmSubsystem;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,13 +32,13 @@ class ArmTest {
 
   @Test
   void armExtendHighTest() {
-    m_arm.ArmExtendHighCommand();
+    m_arm.ArmExtendFarCommand();
     assertEquals(ArmConstants.kHighPosition, m_talonSRXextSim.getMotorOutputLeadVoltage());
   }
 
   @Test
   void armDefualtPositionTest() {
-    m_arm.ArmDefaultPositionCommand();
+    m_arm.ArmRetractCommand();
     assertEquals(ArmConstants.kDefaultPosition, m_talonSRXliftSim.getMotorOutputLeadVoltage());
   }
 }
