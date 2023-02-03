@@ -152,6 +152,5 @@ public final class Constants {
     public static final int kExtSolPort2 = 0;
     public static final int kClawSolPort1 = 0;
     public static final int kClawSolPort2 = 0;
-
   }
 }

@@ -5,11 +5,10 @@ import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants.ArmConstants;
-import edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
-
 
 public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
   public static WPI_TalonSRX ArmTalon1;
@@ -20,10 +19,12 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
     super(new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
     ArmTalon1 = new WPI_TalonSRX(ArmConstants.kArmMotor1);
     ArmTalon2 = new WPI_TalonSRX(ArmConstants.kArmMotor2);
-    
-    DoubleSolenoid ExtendingSolenoid = new DoubleSolenoid(null, ArmConstants.kExtSolPort1, ArmConstants.kExtSolPort2);
-    DoubleSolenoid ClawSolenoid = new DoubleSolenoid(null, ArmConstants.kClawSolPort1, ArmConstants.kClawSolPort2);
-    
+
+    DoubleSolenoid ExtendingSolenoid =
+        new DoubleSolenoid(null, ArmConstants.kExtSolPort1, ArmConstants.kExtSolPort2);
+    DoubleSolenoid ClawSolenoid =
+        new DoubleSolenoid(null, ArmConstants.kClawSolPort1, ArmConstants.kClawSolPort2);
+
     // Encoder encoder = new Encoder(0, 1, false, EncodingType.k2X);
   }
 
