@@ -140,11 +140,11 @@ public final class Constants {
 
     public static final int kArmMotor1 = 0;
     public static final int kArmMotor2 = 0;
-    public static final int kMidPosition = 0;
+    public static final int kMidHeight = 0;
     public static final int kMidLength = 0;
-    public static final int kHighPosition = 0;
-    public static final int kHighLength = 0;
-    public static final double kDefaultPosition = 0;
+    public static final int kMaxHeight = 0;
+    public static final int kMaxLength = 0;
+    public static final int kDefaultHeight = 0;
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;

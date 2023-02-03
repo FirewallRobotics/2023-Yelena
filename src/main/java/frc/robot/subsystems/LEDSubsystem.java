@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+import edu.wpi.first.wpilibj.RobotBase;
 // import edu.wpi.first.hal.AddressableLEDJNI;
 // import edu.wpi.first.hal.simulation.AddressableLEDDataJNI;
 // import edu.wpi.first.wpilibj.simulation.AddressableLEDSim;
@@ -64,17 +65,22 @@ public class LEDSubsystem extends SubsystemBase {
 
     // Set RGB values (these are for the "Firewall Purple")
 
-    // Simulator RGB (need to be brighter)
-    int rgb_red = 150;
-    int rgb_green = 0;
-    int rgb_blue = 150;
+    int rgb_blue;
+    int rgb_green;
+    int rgb_red;
 
-    // Robot RGB (need to be darker)
-    /*
-    int rgb_red = 15;
-    int rgb_green = 0;
-    int rgb_blue = 15;
-    */
+    // Checks if physcial robot exists, or if simulator is running
+    if (RobotBase.isReal()) {
+      // Robot RGB (need to be darker)
+      rgb_red = 15;
+      rgb_green = 0;
+      rgb_blue = 15;
+    } else {
+      // Simulator RGB (need to be brighter)
+      rgb_red = 150;
+      rgb_green = 0;
+      rgb_blue = 150;
+    }
 
     SetLights(rgb_red, rgb_green, rgb_blue);
   }
@@ -89,17 +95,21 @@ public class LEDSubsystem extends SubsystemBase {
 
     // Displays red to indicate something is wrong
 
-    // Simulator RGB (needs to be brighter)
-    int rgb_red = 200;
-    int rgb_green = 0;
-    int rgb_blue = 0;
+    int rgb_blue;
+    int rgb_green;
+    int rgb_red;
 
-    // Robot RGB (needs to be darker)
-    /*
-    int rgb_red = 20;
-    int rgb_green = 0;
-    int rgb_blue = 0;
-    */
+    if (RobotBase.isReal()) {
+      // Robot RGB (need to be darker)
+      rgb_red = 20;
+      rgb_green = 0;
+      rgb_blue = 0;
+    } else {
+      // Simulator RGB (need to be brighter)
+      rgb_red = 200;
+      rgb_green = 0;
+      rgb_blue = 0;
+    }
 
     SetLights(rgb_red, rgb_green, rgb_blue);
   }
@@ -108,17 +118,21 @@ public class LEDSubsystem extends SubsystemBase {
 
     // Displays from blue to light teal to indicate proximity to a goal (i.e. distance from scoring)
 
-    // Simulator RGB (needs to be brighter)
-    int rgb_red = 0;
-    int rgb_green = 10;
-    int rgb_blue = 200;
+    int rgb_blue;
+    int rgb_green;
+    int rgb_red;
 
-    // Robot RGB (needs to be darker)
-    /*
-    int rgb_red = 0;
-    int rgb_green = 1;
-    int rgb_blue = 20;
-    */
+    if (RobotBase.isReal()) {
+      // Robot RGB (need to be darker)
+      rgb_red = 0;
+      rgb_green = 1;
+      rgb_blue = 20;
+    } else {
+      // Simulator RGB (need to be brighter)
+      rgb_red = 0;
+      rgb_green = 10;
+      rgb_blue = 200;
+    }
 
     // NOTE: The rgb_green will be multipied by a number from 0-24
 
@@ -136,17 +150,21 @@ public class LEDSubsystem extends SubsystemBase {
 
     // Displays green to indicate the robot is ready to perform an action (i.e. drop the game piece)
 
-    // Simulator RGB (needs to be brighter)
-    int rgb_red = 0;
-    int rgb_green = 200;
-    int rgb_blue = 0;
+    int rgb_blue;
+    int rgb_green;
+    int rgb_red;
 
-    // Robot RGB (needs to be darker)
-    /*
-    int rgb_red = 0;
-    int rgb_green = 20;
-    int rgb_blue = 0;
-    */
+    if (RobotBase.isReal()) {
+      // Robot RGB (need to be darker)
+      rgb_red = 0;
+      rgb_green = 20;
+      rgb_blue = 0;
+    } else {
+      // Simulator RGB (need to be brighter)
+      rgb_red = 0;
+      rgb_green = 200;
+      rgb_blue = 0;
+    }
 
     SetLights(rgb_red, rgb_green, rgb_blue);
   }
@@ -155,23 +173,26 @@ public class LEDSubsystem extends SubsystemBase {
 
     // Meant to have scrolling lights for asthetic; run as default command
 
-    // Set RGB values (these are for the "Firewall Purple")
-    int rgb_red = 50;
-    int rgb_green = 0;
-    int rgb_blue = 50;
+    int rgb_blue;
+    int rgb_green;
+    int rgb_red;
 
-    // Set RGB values (these are for the "Firewall Purple")
-    /*
-    int rgb_red = 5;
-    int rgb_green = 0;
-    int rgb_blue = 5;
-    */
+    if (RobotBase.isReal()) {
+      // Robot RGB (need to be darker)
+      rgb_red = 5;
+      rgb_green = 0;
+      rgb_blue = 5;
+    } else {
+      // Simulator RGB (need to be brighter)
+      rgb_red = 50;
+      rgb_green = 0;
+      rgb_blue = 50;
+    }
 
     // NOTE: For the lightscroll effect, the rgb values start 3x smaller because I multiply it by
     // either 1, 2, or 3 to change brightness
 
-    // Timer increments every iteration (20ms) and scroll offset decrements every 10 iterations
-    // (200ms)
+    // Timer increments every scheduler run and scroll offset decrements every 10 iterations
     timer++;
 
     if (timer == 10) {
