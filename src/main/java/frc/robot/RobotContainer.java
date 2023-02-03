@@ -38,6 +38,7 @@ public class RobotContainer {
   // The robot's subsystems
 
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final ArmSubsystem m_arm = new ArmSubsystem();
   private final LEDSubsystem m_LEDSubsystem = new LEDSubsystem();
   private final ArmSubsystem m_robotArm = new ArmSubsystem();
 
@@ -61,9 +62,9 @@ public class RobotContainer {
         new RunCommand(
             () ->
                 m_robotDrive.drive(
-                    MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.06),
-                    MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.06),
-                    MathUtil.applyDeadband(-m_driverController.getRightX(), 0.06),
+                    MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.15),
+                    MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.15),
+                    MathUtil.applyDeadband(-m_driverController.getRightX(), 0.15),
                     true),
             m_robotDrive));
 

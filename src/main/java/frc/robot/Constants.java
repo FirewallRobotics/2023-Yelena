@@ -39,20 +39,20 @@ public final class Constants {
 
     // Angular offsets of the modules relative to the chassis in radians
     public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
-    public static final double kFrontRightChassisAngularOffset = 0;
+    public static final double kFrontRightChassisAngularOffset = Math.PI;
     public static final double kBackLeftChassisAngularOffset = Math.PI;
     public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 11;
-    public static final int kRearLeftDrivingCanId = 13;
-    public static final int kFrontRightDrivingCanId = 15;
-    public static final int kRearRightDrivingCanId = 17;
+    public static final int kFrontLeftDrivingCanId = 2;
+    public static final int kRearLeftDrivingCanId = 6;
+    public static final int kFrontRightDrivingCanId = 4;
+    public static final int kRearRightDrivingCanId = 8;
 
-    public static final int kFrontLeftTurningCanId = 10;
-    public static final int kRearLeftTurningCanId = 12;
-    public static final int kFrontRightTurningCanId = 14;
-    public static final int kRearRightTurningCanId = 16;
+    public static final int kFrontLeftTurningCanId = 3;
+    public static final int kRearLeftTurningCanId = 5;
+    public static final int kFrontRightTurningCanId = 1;
+    public static final int kRearRightTurningCanId = 7;
 
     public static final boolean kGyroReversed = false;
   }
@@ -140,11 +140,11 @@ public final class Constants {
 
     public static final int kArmMotor1 = 0;
     public static final int kArmMotor2 = 0;
-    public static final int kMidPosition = 0;
+    public static final int kMidHeight = 0;
     public static final int kMidLength = 0;
-    public static final int kHighPosition = 0;
-    public static final int kHighLength = 0;
-    public static final double kDefaultPosition = 0;
+    public static final int kMaxHeight = 0;
+    public static final int kMaxLength = 0;
+    public static final int kDefaultHeight = 0;
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;
