@@ -1,27 +1,23 @@
 package frc.robot.subsystems;
 
-
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants.ArmConstants;
 
-public class ArmSubsystem extends PIDSubsystem {
-  private static WPI_TalonSRX ArmTalon1;
-  private static WPI_TalonSRX ArmTalon2;
+public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
+  public static WPI_TalonSRX ArmTalon1;
+  public static WPI_TalonSRX ArmTalon2;
   private static Encoder encoder;
 
   public ArmSubsystem() {
     super(new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
-    new TalonSRX(ArmConstants.kArmMotor1);
-    new TalonSRX(ArmConstants.kArmMotor2);
-    Encoder encoder = new Encoder(0, 1, false, EncodingType.k2X);
+    ArmTalon1 = new WPI_TalonSRX(ArmConstants.kArmMotor1);
+    ArmTalon2 = new WPI_TalonSRX(ArmConstants.kArmMotor2);
+    // Encoder encoder = new Encoder(0, 1, false, EncodingType.k2X);
   }
 
   public void GravityOffset(int ktargetPos) {
@@ -102,7 +98,8 @@ public class ArmSubsystem extends PIDSubsystem {
 
   @Override
   public void close() throws Exception {
-    talonSRXlift.close();
-    talonSRXext.close();
+    ArmTalon1.close();
+    ArmTalon2.close();
+    encoder.close();
   }
 }

@@ -1,6 +1,7 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.ctre.phoenix.motorcontrol.TalonSRXSimCollection;
+import edu.wpi.first.hal.HAL;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import org.junit.jupiter.api.AfterEach;
@@ -14,31 +15,32 @@ class ArmTest {
 
   @BeforeEach
   void setup() {
+    assert HAL.initialize(500, 0);
     m_arm = new ArmSubsystem();
-    m_talonSRXextSim = new TalonSRXSimCollection(m_arm.talonSRXext);
-    m_talonSRXliftSim = new TalonSRXSimCollection(m_arm.talonSRXlift);
+    m_talonSRXextSim = new TalonSRXSimCollection(ArmSubsystem.ArmTalon1);
+    m_talonSRXliftSim = new TalonSRXSimCollection(ArmSubsystem.ArmTalon2);
   }
 
   @AfterEach
   void shutdown() throws Exception {
-    m_arm.close();
+    // m_arm.close();
   }
 
   @Test
   void armExtendMedTest() {
     m_arm.ArmExtendMedCommand();
-    assertEquals(ArmConstants.kMidPosition, m_talonSRXextSim.getMotorOutputLeadVoltage());
+    assertEquals(ArmConstants.kMidLength, m_talonSRXextSim.getMotorOutputLeadVoltage());
   }
 
   @Test
   void armExtendHighTest() {
     m_arm.ArmExtendFarCommand();
-    assertEquals(ArmConstants.kHighPosition, m_talonSRXextSim.getMotorOutputLeadVoltage());
+    assertEquals(ArmConstants.kMaxLength, m_talonSRXextSim.getMotorOutputLeadVoltage());
   }
 
   @Test
   void armDefualtPositionTest() {
     m_arm.ArmRetractCommand();
-    assertEquals(ArmConstants.kDefaultPosition, m_talonSRXliftSim.getMotorOutputLeadVoltage());
+    assertEquals(ArmConstants.kDefaultHeight, m_talonSRXliftSim.getMotorOutputLeadVoltage());
   }
 }
