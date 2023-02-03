@@ -1,8 +1,10 @@
 package frc.robot.subsystems;
 
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
@@ -96,5 +98,11 @@ public class ArmSubsystem extends PIDSubsystem {
   protected double getMeasurement() {
     // TODO Auto-generated method stub
     return 0;
+  }
+
+  @Override
+  public void close() throws Exception {
+    talonSRXlift.close();
+    talonSRXext.close();
   }
 }
