@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -210,69 +210,75 @@ extends edu.wpi.first.wpilibj2.command.SubsystemBase</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drive(double,double,double,boolean)">drive</a></span>&#8203;(double&nbsp;xSpeed,
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#drive(double,double,double,boolean,boolean)">drive</a></span>&#8203;(double&nbsp;xSpeed,
      double&nbsp;ySpeed,
      double&nbsp;rot,
-     boolean&nbsp;fieldRelative)</code></th>
+     boolean&nbsp;fieldRelative,
+     boolean&nbsp;rateLimit)</code></th>
 <td class="colLast">
 <div class="block">Method to drive the robot using joystick info.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#driveLevel()">driveLevel</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getHeading()">getHeading</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the heading of the robot.</div>
 </td>
 </tr>
-<tr id="i2" class="altColor">
+<tr id="i3" class="rowColor">
 <td class="colFirst"><code>edu.wpi.first.math.geometry.Pose2d</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPose()">getPose</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the currently-estimated pose of the robot.</div>
 </td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i4" class="altColor">
 <td class="colFirst"><code>double</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTurnRate()">getTurnRate</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Returns the turn rate of the robot.</div>
 </td>
 </tr>
-<tr id="i4" class="altColor">
+<tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#periodic()">periodic</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i5" class="rowColor">
+<tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resetEncoders()">resetEncoders</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Resets the drive encoders to currently read a position of 0.</div>
 </td>
 </tr>
-<tr id="i6" class="altColor">
+<tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#resetOdometry(edu.wpi.first.math.geometry.Pose2d)">resetOdometry</a></span>&#8203;(edu.wpi.first.math.geometry.Pose2d&nbsp;pose)</code></th>
 <td class="colLast">
 <div class="block">Resets the odometry to the specified pose.</div>
 </td>
 </tr>
-<tr id="i7" class="rowColor">
+<tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setModuleStates(edu.wpi.first.math.kinematics.SwerveModuleState%5B%5D)">setModuleStates</a></span>&#8203;(edu.wpi.first.math.kinematics.SwerveModuleState[]&nbsp;desiredStates)</code></th>
 <td class="colLast">
 <div class="block">Sets the swerve ModuleStates.</div>
 </td>
 </tr>
-<tr id="i8" class="altColor">
+<tr id="i9" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setX()">setX</a></span>()</code></th>
 <td class="colLast">
 <div class="block">Sets the wheels into an X formation to prevent movement.</div>
 </td>
 </tr>
-<tr id="i9" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#zeroHeading()">zeroHeading</a></span>()</code></th>
 <td class="colLast">
@@ -393,7 +399,7 @@ extends edu.wpi.first.wpilibj2.command.SubsystemBase</pre>
 </dl>
 </li>
 </ul>
-<a id="drive(double,double,double,boolean)">
+<a id="drive(double,double,double,boolean,boolean)">
 <!--   -->
 </a>
 <ul class="blockList">
@@ -402,7 +408,8 @@ extends edu.wpi.first.wpilibj2.command.SubsystemBase</pre>
 <pre class="methodSignature">public&nbsp;void&nbsp;drive&#8203;(double&nbsp;xSpeed,
                   double&nbsp;ySpeed,
                   double&nbsp;rot,
-                  boolean&nbsp;fieldRelative)</pre>
+                  boolean&nbsp;fieldRelative,
+                  boolean&nbsp;rateLimit)</pre>
 <div class="block">Method to drive the robot using joystick info.</div>
 <dl>
 <dt><span class="paramLabel">Parameters:</span></dt>
@@ -474,7 +481,7 @@ extends edu.wpi.first.wpilibj2.command.SubsystemBase</pre>
 <a id="getTurnRate()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>getTurnRate</h4>
 <pre class="methodSignature">public&nbsp;double&nbsp;getTurnRate()</pre>
@@ -483,6 +490,15 @@ extends edu.wpi.first.wpilibj2.command.SubsystemBase</pre>
 <dt><span class="returnLabel">Returns:</span></dt>
 <dd>The turn rate of the robot, in degrees per second</dd>
 </dl>
+</li>
+</ul>
+<a id="driveLevel()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>driveLevel</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;driveLevel()</pre>
 </li>
 </ul>
 </li>
