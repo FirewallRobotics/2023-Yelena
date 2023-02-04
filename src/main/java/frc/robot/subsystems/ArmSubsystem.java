@@ -1,8 +1,7 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.DemandType;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
@@ -12,16 +11,16 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants.ArmConstants;
 
 public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
-  public static WPI_TalonSRX ArmTalon1;
-  public static WPI_TalonSRX ArmTalon2;
+  public static CANSparkMax ArmMotor1;
+  public static CANSparkMax ArmMotor2;
   private static Encoder encoder;
   public static DoubleSolenoid ExtendingSolenoid;
   public static DoubleSolenoid ClawSolenoid;
 
   public ArmSubsystem() {
     super(new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
-    ArmTalon1 = new WPI_TalonSRX(ArmConstants.kArmMotor1);
-    ArmTalon2 = new WPI_TalonSRX(ArmConstants.kArmMotor2);
+    CANSparkMax ArmMotor1 = new CANSparkMax(ArmConstants.kArmMotor1, MotorType.kBrushless);
+    CANSparkMax ArmMotor2 = new CANSparkMax(ArmConstants.kArmMotor2, MotorType.kBrushless);
 
     ExtendingSolenoid =
         new DoubleSolenoid(
@@ -33,21 +32,21 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
     // Encoder encoder = new Encoder(0, 1, false, EncodingType.k2X);
   }
 
-  public void GravityOffset(int ktargetPos) {
-    int kMeasuredPosHorizontal =
-        840; // position measured when arm is horizontal (with Pheonix Tuner)
-    double kTicksPerDegree = 4092 / 360; // sensor is 1:1 with arm rotation
-    double currentPos = ArmTalon1.getSelectedSensorPosition();
-    double degrees = (currentPos - kMeasuredPosHorizontal) / kTicksPerDegree;
-    double radians = java.lang.Math.toRadians(degrees);
-    double cosineScalar = java.lang.Math.cos(radians);
-    double maxGravityFF = 0.7;
-    ArmSubsystem.ArmTalon1.set(
-        ControlMode.MotionMagic,
-        ktargetPos,
-        DemandType.ArbitraryFeedForward,
-        maxGravityFF * cosineScalar);
-  }
+  // public void GravityOffset(int ktargetPos) {
+  //   int kMeasuredPosHorizontal =
+  //       840; // position measured when arm is horizontal (with Pheonix Tuner)
+  //   double kTicksPerDegree = 4092 / 360; // sensor is 1:1 with arm rotation
+  //   double currentPos = ArmMotor1.getSelectedSensorPosition();
+  //   double degrees = (currentPos - kMeasuredPosHorizontal) / kTicksPerDegree;
+  //   double radians = java.lang.Math.toRadians(degrees);
+  //   double cosineScalar = java.lang.Math.cos(radians);
+  //   double maxGravityFF = 0.7;
+  //   ArmSubsystem.ArmMotor1.set(
+  //       ControlMode.MotionMagic,
+  //       ktargetPos,
+  //       DemandType.ArbitraryFeedForward,
+  //       maxGravityFF * cosineScalar);
+  // }
 
   public void ArmExtendMedCommand() {
     // will likely use pneumatics
@@ -65,19 +64,19 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
   }
 
   public void ArmMidHeightCommand() {
-    GravityOffset(ArmConstants.kMidHeight);
+    // GravityOffset(ArmConstants.kMidHeight);
 
     System.out.println("Raising arm to moderate elevation...");
   }
 
   public void ArmMaxHeightCommand() {
-    GravityOffset(ArmConstants.kMaxHeight);
+    // GravityOffset(ArmConstants.kMaxHeight);
 
     System.out.println("Raising arm to maximum elevation...");
   }
 
   public void ArmDefaultHeightCommand() {
-    GravityOffset(ArmConstants.kDefaultHeight);
+    // GravityOffset(ArmConstants.kDefaultHeight);
 
     System.out.println("Returning to default elevation...");
   }
@@ -111,8 +110,8 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
 
   @Override
   public void close() throws Exception {
-    ArmTalon1.close();
-    ArmTalon2.close();
+    ArmMotor1.close();
+    ArmMotor2.close();
     ExtendingSolenoid.close();
     ClawSolenoid.close();
     // encoder.close();

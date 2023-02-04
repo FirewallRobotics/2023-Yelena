@@ -1,6 +1,6 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.ctre.phoenix.motorcontrol.TalonSRXSimCollection;
+import com.revrobotics.REVPhysicsSim;
 import edu.wpi.first.hal.HAL;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
@@ -10,37 +10,41 @@ import org.junit.jupiter.api.Test;
 
 class ArmTest {
   ArmSubsystem m_arm = new ArmSubsystem();
-  TalonSRXSimCollection m_talonSRXextSim;
-  TalonSRXSimCollection m_talonSRXliftSim;
+  REVPhysicsSim m_sparkmaxSim;
 
   @BeforeEach
   void setup() {
     assert HAL.initialize(500, 0);
-
-    m_talonSRXextSim = new TalonSRXSimCollection(ArmSubsystem.ArmTalon1);
-    m_talonSRXliftSim = new TalonSRXSimCollection(ArmSubsystem.ArmTalon2);
+    m_sparkmaxSim = REVPhysicsSim.getInstance();
+    m_sparkmaxSim.addSparkMax(
+        ArmSubsystem.ArmMotor1, edu.wpi.first.math.system.plant.DCMotor.getNEO(1));
   }
 
   @AfterEach
   void shutdown() throws Exception {
     m_arm.close();
+    ArmSubsystem.ArmMotor1.close();
+    ArmSubsystem.ArmMotor2.close();
   }
 
   @Test
   void armExtendMedTest() {
     m_arm.ArmExtendMedCommand();
-    assertEquals(ArmConstants.kMidLength, m_talonSRXextSim.getMotorOutputLeadVoltage());
+    assertEquals(ArmConstants.kMidLength, ArmSubsystem.ArmMotor1.get());
+    assertEquals(ArmConstants.kMidLength, ArmSubsystem.ArmMotor2.get());
   }
 
   @Test
   void armExtendHighTest() {
     m_arm.ArmExtendFarCommand();
-    assertEquals(ArmConstants.kMaxLength, m_talonSRXextSim.getMotorOutputLeadVoltage());
+    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.ArmMotor1.get());
+    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.ArmMotor2.get());
   }
 
   @Test
   void armDefualtPositionTest() {
     m_arm.ArmRetractCommand();
-    assertEquals(ArmConstants.kDefaultHeight, m_talonSRXliftSim.getMotorOutputLeadVoltage());
+    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.ArmMotor1.get());
+    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.ArmMotor2.get());
   }
 }
