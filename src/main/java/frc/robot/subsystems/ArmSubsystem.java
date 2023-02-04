@@ -4,7 +4,10 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants.ArmConstants;
 
@@ -12,11 +15,21 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
   public static WPI_TalonSRX ArmTalon1;
   public static WPI_TalonSRX ArmTalon2;
   private static Encoder encoder;
+  public static DoubleSolenoid ExtendingSolenoid;
+  public static DoubleSolenoid ClawSolenoid;
 
   public ArmSubsystem() {
     super(new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
     ArmTalon1 = new WPI_TalonSRX(ArmConstants.kArmMotor1);
     ArmTalon2 = new WPI_TalonSRX(ArmConstants.kArmMotor2);
+
+    ExtendingSolenoid =
+        new DoubleSolenoid(
+            PneumaticsModuleType.CTREPCM, ArmConstants.kExtSolPort1, ArmConstants.kExtSolPort2);
+    ClawSolenoid =
+        new DoubleSolenoid(
+            PneumaticsModuleType.CTREPCM, ArmConstants.kClawSolPort1, ArmConstants.kClawSolPort2);
+
     // Encoder encoder = new Encoder(0, 1, false, EncodingType.k2X);
   }
 
@@ -81,7 +94,7 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
 
   @Override
   public void periodic() {
-    encoder.getDistance();
+    // encoder.getDistance();
   }
 
   @Override
@@ -100,6 +113,8 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
   public void close() throws Exception {
     ArmTalon1.close();
     ArmTalon2.close();
-    encoder.close();
+    ExtendingSolenoid.close();
+    ClawSolenoid.close();
+    // encoder.close();
   }
 }

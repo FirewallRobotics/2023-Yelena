@@ -143,8 +143,8 @@ public final class Constants {
 
   public static final class ArmConstants {
 
-    public static final int kArmMotor1 = 0;
-    public static final int kArmMotor2 = 0;
+    public static final int kArmMotor1 = 9;
+    public static final int kArmMotor2 = 10;
     public static final int kMidHeight = 0;
     public static final int kMidLength = 0;
     public static final int kMaxHeight = 0;
@@ -153,5 +153,9 @@ public final class Constants {
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;
+    public static final int kExtSolPort1 = 1;
+    public static final int kExtSolPort2 = 2;
+    public static final int kClawSolPort1 = 3;
+    public static final int kClawSolPort2 = 4;
   }
 }
