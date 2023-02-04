@@ -38,7 +38,6 @@ public class RobotContainer {
   // The robot's subsystems
 
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
-  private final ArmSubsystem m_arm = new ArmSubsystem();
   private final LEDSubsystem m_LEDSubsystem = new LEDSubsystem();
   private final ArmSubsystem m_robotArm = new ArmSubsystem();
 
