@@ -9,21 +9,21 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ArmTest {
-  ArmSubsystem m_arm;
+  ArmSubsystem m_arm = new ArmSubsystem();
   TalonSRXSimCollection m_talonSRXextSim;
   TalonSRXSimCollection m_talonSRXliftSim;
 
   @BeforeEach
   void setup() {
     assert HAL.initialize(500, 0);
-    m_arm = new ArmSubsystem();
+
     m_talonSRXextSim = new TalonSRXSimCollection(ArmSubsystem.ArmTalon1);
     m_talonSRXliftSim = new TalonSRXSimCollection(ArmSubsystem.ArmTalon2);
   }
 
   @AfterEach
   void shutdown() throws Exception {
-    // m_arm.close();
+    m_arm.close();
   }
 
   @Test
