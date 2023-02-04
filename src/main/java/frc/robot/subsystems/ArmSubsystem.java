@@ -94,7 +94,7 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
 
   @Override
   public void periodic() {
-    encoder.getDistance();
+    // encoder.getDistance();
   }
 
   @Override
@@ -113,6 +113,8 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
   public void close() throws Exception {
     ArmTalon1.close();
     ArmTalon2.close();
-    encoder.close();
+    ExtendingSolenoid.close();
+    ClawSolenoid.close();
+    // encoder.close();
   }
 }
