@@ -19,8 +19,8 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
 
   public ArmSubsystem() {
     super(new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
-    CANSparkMax ArmMotor1 = new CANSparkMax(ArmConstants.kArmMotor1, MotorType.kBrushless);
-    CANSparkMax ArmMotor2 = new CANSparkMax(ArmConstants.kArmMotor2, MotorType.kBrushless);
+    ArmMotor1 = new CANSparkMax(ArmConstants.kArmMotor1, MotorType.kBrushless);
+    ArmMotor2 = new CANSparkMax(ArmConstants.kArmMotor2, MotorType.kBrushless);
 
     ExtendingSolenoid =
         new DoubleSolenoid(

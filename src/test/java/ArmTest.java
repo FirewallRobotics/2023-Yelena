@@ -18,13 +18,13 @@ class ArmTest {
     m_sparkmaxSim = REVPhysicsSim.getInstance();
     m_sparkmaxSim.addSparkMax(
         ArmSubsystem.ArmMotor1, edu.wpi.first.math.system.plant.DCMotor.getNEO(1));
+    m_sparkmaxSim.addSparkMax(
+        ArmSubsystem.ArmMotor2, edu.wpi.first.math.system.plant.DCMotor.getNEO(2));
   }
 
   @AfterEach
   void shutdown() throws Exception {
     m_arm.close();
-    ArmSubsystem.ArmMotor1.close();
-    ArmSubsystem.ArmMotor2.close();
   }
 
   @Test
