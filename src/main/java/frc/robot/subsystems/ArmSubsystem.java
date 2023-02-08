@@ -25,6 +25,9 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
     ArmMotor1 = new CANSparkMax(ArmConstants.kArmMotor1Port, MotorType.kBrushless);
     ArmMotor2 = new CANSparkMax(ArmConstants.kArmMotor2Port, MotorType.kBrushless);
 
+    ArmMotor1.restoreFactoryDefaults();
+    ArmMotor2.restoreFactoryDefaults();
+
     ExtendingSolenoid =
         new DoubleSolenoid(
             PneumaticsModuleType.CTREPCM, ArmConstants.kExtSolPort1, ArmConstants.kExtSolPort2);
@@ -33,6 +36,7 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
             PneumaticsModuleType.CTREPCM, ArmConstants.kClawSolPort1, ArmConstants.kClawSolPort2);
 
     ArmEncoder = ArmMotor1.getAbsoluteEncoder(Type.kDutyCycle);
+    ArmEncoder.setInverted(true);
 
     ArmPIDController = ArmMotor1.getPIDController();
     ArmPIDController.setFeedbackDevice(ArmEncoder);
@@ -66,20 +70,21 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
   }
 
   public void ArmMidHeightCommand() {
-    // GravityOffset(ArmConstants.kMidHeight);
-
+    GravityOffset(ArmConstants.kMidHeight);
+    ArmPIDController.setReference(ArmConstants.kMidHeight, CANSparkMax.ControlType.kPosition);
     System.out.println("Raising arm to moderate elevation...");
   }
 
   public void ArmMaxHeightCommand() {
     GravityOffset(ArmConstants.kMaxHeight);
+    ArmPIDController.setReference(ArmConstants.kMaxHeight, CANSparkMax.ControlType.kPosition);
 
     System.out.println("Raising arm to maximum elevation...");
   }
 
   public void ArmDefaultHeightCommand() {
     GravityOffset(ArmConstants.kDefaultHeight);
-
+    ArmPIDController.setReference(ArmConstants.kDefaultHeight, CANSparkMax.ControlType.kPosition);
     System.out.println("Returning to default elevation...");
   }
 
@@ -95,7 +100,7 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
 
   @Override
   public void periodic() {
-    // encoder.getDistance();
+    ArmEncoder.getPosition();
   }
 
   @Override
@@ -116,6 +121,6 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
     ArmMotor2.close();
     ExtendingSolenoid.close();
     ClawSolenoid.close();
-    // encoder.close();
+    // ArmEncoder.close();
   }
 }
