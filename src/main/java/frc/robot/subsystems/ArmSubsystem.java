@@ -5,14 +5,13 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 
-public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
+public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   public static CANSparkMax MasterArmMotor;
   public static CANSparkMax MinionArmMotor;
   private final AbsoluteEncoder ArmEncoder;
@@ -21,7 +20,6 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
   private final SparkMaxPIDController ArmPIDController;
 
   public ArmSubsystem() {
-    super(new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
     MasterArmMotor = new CANSparkMax(ArmConstants.kMasterArmMotorPort, MotorType.kBrushless);
     MinionArmMotor = new CANSparkMax(ArmConstants.kMinionArmMotorPort, MotorType.kBrushless);
 
@@ -103,18 +101,6 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
   @Override
   public void periodic() {
     ArmEncoder.getPosition();
-  }
-
-  @Override
-  protected void useOutput(double output, double setpoint) {
-    // TODO Auto-generated method stub
-
-  }
-
-  @Override
-  protected double getMeasurement() {
-    // TODO Auto-generated method stub
-    return 0;
   }
 
   @Override
