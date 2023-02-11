@@ -23,17 +23,14 @@ class ArmTest {
     m_sparkmaxSim.addSparkMax(
         ArmSubsystem.MasterArmMotor, edu.wpi.first.math.system.plant.DCMotor.getNEO(1));
     m_sparkmaxSim.addSparkMax(
+        ArmSubsystem.MinionArmMotor, edu.wpi.first.math.system.plant.DCMotor.getNEO(2));
 
-    ArmSubsystem.MinionArmMotor, edu.wpi.first.math.system.plant.DCMotor.getNEO(2));
-
-       
     m_extendingDoubleSolenoidSim =
         new DoubleSolenoidSim(
             PneumaticsModuleType.CTREPCM, ArmConstants.kExtSolPort1, ArmConstants.kExtSolPort2);
     m_clawDoubleSolenoidSim =
         new DoubleSolenoidSim(
             PneumaticsModuleType.CTREPCM, ArmConstants.kClawSolPort1, ArmConstants.kClawSolPort2);
-
   }
 
   @AfterEach
