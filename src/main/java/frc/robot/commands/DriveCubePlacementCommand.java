@@ -40,11 +40,11 @@ public class DriveCubePlacementCommand extends CommandBase {
       m_drivetrain.setX();
     } else if (adjustLeftRight > 0) { // Move Left
       m_drivetrain.drive(
-          adjustLeftRight * speedMultiplier, 0.0, 0.0, false // Not sure here
+          adjustLeftRight * speedMultiplier, 0.0, 0.0, true, true // Not sure here
           );
     } else { // Move Right
       m_drivetrain.drive(
-          adjustLeftRight * speedMultiplier, 0.0, 0.0, false // Not sure here
+          adjustLeftRight * speedMultiplier, 0.0, 0.0, true, true // Not sure here
           );
     }
 
@@ -52,11 +52,11 @@ public class DriveCubePlacementCommand extends CommandBase {
       m_drivetrain.setX();
     } else if (adjustBackForward > 0) { // Move Forward
       m_drivetrain.drive(
-          0.0, adjustBackForward * speedMultiplier, 0.0, false // Not sure here
+          0.0, adjustBackForward * speedMultiplier, 0.0, true, true // Not sure here
           );
     } else { // Move Backward
       m_drivetrain.drive(
-          0.0, adjustBackForward * speedMultiplier, 0.0, false // Not sure here
+          0.0, adjustBackForward * speedMultiplier, 0.0, true, true // Not sure here
           );
     }
   }
@@ -68,6 +68,10 @@ public class DriveCubePlacementCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    if (adjustLeftRight == 0 && adjustBackForward == 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

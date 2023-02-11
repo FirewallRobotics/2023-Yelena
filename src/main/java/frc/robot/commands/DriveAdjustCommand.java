@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
 public class DriveAdjustCommand extends CommandBase {
@@ -36,42 +35,26 @@ public class DriveAdjustCommand extends CommandBase {
 
     if (adjustLeftRight == 0) { // Stop
       m_drivetrain.setX();
-    }
-    else if (adjustLeftRight > 0) { // Move Left
+    } else if (adjustLeftRight > 0) { // Move Left
       m_drivetrain.drive(
-        adjustLeftRight,
-        0.0,
-        0.0,
-        false // Not sure here
-        );
-    }
-    else { // Move Right
+          adjustLeftRight, 0.0, 0.0, true, true // Not sure here
+          );
+    } else { // Move Right
       m_drivetrain.drive(
-        adjustLeftRight,
-        0.0,
-        0.0,
-        false // Not sure here
-        );
+          adjustLeftRight, 0.0, 0.0, true, true // Not sure here
+          );
     }
 
     if (adjustBackForward == 0) { // Stop
       m_drivetrain.setX();
-    }
-    else if (adjustBackForward > 0) { // Move Forward
+    } else if (adjustBackForward > 0) { // Move Forward
       m_drivetrain.drive(
-        0.0,
-        adjustBackForward,
-        0.0,
-        false // Not sure here
-        );
-    }
-    else { // Move Backward
+          0.0, adjustBackForward, 0.0, false, true // Not sure here
+          );
+    } else { // Move Backward
       m_drivetrain.drive(
-        0.0,
-        adjustBackForward,
-        0.0,
-        false // Not sure here
-        );
+          0.0, adjustBackForward, 0.0, false, true // Not sure here
+          );
     }
   }
 
@@ -82,10 +65,9 @@ public class DriveAdjustCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (adjustLeftRight == 0 && adjustBackForward == 0){
+    if (adjustLeftRight == 0 && adjustBackForward == 0) {
       return true;
-    }
-    else {
+    } else {
       return false;
     }
   }
