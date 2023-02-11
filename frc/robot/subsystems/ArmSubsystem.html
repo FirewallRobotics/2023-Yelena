@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10};
+var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -126,12 +126,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <li>edu.wpi.first.wpilibj2.command.SubsystemBase</li>
 <li>
 <ul class="inheritance">
-<li>edu.wpi.first.wpilibj2.command.PIDSubsystem</li>
-<li>
-<ul class="inheritance">
 <li>frc.robot.subsystems.ArmSubsystem</li>
-</ul>
-</li>
 </ul>
 </li>
 </ul>
@@ -146,7 +141,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </dl>
 <hr>
 <pre>public class <span class="typeNameLabel">ArmSubsystem</span>
-extends edu.wpi.first.wpilibj2.command.PIDSubsystem
+extends edu.wpi.first.wpilibj2.command.SubsystemBase
 implements java.lang.AutoCloseable</pre>
 </li>
 </ul>
@@ -189,13 +184,6 @@ implements java.lang.AutoCloseable</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a id="fields.inherited.from.class.edu.wpi.first.wpilibj2.command.PIDSubsystem">
-<!--   -->
-</a>
-<h3>Fields inherited from class&nbsp;edu.wpi.first.wpilibj2.command.PIDSubsystem</h3>
-<code>m_controller, m_enabled</code></li>
-</ul>
 </li>
 </ul>
 </section>
@@ -280,34 +268,16 @@ implements java.lang.AutoCloseable</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
-<td class="colFirst"><code>protected double</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getMeasurement()">getMeasurement</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#GravityOffset(int)">GravityOffset</a></span>&#8203;(int&nbsp;ktargetPos)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i11" class="rowColor">
+<tr id="i10" class="altColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#periodic()">periodic</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#useOutput(double,double)">useOutput</a></span>&#8203;(double&nbsp;output,
-         double&nbsp;setpoint)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
 </table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.edu.wpi.first.wpilibj2.command.PIDSubsystem">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;edu.wpi.first.wpilibj2.command.PIDSubsystem</h3>
-<code>disable, enable, getController, getSetpoint, isEnabled, setSetpoint</code></li>
-</ul>
 <ul class="blockList">
 <li class="blockList"><a id="methods.inherited.from.class.edu.wpi.first.wpilibj2.command.SubsystemBase">
 <!--   -->
@@ -501,35 +471,6 @@ implements java.lang.AutoCloseable</pre>
 <dl>
 <dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
 <dd><code>periodic</code>&nbsp;in interface&nbsp;<code>edu.wpi.first.wpilibj2.command.Subsystem</code></dd>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>periodic</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.PIDSubsystem</code></dd>
-</dl>
-</li>
-</ul>
-<a id="useOutput(double,double)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>useOutput</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;useOutput&#8203;(double&nbsp;output,
-                         double&nbsp;setpoint)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>useOutput</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.PIDSubsystem</code></dd>
-</dl>
-</li>
-</ul>
-<a id="getMeasurement()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getMeasurement</h4>
-<pre class="methodSignature">protected&nbsp;double&nbsp;getMeasurement()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>getMeasurement</code>&nbsp;in class&nbsp;<code>edu.wpi.first.wpilibj2.command.PIDSubsystem</code></dd>
 </dl>
 </li>
 </ul>
