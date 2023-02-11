@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants.ArmConstants;
 
 public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
-  public static CANSparkMax ArmMotor1;
-  public static CANSparkMax ArmMotor2;
+  public static CANSparkMax MasterArmMotor;
+  public static CANSparkMax MinionArmMotor;
   private final AbsoluteEncoder ArmEncoder;
   public static DoubleSolenoid ExtendingSolenoid;
   public static DoubleSolenoid ClawSolenoid;
@@ -22,11 +22,13 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
 
   public ArmSubsystem() {
     super(new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
-    ArmMotor1 = new CANSparkMax(ArmConstants.kArmMotor1Port, MotorType.kBrushless);
-    ArmMotor2 = new CANSparkMax(ArmConstants.kArmMotor2Port, MotorType.kBrushless);
+    MasterArmMotor = new CANSparkMax(ArmConstants.kMasterArmMotorPort, MotorType.kBrushless);
+    MinionArmMotor = new CANSparkMax(ArmConstants.kMinionArmMotorPort, MotorType.kBrushless);
 
-    ArmMotor1.restoreFactoryDefaults();
-    ArmMotor2.restoreFactoryDefaults();
+    MasterArmMotor.restoreFactoryDefaults();
+    MinionArmMotor.restoreFactoryDefaults();
+
+    MinionArmMotor.follow(MasterArmMotor);
 
     ExtendingSolenoid =
         new DoubleSolenoid(
@@ -35,10 +37,10 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
         new DoubleSolenoid(
             PneumaticsModuleType.CTREPCM, ArmConstants.kClawSolPort1, ArmConstants.kClawSolPort2);
 
-    ArmEncoder = ArmMotor1.getAbsoluteEncoder(Type.kDutyCycle);
+    ArmEncoder = MasterArmMotor.getAbsoluteEncoder(Type.kDutyCycle);
     ArmEncoder.setInverted(true);
 
-    ArmPIDController = ArmMotor1.getPIDController();
+    ArmPIDController = MasterArmMotor.getPIDController();
     ArmPIDController.setFeedbackDevice(ArmEncoder);
   }
 
@@ -117,8 +119,8 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
 
   @Override
   public void close() throws Exception {
-    ArmMotor1.close();
-    ArmMotor2.close();
+    MasterArmMotor.close();
+    MinionArmMotor.close();
     ExtendingSolenoid.close();
     ClawSolenoid.close();
     // ArmEncoder.close();

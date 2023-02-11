@@ -17,9 +17,9 @@ class ArmTest {
     assert HAL.initialize(500, 0);
     m_sparkmaxSim = REVPhysicsSim.getInstance();
     m_sparkmaxSim.addSparkMax(
-        ArmSubsystem.ArmMotor1, edu.wpi.first.math.system.plant.DCMotor.getNEO(1));
+        ArmSubsystem.MasterArmMotor, edu.wpi.first.math.system.plant.DCMotor.getNEO(1));
     m_sparkmaxSim.addSparkMax(
-        ArmSubsystem.ArmMotor2, edu.wpi.first.math.system.plant.DCMotor.getNEO(2));
+        ArmSubsystem.MinionArmMotor, edu.wpi.first.math.system.plant.DCMotor.getNEO(2));
   }
 
   @AfterEach
@@ -30,21 +30,21 @@ class ArmTest {
   @Test
   void armExtendMedTest() {
     m_arm.ArmExtendMedCommand();
-    assertEquals(ArmConstants.kMidLength, ArmSubsystem.ArmMotor1.get());
-    assertEquals(ArmConstants.kMidLength, ArmSubsystem.ArmMotor2.get());
+    assertEquals(ArmConstants.kMidLength, ArmSubsystem.MasterArmMotor.get());
+    assertEquals(ArmConstants.kMidLength, ArmSubsystem.MinionArmMotor.get());
   }
 
   @Test
   void armExtendHighTest() {
     m_arm.ArmExtendFarCommand();
-    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.ArmMotor1.get());
-    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.ArmMotor2.get());
+    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MasterArmMotor.get());
+    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MinionArmMotor.get());
   }
 
   @Test
   void armDefualtPositionTest() {
     m_arm.ArmRetractCommand();
-    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.ArmMotor1.get());
-    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.ArmMotor2.get());
+    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MasterArmMotor.get());
+    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MinionArmMotor.get());
   }
 }
