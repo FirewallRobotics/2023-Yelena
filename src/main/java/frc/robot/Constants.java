@@ -128,6 +128,8 @@ public final class Constants {
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
+    public static final double kAdjustSpeedMultiplier = 0.3;
+
     public static final double kPXController = 1;
     public static final double kPYController = 1;
     public static final double kPThetaController = 1;
@@ -158,5 +160,23 @@ public final class Constants {
     public static final int kExtSolPort2 = 2;
     public static final int kClawSolPort1 = 3;
     public static final int kClawSolPort2 = 4;
+  }
+
+  public static final class VisionConstants {
+
+    public static final double kCameraCenterX = 285;
+    public static final double kTargetCenterXRange = 10;
+    public static final double kConeTargetWidth = 50;
+    public static final double kConeTargetWidthRange = 10;
+    public static final double kCubeTargetRadius = 50;
+    public static final double kCubeTargetRadiusRange = 10;
+    public static final double kTapeTargetX = 0;
+    public static final double kTapeTargetXRange = 10;
+    public static final double kTapeTargetY = 0;
+    public static final double kTapeTargetYRange = 10;
+    public static final double kTapeTargetArea = 100;
+    public static final double kTapeTargetAreaRange = 10;
+    public static final double kAprilTagTargetArea = 100;
+    public static final double kAprilTagTargetAreaRange = 10;
   }
 }
