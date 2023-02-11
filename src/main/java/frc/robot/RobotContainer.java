@@ -13,8 +13,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.XboxController;
+// import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -42,8 +43,8 @@ public class RobotContainer {
   private final ArmSubsystem m_robotArm = new ArmSubsystem();
 
   // The driver's controller
-  Joystick m_driverJoystick = new Joystick(OIConstants.kDriverJoystickPort);
-  /// XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  /// Joystick m_driverJoystick = new Joystick(OIConstants.kDriverJoystickPort);
+  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -58,27 +59,27 @@ public class RobotContainer {
     // Configure default commands
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
-        // Turning is controlled by the X axis of the right stick.
+        // Turning is controlled by the X axis bof the right stick.
         new RunCommand(
             () ->
                 m_robotDrive.drive(
-                    -MathUtil.applyDeadband(m_driverJoystick.getX(), OIConstants.kDriveDeadband),
-                    -MathUtil.applyDeadband(m_driverJoystick.getY(), OIConstants.kDriveDeadband),
                     -MathUtil.applyDeadband(
-                        m_driverJoystick.getThrottle(), OIConstants.kDriveDeadband),
+                        m_driverController.getLeftY(), OIConstants.kDriveDeadband),
+                    -MathUtil.applyDeadband(
+                        m_driverController.getLeftX(), OIConstants.kDriveDeadband),
+                    -MathUtil.applyDeadband(
+                        m_driverController.getRightX(), OIConstants.kDriveDeadband),
                     true,
                     true),
             m_robotDrive));
 
     /*m_robotDrive.drive(
-            -MathUtil.applyDeadband(
-                m_driverController.getLeftY(), OIConstants.kDriveDeadband),
-            -MathUtil.applyDeadband(
-                m_driverController.getLeftX(), OIConstants.kDriveDeadband),
-            -MathUtil.applyDeadband(
-                m_driverController.getRightX(), OIConstants.kDriveDeadband),
-            true,
-            true),
+                -MathUtil.applyDeadband(m_driverJoystick.getY(), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(m_driverJoystick.getX(), OIConstants.kDriveDeadband),
+                -MathUtil.applyDeadband(
+                    m_driverJoystick.getThrottle(), OIConstants.kDriveDeadband),
+                true,
+                true),
     m_robotDrive));*/
 
     m_LEDSubsystem.setDefaultCommand(
@@ -93,7 +94,7 @@ public class RobotContainer {
    * {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverJoystick, 2)
+    /*new JoystickButton(m_driverJoystick, 2)
         .whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
 
     // The buttons created below were meant for LED testing, feel free to change
@@ -105,9 +106,9 @@ public class RobotContainer {
         .whileTrue(new RunCommand(() -> m_LEDSubsystem.ReadyLight(), m_LEDSubsystem));
 
     new JoystickButton(m_driverJoystick, 5)
-        .whileTrue(new RunCommand(() -> m_LEDSubsystem.LightOff(), m_LEDSubsystem));
+        .whileTrue(new RunCommand(() -> m_LEDSubsystem.LightOff(), m_LEDSubsystem));*/
 
-    /*new JoystickButton(m_driverController, Button.kR1.value)
+    new JoystickButton(m_driverController, Button.kR1.value)
         .whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
 
     // The buttons created below were meant for LED testing, feel free to change
@@ -119,7 +120,7 @@ public class RobotContainer {
         .whileTrue(new RunCommand(() -> m_LEDSubsystem.ReadyLight(), m_LEDSubsystem));
 
     new JoystickButton(m_driverController, Button.kSquare.value)
-        .whileTrue(new RunCommand(() -> m_LEDSubsystem.LightOff(), m_LEDSubsystem));*/
+        .whileTrue(new RunCommand(() -> m_LEDSubsystem.LightOff(), m_LEDSubsystem));
   }
 
   /**
