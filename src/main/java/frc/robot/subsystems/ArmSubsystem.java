@@ -5,23 +5,22 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import edu.wpi.first.wpilibj2.command.PIDSubsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 
-public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
+public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   public static CANSparkMax ArmMotor1;
   public static CANSparkMax ArmMotor2;
-  private final AbsoluteEncoder ArmEncoder;
+  public final AbsoluteEncoder ArmEncoder;
   public static DoubleSolenoid ExtendingSolenoid;
   public static DoubleSolenoid ClawSolenoid;
-  private final SparkMaxPIDController ArmPIDController;
+  public final SparkMaxPIDController ArmPIDController;
 
   public ArmSubsystem() {
-    super(new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
+    // super(new PIDController(ArmConstants.kP, ArmConstants.kI, ArmConstants.kD));
     ArmMotor1 = new CANSparkMax(ArmConstants.kArmMotor1Port, MotorType.kBrushless);
     ArmMotor2 = new CANSparkMax(ArmConstants.kArmMotor2Port, MotorType.kBrushless);
 
@@ -98,7 +97,7 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
     System.out.println("Releasing claw...");
   }
 
-  @Override
+  /*@Override
   public void periodic() {
     ArmEncoder.getPosition();
   }
@@ -113,7 +112,7 @@ public class ArmSubsystem extends PIDSubsystem implements AutoCloseable {
   protected double getMeasurement() {
     // TODO Auto-generated method stub
     return 0;
-  }
+  }*/
 
   @Override
   public void close() throws Exception {
