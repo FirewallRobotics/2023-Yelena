@@ -17,7 +17,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  SendableChooser<Command> chooser = new SendableChooser();
+  SendableChooser<Command> GridPosChooser = new SendableChooser();
+  SendableChooser<Command> TacticChooser = new SendableChooser();
 
   private RobotContainer m_robotContainer;
 
@@ -58,7 +59,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = chooser.getSelected();
+    m_autonomousCommand = GridPosChooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -68,6 +69,20 @@ public class Robot extends TimedRobot {
      */
 
     // schedule the autonomous command (example)
+    TacticChooser.setDefaultOption("Double Shot", m_autonomousCommand);
+
+    TacticChooser.addOption("Shot and Power Station", m_autonomousCommand);
+
+    TacticChooser.addOption("Power Station", m_autonomousCommand);
+
+    GridPosChooser.setDefaultOption("Red Grid Position 1", m_autonomousCommand);
+
+    GridPosChooser.addOption("Red Grid Position 2", m_autonomousCommand);
+
+    GridPosChooser.addOption("Blue Grid Position 1", m_autonomousCommand);
+
+    GridPosChooser.addOption("Blue Grid Position 2", m_autonomousCommand);
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
