@@ -23,7 +23,7 @@ class ArmTest {
     m_sparkmaxSim.addSparkMax(
         ArmSubsystem.MasterArmMotor, edu.wpi.first.math.system.plant.DCMotor.getNEO(1));
     m_sparkmaxSim.addSparkMax(
-        ArmSubsystem.MinionArmMotor, edu.wpi.first.math.system.plant.DCMotor.getNEO(2));
+        ArmSubsystem.MinionArmMotor, edu.wpi.first.math.system.plant.DCMotor.getNEO(1));
 
     m_extendingDoubleSolenoidSim =
         new DoubleSolenoidSim(
@@ -57,5 +57,23 @@ class ArmTest {
     m_arm.ArmRetractCommand();
     assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MasterArmMotor.get());
     assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MinionArmMotor.get());
+  }
+
+  @Test
+  void ArmMidHeightCommandTest() {
+    m_arm.ArmMidHeightCommand();
+    assertEquals(ArmConstants.kMidHeight, m_arm.ArmEncoder.getPosition());
+  }
+
+  @Test
+  void ArmMaxHeightCommandTest() {
+    m_arm.ArmMaxHeightCommand();
+    assertEquals(ArmConstants.kMaxHeight, m_arm.ArmEncoder.getPosition());
+  }
+
+  @Test
+  void ArmDefaultHeightCommandTest() {
+    m_arm.ArmDefaultHeightCommand();
+    assertEquals(ArmConstants.kDefaultHeight, m_arm.ArmEncoder.getPosition());
   }
 }
