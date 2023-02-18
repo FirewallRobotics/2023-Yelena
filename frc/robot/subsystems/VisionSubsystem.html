@@ -198,13 +198,43 @@ extends edu.wpi.first.wpilibj2.command.SubsystemBase</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>edu.wpi.first.networktables.NetworkTable</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cone">cone</a></span></code></th>
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cameraCenterX">cameraCenterX</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>edu.wpi.first.networktables.NetworkTable</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cone">cone</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#coneTargetWidth">coneTargetWidth</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#coneTargetWidthRange">coneTargetWidthRange</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>edu.wpi.first.networktables.NetworkTable</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cube">cube</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cubeTargetRadius">cubeTargetRadius</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#cubeTargetRadiusRange">cubeTargetRadiusRange</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#decelerationDistance">decelerationDistance</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
@@ -293,8 +323,53 @@ extends edu.wpi.first.wpilibj2.command.SubsystemBase</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tagTargetArea">tagTargetArea</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tagTargetAreaRange">tagTargetAreaRange</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>edu.wpi.first.networktables.NetworkTable</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tape">tape</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tapeTargetArea">tapeTargetArea</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tapeTargetAreaRange">tapeTargetAreaRange</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tapeTargetX">tapeTargetX</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tapeTargetXRange">tapeTargetXRange</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tapeTargetY">tapeTargetY</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#tapeTargetYRange">tapeTargetYRange</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#targetCenterXRange">targetCenterXRange</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -616,10 +691,145 @@ extends edu.wpi.first.wpilibj2.command.SubsystemBase</pre>
 <a id="adjustCubePlacementBackForward">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>adjustCubePlacementBackForward</h4>
 <pre>public&nbsp;double adjustCubePlacementBackForward</pre>
+</li>
+</ul>
+<a id="cameraCenterX">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>cameraCenterX</h4>
+<pre>public&nbsp;double cameraCenterX</pre>
+</li>
+</ul>
+<a id="targetCenterXRange">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>targetCenterXRange</h4>
+<pre>public&nbsp;double targetCenterXRange</pre>
+</li>
+</ul>
+<a id="coneTargetWidth">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>coneTargetWidth</h4>
+<pre>public&nbsp;double coneTargetWidth</pre>
+</li>
+</ul>
+<a id="coneTargetWidthRange">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>coneTargetWidthRange</h4>
+<pre>public&nbsp;double coneTargetWidthRange</pre>
+</li>
+</ul>
+<a id="cubeTargetRadius">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>cubeTargetRadius</h4>
+<pre>public&nbsp;double cubeTargetRadius</pre>
+</li>
+</ul>
+<a id="cubeTargetRadiusRange">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>cubeTargetRadiusRange</h4>
+<pre>public&nbsp;double cubeTargetRadiusRange</pre>
+</li>
+</ul>
+<a id="tapeTargetX">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tapeTargetX</h4>
+<pre>public&nbsp;double tapeTargetX</pre>
+</li>
+</ul>
+<a id="tapeTargetXRange">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tapeTargetXRange</h4>
+<pre>public&nbsp;double tapeTargetXRange</pre>
+</li>
+</ul>
+<a id="tapeTargetY">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tapeTargetY</h4>
+<pre>public&nbsp;double tapeTargetY</pre>
+</li>
+</ul>
+<a id="tapeTargetYRange">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tapeTargetYRange</h4>
+<pre>public&nbsp;double tapeTargetYRange</pre>
+</li>
+</ul>
+<a id="tapeTargetArea">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tapeTargetArea</h4>
+<pre>public&nbsp;double tapeTargetArea</pre>
+</li>
+</ul>
+<a id="tapeTargetAreaRange">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tapeTargetAreaRange</h4>
+<pre>public&nbsp;double tapeTargetAreaRange</pre>
+</li>
+</ul>
+<a id="tagTargetArea">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tagTargetArea</h4>
+<pre>public&nbsp;double tagTargetArea</pre>
+</li>
+</ul>
+<a id="tagTargetAreaRange">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>tagTargetAreaRange</h4>
+<pre>public&nbsp;double tagTargetAreaRange</pre>
+</li>
+</ul>
+<a id="decelerationDistance">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>decelerationDistance</h4>
+<pre>public&nbsp;double decelerationDistance</pre>
 </li>
 </ul>
 </li>
