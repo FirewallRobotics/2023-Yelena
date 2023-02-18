@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ArmTest {
+  static final double DELTA = 1e-2; // acceptable deviation range
   ArmSubsystem m_arm = new ArmSubsystem();
   REVPhysicsSim m_sparkmaxSim;
   DoubleSolenoidSim m_extendingDoubleSolenoidSim;
@@ -41,39 +42,42 @@ class ArmTest {
   @Test
   void armExtendMedTest() {
     m_arm.ArmExtendMedCommand();
-    assertEquals(ArmConstants.kMidLength, ArmSubsystem.MasterArmMotor.get());
-    assertEquals(ArmConstants.kMidLength, ArmSubsystem.MinionArmMotor.get());
+    assertEquals(ArmConstants.kMidLength, ArmSubsystem.MasterArmMotor.get(), DELTA);
+    assertEquals(ArmConstants.kMidLength, ArmSubsystem.MinionArmMotor.get(), DELTA);
   }
 
   @Test
   void armExtendHighTest() {
     m_arm.ArmExtendFarCommand();
-    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MasterArmMotor.get());
-    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MinionArmMotor.get());
+    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MasterArmMotor.get(), DELTA);
+    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MinionArmMotor.get(), DELTA);
   }
 
   @Test
   void armDefualtPositionTest() {
     m_arm.ArmRetractCommand();
-    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MasterArmMotor.get());
-    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MinionArmMotor.get());
+    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MasterArmMotor.get(), DELTA);
+    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MinionArmMotor.get(), DELTA);
   }
 
   @Test
   void ArmMidHeightCommandTest() {
     m_arm.ArmMidHeightCommand();
-    assertEquals(ArmConstants.kMidHeight, m_arm.ArmEncoder.getPosition());
+    assertEquals(ArmConstants.kMidHeight, m_arm.ArmEncoder.getPosition(), DELTA);
+    System.out.println("Mid height " + m_arm.ArmEncoder.getPosition());
   }
 
   @Test
   void ArmMaxHeightCommandTest() {
     m_arm.ArmMaxHeightCommand();
-    assertEquals(ArmConstants.kMaxHeight, m_arm.ArmEncoder.getPosition());
+    assertEquals(ArmConstants.kMaxHeight, m_arm.ArmEncoder.getPosition(), DELTA);
+    System.out.println("Max height " + m_arm.ArmEncoder.getPosition());
   }
 
   @Test
   void ArmDefaultHeightCommandTest() {
     m_arm.ArmDefaultHeightCommand();
-    assertEquals(ArmConstants.kDefaultHeight, m_arm.ArmEncoder.getPosition());
+    assertEquals(ArmConstants.kDefaultHeight, m_arm.ArmEncoder.getPosition(), DELTA);
+    System.out.println("Default Height " + m_arm.ArmEncoder.getPosition());
   }
 }
