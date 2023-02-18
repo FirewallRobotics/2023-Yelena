@@ -50,6 +50,22 @@ public class VisionSubsystem extends SubsystemBase {
   public double adjustCubePlacementLeftRight;
   public double adjustCubePlacementBackForward;
 
+  public double cameraCenterX = Constants.VisionConstants.kCameraCenterX;
+  public double targetCenterXRange = Constants.VisionConstants.kTargetCenterXRange;
+  public double coneTargetWidth = Constants.VisionConstants.kConeTargetWidth;
+  public double coneTargetWidthRange = Constants.VisionConstants.kConeTargetWidthRange;
+  public double cubeTargetRadius = Constants.VisionConstants.kCubeTargetRadius;
+  public double cubeTargetRadiusRange = Constants.VisionConstants.kCubeTargetRadiusRange;
+  public double tapeTargetX = Constants.VisionConstants.kTapeTargetX;
+  public double tapeTargetXRange = Constants.VisionConstants.kTapeTargetXRange;
+  public double tapeTargetY = Constants.VisionConstants.kTapeTargetY;
+  public double tapeTargetYRange = Constants.VisionConstants.kTapeTargetYRange;
+  public double tapeTargetArea = Constants.VisionConstants.kTapeTargetArea;
+  public double tapeTargetAreaRange = Constants.VisionConstants.kTapeTargetAreaRange;
+  public double tagTargetArea = Constants.VisionConstants.kAprilTagTargetArea;
+  public double tagTargetAreaRange = Constants.VisionConstants.kAprilTagTargetAreaRange;
+  public double decelerationDistance = Constants.VisionConstants.kDecelerationDistance;
+
   public VisionSubsystem() {}
 
   @Override
@@ -78,21 +94,6 @@ public class VisionSubsystem extends SubsystemBase {
 
     double coneWidth = coneXMax - coneXMin;
     double coneCenterX = (coneXMin + coneXMax) / 2.0;
-
-    double cameraCenterX = Constants.VisionConstants.kCameraCenterX;
-    double targetCenterXRange = Constants.VisionConstants.kTargetCenterXRange;
-    double coneTargetWidth = Constants.VisionConstants.kConeTargetWidth;
-    double coneTargetWidthRange = Constants.VisionConstants.kConeTargetWidthRange;
-    double cubeTargetRadius = Constants.VisionConstants.kCubeTargetRadius;
-    double cubeTargetRadiusRange = Constants.VisionConstants.kCubeTargetRadiusRange;
-    double tapeTargetX = Constants.VisionConstants.kTapeTargetX;
-    double tapeTargetXRange = Constants.VisionConstants.kTapeTargetXRange;
-    double tapeTargetY = Constants.VisionConstants.kTapeTargetY;
-    double tapeTargetYRange = Constants.VisionConstants.kTapeTargetYRange;
-    double tapeTargetArea = Constants.VisionConstants.kTapeTargetArea;
-    double tapeTargetAreaRange = Constants.VisionConstants.kTapeTargetAreaRange;
-    double tagTargetArea = Constants.VisionConstants.kAprilTagTargetArea;
-    double tagTargetAreaRange = Constants.VisionConstants.kAprilTagTargetAreaRange;
 
     // Create pose from data collected from NetworkTable
 
@@ -135,10 +136,10 @@ public class VisionSubsystem extends SubsystemBase {
       adjustBackForward = 0;
     } else if (coneWidthDifference < 0) // Too far
     {
-      adjustBackForward = 1;
+      adjustBackForward = 1 * DecelerationSpeed(coneWidthDifference, coneTargetWidthRange);
     } else // Too close
     {
-      adjustBackForward = -1;
+      adjustBackForward = -1 * DecelerationSpeed(coneWidthDifference, coneTargetWidthRange);
     }
 
     // Cone left or right of robot
@@ -147,10 +148,11 @@ public class VisionSubsystem extends SubsystemBase {
       adjustLeftRight = 0;
     } else if (coneCenterDifference < 0) // Too far left
     {
-      adjustLeftRight = 1;
+      adjustLeftRight = 1 * DecelerationSpeed(coneCenterDifference, targetCenterXRange);
+
     } else // Too far right
     {
-      adjustLeftRight = -1;
+      adjustLeftRight = -1 * DecelerationSpeed(coneCenterDifference, targetCenterXRange);
     }
 
     // Distance from cube based on radius
@@ -159,10 +161,10 @@ public class VisionSubsystem extends SubsystemBase {
       adjustBackForward = 0;
     } else if (cubeRadiusDifference < 0) // Too far
     {
-      adjustBackForward = 1;
+      adjustBackForward = 1 * DecelerationSpeed(cubeRadiusDifference, cubeTargetRadiusRange);
     } else // Too close
     {
-      adjustBackForward = -1;
+      adjustBackForward = -1 * DecelerationSpeed(cubeRadiusDifference, cubeTargetRadiusRange);
     }
 
     // Cube left or right of robot
@@ -171,10 +173,10 @@ public class VisionSubsystem extends SubsystemBase {
       adjustLeftRight = 0;
     } else if (cubeCenterDifference < 0) // Too far left
     {
-      adjustLeftRight = 1;
+      adjustLeftRight = 1 * DecelerationSpeed(cubeCenterDifference, targetCenterXRange);
     } else // Too far right
     {
-      adjustLeftRight = -1;
+      adjustLeftRight = -1 * DecelerationSpeed(cubeCenterDifference, targetCenterXRange);
     }
 
     // Tape near target X
@@ -183,10 +185,11 @@ public class VisionSubsystem extends SubsystemBase {
       adjustConePlacementLeftRight = 0;
     } else if (tapeCenterX < 0) // Too far left
     {
-      adjustConePlacementLeftRight = 1;
+      adjustConePlacementLeftRight = 1 * DecelerationSpeed(tapeCenterXDifference, tapeTargetXRange);
     } else // Too far right
     {
-      adjustConePlacementLeftRight = -1;
+      adjustConePlacementLeftRight =
+          -1 * DecelerationSpeed(tapeCenterXDifference, tapeTargetXRange);
     }
 
     /*  Tape near target Y
@@ -210,10 +213,10 @@ public class VisionSubsystem extends SubsystemBase {
       adjustConePlacementBackForward = 0;
     } else if (tapeAreaDifference < 0) // Too far
     {
-      adjustConePlacementBackForward = 1;
+      adjustConePlacementBackForward = 1 * DecelerationSpeed(tapeAreaDifference, tapeTargetXRange);
     } else // Too close
     {
-      adjustConePlacementBackForward = -1;
+      adjustConePlacementBackForward = -1 * DecelerationSpeed(tapeAreaDifference, tapeTargetXRange);
     }
 
     // Tag near target X
@@ -222,10 +225,12 @@ public class VisionSubsystem extends SubsystemBase {
       adjustCubePlacementLeftRight = 0;
     } else if (tagCenterXDifference < 0) // Too far left
     {
-      adjustCubePlacementLeftRight = 1;
+      adjustCubePlacementLeftRight =
+          1 * DecelerationSpeed(tagCenterXDifference, targetCenterXRange);
     } else // Too far right
     {
-      adjustCubePlacementLeftRight = -1;
+      adjustCubePlacementLeftRight =
+          -1 * DecelerationSpeed(tagCenterXDifference, targetCenterXRange);
     }
 
     // Distance from tag based on area
@@ -234,10 +239,23 @@ public class VisionSubsystem extends SubsystemBase {
       adjustCubePlacementBackForward = 0;
     } else if (tapeAreaDifference < 0) // Too far
     {
-      adjustCubePlacementBackForward = 1;
+      adjustCubePlacementBackForward = 1 * DecelerationSpeed(tagAreaDifference, tagTargetAreaRange);
     } else // Too close
     {
-      adjustCubePlacementBackForward = -1;
+      adjustCubePlacementBackForward =
+          -1 * DecelerationSpeed(tagAreaDifference, tagTargetAreaRange);
+    }
+  }
+
+  private double DecelerationSpeed(double positionDifference, double targetRange) {
+    double distanceFromTarget = Math.abs(positionDifference) - targetRange;
+    double speed = (distanceFromTarget / decelerationDistance) * 9.0 / 10.0 + 0.1;
+
+    if (speed < 1) // Max value for speed is 1
+    {
+      return speed;
+    } else {
+      return 1.0;
     }
   }
 }

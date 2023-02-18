@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
 public class DriveAdjustCommand extends CommandBase {
@@ -33,15 +34,17 @@ public class DriveAdjustCommand extends CommandBase {
     adjustLeftRight = m_vision.adjustLeftRight;
     adjustBackForward = m_vision.adjustBackForward;
 
+    double speedMultiplier = Constants.AutoConstants.kAdjustSpeedMultiplier;
+
     if (adjustLeftRight == 0) { // Stop
       m_drivetrain.setX();
     } else if (adjustLeftRight > 0) { // Move Left
       m_drivetrain.drive(
-          adjustLeftRight, 0.0, 0.0, true, true // Not sure here
+          adjustLeftRight * speedMultiplier, 0.0, 0.0, true, true // Not sure here
           );
     } else { // Move Right
       m_drivetrain.drive(
-          adjustLeftRight, 0.0, 0.0, true, true // Not sure here
+          adjustLeftRight * speedMultiplier, 0.0, 0.0, true, true // Not sure here
           );
     }
 
@@ -49,11 +52,11 @@ public class DriveAdjustCommand extends CommandBase {
       m_drivetrain.setX();
     } else if (adjustBackForward > 0) { // Move Forward
       m_drivetrain.drive(
-          0.0, adjustBackForward, 0.0, false, true // Not sure here
+          0.0, adjustBackForward * speedMultiplier, 0.0, true, true // Not sure here
           );
     } else { // Move Backward
       m_drivetrain.drive(
-          0.0, adjustBackForward, 0.0, false, true // Not sure here
+          0.0, adjustBackForward * speedMultiplier, 0.0, true, true // Not sure here
           );
     }
   }

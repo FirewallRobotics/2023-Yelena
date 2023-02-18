@@ -178,5 +178,6 @@ public final class Constants {
     public static final double kTapeTargetAreaRange = 10;
     public static final double kAprilTagTargetArea = 100;
     public static final double kAprilTagTargetAreaRange = 10;
+    public static final double kDecelerationDistance = 9;
   }
 }
