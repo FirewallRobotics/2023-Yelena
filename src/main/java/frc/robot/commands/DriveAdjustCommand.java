@@ -36,27 +36,15 @@ public class DriveAdjustCommand extends CommandBase {
 
     double speedMultiplier = Constants.AutoConstants.kAdjustSpeedMultiplier;
 
-    if (adjustLeftRight == 0) { // Stop
+    if (adjustBackForward == 0 && adjustLeftRight == 0) {
       m_drivetrain.setX();
-    } else if (adjustLeftRight > 0) { // Move Left
+    } else {
       m_drivetrain.drive(
-          adjustLeftRight * speedMultiplier, 0.0, 0.0, true, true // Not sure here
-          );
-    } else { // Move Right
-      m_drivetrain.drive(
-          adjustLeftRight * speedMultiplier, 0.0, 0.0, true, true // Not sure here
-          );
-    }
-
-    if (adjustBackForward == 0) { // Stop
-      m_drivetrain.setX();
-    } else if (adjustBackForward > 0) { // Move Forward
-      m_drivetrain.drive(
-          0.0, adjustBackForward * speedMultiplier, 0.0, true, true // Not sure here
-          );
-    } else { // Move Backward
-      m_drivetrain.drive(
-          0.0, adjustBackForward * speedMultiplier, 0.0, true, true // Not sure here
+          adjustLeftRight * speedMultiplier,
+          adjustBackForward * speedMultiplier,
+          0.0,
+          true,
+          true // Not sure here
           );
     }
   }
