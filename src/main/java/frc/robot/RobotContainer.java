@@ -172,4 +172,16 @@ public class RobotContainer {
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
   }
+
+  public Command getAutonomousPowerStation(boolean isRedAlliance) {
+    return null;
+  }
+
+  public Command getAutonomousShotAndPowerStation(boolean isRedAlliance) {
+    return null;
+  }
+
+  public Command getAutonomousDoubleShot(boolean isRedAlliance) {
+    return null;
+  }
 }

@@ -4,6 +4,9 @@
 
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -17,7 +20,8 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  SendableChooser<Command> chooser = new SendableChooser();
+  SendableChooser<Command> GridPosChooser = new SendableChooser();
+  SendableChooser<Command> TacticChooser = new SendableChooser();
 
   private RobotContainer m_robotContainer;
 
@@ -29,6 +33,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
+
     m_robotContainer = new RobotContainer();
   }
 
@@ -42,7 +47,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-    // commands, running already-scheduled commands, removing finished or interrupted commands,
+    // commands, running already-scheduled commands, removing finished or interrupted commandsa,
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
@@ -58,7 +63,6 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = chooser.getSelected();
 
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
@@ -66,8 +70,32 @@ public class Robot extends TimedRobot {
      * = new MyAutoCommand(); break; case "Default Auto": default:
      * autonomousCommand = new ExampleCommand(); break; }
      */
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    NetworkTable fmsinfo = inst.getTable("FMSInfo");
+    NetworkTableEntry isRedAlliance = fmsinfo.getEntry("IsRedAlliance");
+    boolean red_alliance = isRedAlliance.getBoolean(false);
+    // SmartDashboard.putBoolean("isRedAlliance", red_alliance);
 
     // schedule the autonomous command (example)
+    TacticChooser.setDefaultOption(
+        "Double Shot", m_robotContainer.getAutonomousDoubleShot(red_alliance));
+
+    TacticChooser.addOption(
+        "Shot and Power Station", m_robotContainer.getAutonomousShotAndPowerStation(red_alliance));
+
+    TacticChooser.addOption(
+        "Power Station", m_robotContainer.getAutonomousPowerStation(red_alliance));
+
+    /*GridPosChooser.setDefaultOption("Red Grid Position 1",  m_robotContainer.getAutonomousRedGridPos1());
+
+    GridPosChooser.addOption("Red Grid Position 2",  m_robotContainer.getAutonomousRedGridPos2());
+
+    GridPosChooser.addOption("Blue Grid Position 1",  m_robotContainer.getAutonomousBlueGridPos1());
+
+    GridPosChooser.addOption("Blue Grid Position 2",  m_robotContainer.getAutonomousBlueGridPos2());*/
+
+    m_autonomousCommand = GridPosChooser.getSelected();
+
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
