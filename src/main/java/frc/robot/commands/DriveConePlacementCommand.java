@@ -68,10 +68,6 @@ public class DriveConePlacementCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (adjustLeftRight == 0 && adjustBackForward == 0) {
-      return true;
-    } else {
-      return false;
-    }
+    return adjustLeftRight == 0 && adjustBackForward == 0;
   }
 }

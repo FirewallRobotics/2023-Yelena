@@ -8,19 +8,19 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class DriveAdjustCommand extends CommandBase {
+public class AutoDriveToBalanceCommand extends CommandBase {
 
-  private DriveSubsystem m_drivetrain;
+  private DriveSubsystem m_drive;
   private VisionSubsystem m_vision;
+  private boolean isFinished = false;
 
-  private double adjustLeftRight;
-  private double adjustBackForward;
+  private double driveToBalanceSpeed = Constants.DriveConstants.kDriveToBalanceSpeedMultiplier;
+  private double driveGyroAngleRange = Constants.DriveConstants.kDriveToBalanceGyroAngleRange;
 
-  public DriveAdjustCommand(DriveSubsystem dt_subsystem, VisionSubsystem v_subsystem) {
-    m_drivetrain = dt_subsystem;
+  public AutoDriveToBalanceCommand(DriveSubsystem d_subsystem, VisionSubsystem v_subsystem) {
+    m_drive = d_subsystem;
     m_vision = v_subsystem;
-
-    addRequirements(dt_subsystem);
+    addRequirements(d_subsystem);
     addRequirements(v_subsystem);
   }
 
@@ -31,24 +31,14 @@ public class DriveAdjustCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    adjustLeftRight = m_vision.adjustLeftRight;
-    adjustBackForward = m_vision.adjustBackForward;
+    double angle = m_drive.m_gyro.getXComplementaryAngle();
 
-    double speedMultiplier = Constants.AutoConstants.kAdjustSpeedMultiplier;
-
-    if (adjustBackForward == 0 && adjustLeftRight == 0) {
-      m_drivetrain.setX();
+    if (Math.abs(angle) <= driveGyroAngleRange) {
+      m_drive.drive(-1 * driveToBalanceSpeed, 0, 0, isFinished, isFinished);
     } else {
-      m_drivetrain.drive(
-          adjustLeftRight * speedMultiplier,
-          adjustBackForward * speedMultiplier,
-          0.0,
-          true,
-          true // Not sure here
-          );
+      isFinished = true;
     }
   }
-
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {}
@@ -56,6 +46,6 @@ public class DriveAdjustCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return adjustLeftRight == 0 && adjustBackForward == 0;
+    return isFinished;
   }
 }

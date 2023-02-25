@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 // import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController.Button;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
@@ -48,6 +50,8 @@ public class RobotContainer {
   /// Joystick m_driverJoystick = new Joystick(OIConstants.kDriverJoystickPort);
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
 
+  SendableChooser<Command> m_chooser = new SendableChooser<>();
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     // Configure the button bindings
@@ -74,6 +78,18 @@ public class RobotContainer {
                     true,
                     true),
             m_robotDrive));
+
+    m_chooser.setDefaultOption(
+        "Autonomous Score and Balance", new AutoBalanceZeroGyroCommand(m_robotDrive));
+
+    m_chooser.addOption(
+        "Autonomous Score and Drive to pick up GamePiece",
+        new AutoBalanceZeroGyroCommand(m_robotDrive));
+
+    m_chooser.addOption(
+        "Autonomous Drive Shoot only", new AutoBalanceZeroGyroCommand(m_robotDrive));
+
+    SmartDashboard.putData("Auto Mode", m_chooser);
 
     /*m_robotDrive.drive(
                 -MathUtil.applyDeadband(m_driverJoystick.getY(), OIConstants.kDriveDeadband),

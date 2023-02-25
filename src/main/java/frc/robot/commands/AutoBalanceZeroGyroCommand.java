@@ -11,6 +11,8 @@ public class AutoBalanceZeroGyroCommand extends CommandBase {
   /** Creates a new AutoBalanceZeroGyro. */
   private DriveSubsystem m_drivetrain;
 
+  private boolean isFinished = false;
+
   public AutoBalanceZeroGyroCommand(DriveSubsystem dt_subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
 
@@ -25,8 +27,8 @@ public class AutoBalanceZeroGyroCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
     m_drivetrain.zeroHeading();
+    isFinished = true;
   }
 
   // Called once the command ends or is interrupted.
@@ -36,6 +38,6 @@ public class AutoBalanceZeroGyroCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return isFinished;
   }
 }
