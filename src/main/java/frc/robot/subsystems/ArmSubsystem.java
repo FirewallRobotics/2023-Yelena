@@ -6,6 +6,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 import com.revrobotics.SparkMaxPIDController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -81,47 +82,44 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     ArmPIDController.setReference(radians, CANSparkMax.ControlType.kPosition);
   }
 
-  public void ArmExtendMedCommand() {
-    // will likely use pneumatics
-    System.out.println("Extending to moderate length...");
+  public static void ArmExtendCommand() {
+    ExtendingSolenoid.set(Value.kForward);
+    System.out.println("Extending arm...");
   }
 
-  public void ArmExtendFarCommand() {
-    // will likely use pneumatics
-    System.out.println("Extending to maximum length...");
-  }
-
-  public void ArmRetractCommand() {
-    // will likely use pneumatics
+  public static void ArmRetractCommand() {
+    ExtendingSolenoid.set(Value.kReverse);
     System.out.println("Returning to default length...");
   }
 
   public void ArmMidHeightCommand() {
     GravityOffset(ArmConstants.kMidHeight);
     ArmPIDController.setReference(ArmConstants.kMidHeight, CANSparkMax.ControlType.kPosition);
+    MasterArmMotor.set(ArmConstants.kMidHeight);
     System.out.println("Raising arm to moderate elevation...");
   }
 
   public void ArmMaxHeightCommand() {
     GravityOffset(ArmConstants.kMaxHeight);
     ArmPIDController.setReference(ArmConstants.kMaxHeight, CANSparkMax.ControlType.kPosition);
-
+    MasterArmMotor.set(ArmConstants.kMaxHeight);
     System.out.println("Raising arm to maximum elevation...");
   }
 
   public void ArmDefaultHeightCommand() {
     GravityOffset(ArmConstants.kDefaultHeight);
     ArmPIDController.setReference(ArmConstants.kDefaultHeight, CANSparkMax.ControlType.kPosition);
+    MasterArmMotor.set(ArmConstants.kDefaultHeight);
     System.out.println("Returning to default elevation...");
   }
 
-  public void ClawGraspCommand() {
-    // will likely use pneumatics
-    System.out.println("Closing claw...");
+  public void ClawGrabConeCommand() {
+    ClawSolenoid.set(Value.kForward);
+    System.out.println("Grabbing cone...");
   }
 
   public void ClawReleaseCommand() {
-    // will likely use pneumatics
+    ClawSolenoid.set(Value.kReverse);
     System.out.println("Releasing claw...");
   }
 

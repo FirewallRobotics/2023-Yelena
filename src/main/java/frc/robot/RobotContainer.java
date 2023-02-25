@@ -14,10 +14,12 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.XboxController.Axis;
 // import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
@@ -92,6 +94,8 @@ public class RobotContainer {
    * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its subclasses ({@link
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then calling passing it to a
    * {@link JoystickButton}.
+   *
+   * @return
    */
   private void configureButtonBindings() {
     /*new JoystickButton(m_driverJoystick, 2)
@@ -113,14 +117,30 @@ public class RobotContainer {
 
     // The buttons created below were meant for LED testing, feel free to change
 
-    new JoystickButton(m_driverController, Button.kB.value)
-        .whileTrue(new RunCommand(() -> m_LEDSubsystem.WarningLight(), m_LEDSubsystem));
-
-    new JoystickButton(m_driverController, Button.kA.value)
-        .whileTrue(new RunCommand(() -> m_LEDSubsystem.ReadyLight(), m_LEDSubsystem));
-
     new JoystickButton(m_driverController, Button.kX.value)
-        .whileTrue(new RunCommand(() -> m_LEDSubsystem.LightOff(), m_LEDSubsystem));
+        .whileTrue(
+            new SequentialCommandGroup(
+                new ArmMidHeightCommand(m_robotArm), new ArmExtendCommand(m_robotArm)));
+    new JoystickButton(m_driverController, Button.kX.value)
+        .whileFalse(
+            new SequentialCommandGroup(
+                new ArmRetractCommand(m_robotArm), new ArmDefaultHeightCommand(m_robotArm)));
+
+    new JoystickButton(m_driverController, Button.kY.value)
+        .whileTrue(
+            new SequentialCommandGroup(
+                new ArmMaxHeightCommand(m_robotArm), new ArmExtendCommand(m_robotArm)));
+    new JoystickButton(m_driverController, Button.kY.value)
+        .whileFalse(
+            new SequentialCommandGroup(
+                new ArmRetractCommand(m_robotArm), new ArmDefaultHeightCommand(m_robotArm)));
+
+    new JoystickButton(
+            m_driverController, Axis.kRightTrigger.value) // does it not know what a trigger is?
+        .onTrue(new ClawGrabCommand(m_robotArm));
+
+    new JoystickButton(m_driverController, Axis.kLeftTrigger.value)
+        .onTrue(new ClawReleaseCommand(m_robotArm));
   }
 
   /**

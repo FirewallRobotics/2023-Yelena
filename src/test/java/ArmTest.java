@@ -39,15 +39,8 @@ class ArmTest {
   }
 
   @Test
-  void armExtendMedTest() {
-    m_arm.ArmExtendMedCommand();
-    assertEquals(ArmConstants.kMidLength, ArmSubsystem.MasterArmMotor.get());
-    assertEquals(ArmConstants.kMidLength, ArmSubsystem.MinionArmMotor.get());
-  }
-
-  @Test
   void armExtendHighTest() {
-    m_arm.ArmExtendFarCommand();
+    m_arm.ArmExtendCommand();
     assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MasterArmMotor.get());
     assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MinionArmMotor.get());
   }
