@@ -60,7 +60,11 @@ public final class Constants {
 
     public static final boolean kGyroReversed = false;
 
-    // Gyro Firewall specifications
+    // Driving to the Balance Board
+    public static final double kDriveToBalanceSpeedMultiplier = 0.5;
+    public static final double kDriveToBalanceGyroAngleRange = 10;
+
+    // Balance specifications
     public static final double kGyroAngleRange = 10;
     public static final double kBalanceSpeedMultiplier = 0.1;
     public static final double kBalanceDecelerationDistance = 9;

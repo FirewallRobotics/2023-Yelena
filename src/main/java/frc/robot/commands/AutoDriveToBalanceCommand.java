@@ -9,7 +9,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
 public class AutoDriveToBalanceCommand extends CommandBase {
-  
+
   private DriveSubsystem m_drive;
   private VisionSubsystem m_vision;
   private boolean isFinished = false;
@@ -33,7 +33,7 @@ public class AutoDriveToBalanceCommand extends CommandBase {
   public void execute() {
     double angle = m_drive.m_gyro.getXComplementaryAngle();
 
-    if (Math.abs(angle) <= driveGyroAngleRange){
+    if (Math.abs(angle) <= driveGyroAngleRange) {
       m_drive.drive(-1 * driveToBalanceSpeed, 0, 0, isFinished, isFinished);
     } else {
       isFinished = true;
