@@ -15,4 +15,11 @@ public class AutoDriveToGridPos1Command extends CommandBase {
     addRequirements(d_subsystem);
     addRequirements(v_subsystem);
   }
+
+  @Override
+  public void execute() {
+    m_drive.drive(
+        0.0, 0.0, 180.0, true, true // Not sure here
+        );
+  }
 }

@@ -13,6 +13,13 @@ public class AutoDriveToGridPos2Command extends CommandBase {
     m_drive = d_subsystem;
     m_vision = v_subsystem;
     addRequirements(d_subsystem);
-    addRequirements(v_subsystem);
+    addRequirements(v_subsystem); 
   }
-}
+
+  @Override
+  public void execute() {
+    m_drive.drive(
+        0.0, 0.0, 180.0, true, true // Not sure here
+        );
+  }
+} 
