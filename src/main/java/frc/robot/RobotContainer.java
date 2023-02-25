@@ -137,10 +137,10 @@ public class RobotContainer {
 
     new JoystickButton(
             m_driverController, Axis.kRightTrigger.value) // does it not know what a trigger is?
-        .whileTrue(new ClawGrabCommand(m_robotArm));
+        .onTrue(new ClawGrabCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Axis.kLeftTrigger.value)
-        .whileTrue(new ClawReleaseCommand(m_robotArm));
+        .onTrue(new ClawReleaseCommand(m_robotArm));
   }
 
   /**
