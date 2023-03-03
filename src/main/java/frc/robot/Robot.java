@@ -4,13 +4,25 @@
 
 package frc.robot;
 
+import java.util.List;
+
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.DriveSubsystem;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -25,6 +37,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  public Trajectory m_trajectory;
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -35,6 +48,22 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
 
     m_robotContainer = new RobotContainer();
+
+  
+
+    m_trajectory =
+    TrajectoryGenerator.generateTrajectory(
+        new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
+        List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
+        new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
+        new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0)));
+
+    SmartDashboard.putData(DriveSubsystem.m_field);
+
+
+    DriveSubsystem.m_field.getObject("traj").setTrajectory(m_trajectory);
+
+    
   }
 
   /**
