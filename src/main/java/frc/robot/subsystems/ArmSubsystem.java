@@ -94,19 +94,16 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
 
   public void ArmMidHeightCommand() {
     GravityOffset(ArmConstants.kMidHeight);
-    MasterArmMotor.set(ArmConstants.kMidHeight);
     System.out.println("Raising arm to moderate elevation...");
   }
 
   public void ArmMaxHeightCommand() {
     GravityOffset(ArmConstants.kMaxHeight);
-    MasterArmMotor.set(ArmConstants.kMaxHeight);
     System.out.println("Raising arm to maximum elevation...");
   }
 
   public void ArmDefaultHeightCommand() {
     GravityOffset(ArmConstants.kDefaultHeight);
-    MasterArmMotor.set(ArmConstants.kDefaultHeight);
     System.out.println("Returning to default elevation...");
   }
 
