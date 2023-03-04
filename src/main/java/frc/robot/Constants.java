@@ -141,14 +141,14 @@ public final class Constants {
     public static final double kMaxAccelerationMetersPerSecondSquared = 3;
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
-    public static final double startingX1 = 13.8;
-    public static final double startingX2 = 14;
-    public static final double startingX3 = 15;
-    public static final double startingX4 = 16;
-    public static final double startingY1 = 2.8;
-    public static final double startingY2 = 4;
-    public static final double startingY3 = 5;
-    public static final double startingY4 = 6;
+    public static final double startingX1 = 13.4;
+    public static final double startingX2 = 13.4;
+    public static final double startingX3 = 13.4;
+    public static final double startingX4 = 0;
+    public static final double startingY1 = 3.0;
+    public static final double startingY2 = 4.5;
+    public static final double startingY3 = 1.5;
+    public static final double startingY4 = 0;
 
     public static final double kAdjustSpeedMultiplier = 0.3;
 
