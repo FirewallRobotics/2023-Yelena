@@ -238,8 +238,6 @@ public class RobotContainer {
   private double GetSpeed() {
     if (m_driverController.getAButton()) {
       return DriveConstants.kSprintSpeed;
-    } else if (m_driverController.getXButton()) {
-      return DriveConstants.kSneakSpeed;
     } else {
       return DriveConstants.kDefaultSpeed;
     }
