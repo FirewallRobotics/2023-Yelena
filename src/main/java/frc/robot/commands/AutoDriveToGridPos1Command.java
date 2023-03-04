@@ -1,9 +1,18 @@
-package frc.robot.commands;
+/*package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.DriveConstants;
 
 public class AutoDriveToGridPos1Command extends CommandBase {
+  TrajectoryConfig config =
+  new TrajectoryConfig(
+          AutoConstants.kMaxSpeedMetersPerSecond,
+          AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+      // Add kinematics to ensure max speed is actually obeyed
+      .setKinematics(DriveConstants.kDriveKinematics);
 
   private DriveSubsystem m_drive;
   private VisionSubsystem m_vision;
@@ -18,8 +27,7 @@ public class AutoDriveToGridPos1Command extends CommandBase {
 
   @Override
   public void execute() {
-    m_drive.drive(
-        0.0, 0.0, 180.0, true, true // Not sure here
-        );
+
   }
 }
+ */

@@ -9,6 +9,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
@@ -74,17 +75,23 @@ public class Robot extends TimedRobot {
     NetworkTable fmsinfo = inst.getTable("FMSInfo");
     NetworkTableEntry isRedAlliance = fmsinfo.getEntry("IsRedAlliance");
     boolean red_alliance = isRedAlliance.getBoolean(false);
+    double startingX = 0;
+    double startingY = 0;
+    SmartDashboard.putNumber("Auto Start Position", 1);
+    int startingPos =
+        Math.toIntExact(Math.round(SmartDashboard.getNumber("Auto Start Position", 1)));
     // SmartDashboard.putBoolean("isRedAlliance", red_alliance);
 
     // schedule the autonomous command (example)
     TacticChooser.setDefaultOption(
-        "Double Shot", m_robotContainer.getAutonomousDoubleShot(red_alliance));
+        "Double Shot", m_robotContainer.getAutonomousDoubleShot(red_alliance, startingPos));
 
     TacticChooser.addOption(
-        "Shot and Power Station", m_robotContainer.getAutonomousShotAndPowerStation(red_alliance));
+        "Shot and Power Station",
+        m_robotContainer.getAutonomousShotAndPowerStation(red_alliance, startingPos));
 
     TacticChooser.addOption(
-        "Power Station", m_robotContainer.getAutonomousPowerStation(red_alliance));
+        "Power Station", m_robotContainer.getAutonomousPowerStation(red_alliance, startingPos));
 
     /*GridPosChooser.setDefaultOption("Red Grid Position 1",  m_robotContainer.getAutonomousRedGridPos1());
 
