@@ -184,14 +184,14 @@ public final class Constants {
     public static final double kConeTargetWidthRange = 10;
     public static final double kCubeTargetRadius = 50;
     public static final double kCubeTargetRadiusRange = 10;
-    public static final double kTapeTargetX = 0;
-    public static final double kTapeTargetXRange = 10;
-    public static final double kTapeTargetY = 0;
-    public static final double kTapeTargetYRange = 10;
-    public static final double kTapeTargetArea = 100;
-    public static final double kTapeTargetAreaRange = 10;
-    public static final double kAprilTagTargetArea = 100;
-    public static final double kAprilTagTargetAreaRange = 10;
+    public static final double kAprilTagConeTargetX = 300;
+    public static final double kAprilTagConeTargetXRange = 10;
+    public static final double kAprilTagConeTargetArea = 100;
+    public static final double kAprilTagConeTargetAreaRange = 10;
+    public static final double kAprilTagCubeTargetX = 285;
+    public static final double kAprilTagCubeTargetXRange = 10;
+    public static final double kAprilTagCubeTargetArea = 100;
+    public static final double kAprilTagCubeTargetAreaRange = 10;
     public static final double kDecelerationDistance = 9;
   }
 }

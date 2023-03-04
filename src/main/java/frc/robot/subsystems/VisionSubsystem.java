@@ -195,7 +195,8 @@ public class VisionSubsystem extends SubsystemBase {
       adjustCubePlacementBackForward = 0;
     } else if (tagCubeAreaDifference < 0) // Too far
     {
-      adjustCubePlacementBackForward = 1 * DecelerationSpeed(tagCubeAreaDifference, tagCubeTargetAreaRange);
+      adjustCubePlacementBackForward =
+          1 * DecelerationSpeed(tagCubeAreaDifference, tagCubeTargetAreaRange);
     } else // Too close
     {
       adjustCubePlacementBackForward =
@@ -222,7 +223,8 @@ public class VisionSubsystem extends SubsystemBase {
       adjustConePlacementBackForward = 0;
     } else if (tagConeAreaDifference < 0) // Too far
     {
-      adjustConePlacementBackForward = 1 * DecelerationSpeed(tagConeAreaDifference, tagConeTargetAreaRange);
+      adjustConePlacementBackForward =
+          1 * DecelerationSpeed(tagConeAreaDifference, tagConeTargetAreaRange);
     } else // Too close
     {
       adjustConePlacementBackForward =
