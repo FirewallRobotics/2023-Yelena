@@ -31,7 +31,7 @@ public class AutoDriveToBalanceCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double angle = m_drive.m_gyro.getXComplementaryAngle();
+    double angle = m_drive.m_gyro.getYComplementaryAngle();
 
     if (Math.abs(angle) <= driveGyroAngleRange) {
       m_drive.drive(-1 * driveToBalanceSpeed, 0, 0, isFinished, isFinished);
