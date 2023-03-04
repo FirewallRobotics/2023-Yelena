@@ -17,12 +17,12 @@ public class VisionSubsystem extends SubsystemBase {
   public NetworkTableInstance inst = NetworkTableInstance.getDefault();
 
   public NetworkTable aprilTag = inst.getTable("apriltag");
-  public NetworkTableEntry ntTagCenterX = aprilTag.getEntry("Center X");
-  public NetworkTableEntry ntTagCenterY = aprilTag.getEntry("Center Y");
+  public NetworkTableEntry ntTagCenterX = aprilTag.getEntry("center_x");
+  public NetworkTableEntry ntTagCenterY = aprilTag.getEntry("center_y");
   public NetworkTableEntry ntTagRotation = aprilTag.getEntry("rotation");
   public NetworkTableEntry ntTagArea = aprilTag.getEntry("area");
 
-  public NetworkTableEntry ntPose = aprilTag.getEntry("Pose");
+  public NetworkTableEntry ntPose = aprilTag.getEntry("pose");
   public Pose3d pose;
 
   public NetworkTable cube = inst.getTable("cube");
@@ -56,14 +56,14 @@ public class VisionSubsystem extends SubsystemBase {
   public double coneTargetWidthRange = Constants.VisionConstants.kConeTargetWidthRange;
   public double cubeTargetRadius = Constants.VisionConstants.kCubeTargetRadius;
   public double cubeTargetRadiusRange = Constants.VisionConstants.kCubeTargetRadiusRange;
-  public double tapeTargetX = Constants.VisionConstants.kTapeTargetX;
-  public double tapeTargetXRange = Constants.VisionConstants.kTapeTargetXRange;
-  public double tapeTargetY = Constants.VisionConstants.kTapeTargetY;
-  public double tapeTargetYRange = Constants.VisionConstants.kTapeTargetYRange;
-  public double tapeTargetArea = Constants.VisionConstants.kTapeTargetArea;
-  public double tapeTargetAreaRange = Constants.VisionConstants.kTapeTargetAreaRange;
-  public double tagTargetArea = Constants.VisionConstants.kAprilTagTargetArea;
-  public double tagTargetAreaRange = Constants.VisionConstants.kAprilTagTargetAreaRange;
+  public double tagConeTargetX = Constants.VisionConstants.kAprilTagConeTargetX;
+  public double tagConeTargetXRange = Constants.VisionConstants.kAprilTagConeTargetXRange;
+  public double tagConeTargetArea = Constants.VisionConstants.kAprilTagConeTargetArea;
+  public double tagConeTargetAreaRange = Constants.VisionConstants.kAprilTagConeTargetAreaRange;
+  public double tagCubeTargetX = Constants.VisionConstants.kAprilTagCubeTargetX;
+  public double tagCubeTargetXRange = Constants.VisionConstants.kAprilTagCubeTargetXRange;
+  public double tagCubeTargetArea = Constants.VisionConstants.kAprilTagCubeTargetArea;
+  public double tagCubeTargetAreaRange = Constants.VisionConstants.kAprilTagCubeTargetAreaRange;
   public double decelerationDistance = Constants.VisionConstants.kDecelerationDistance;
 
   public VisionSubsystem() {}
@@ -88,10 +88,6 @@ public class VisionSubsystem extends SubsystemBase {
     double coneYMin = ntConeYMin.getDouble(0);
     double coneYMax = ntConeYMax.getDouble(0);
 
-    double tapeCenterX = ntTapeCenterX.getDouble(0);
-    double tapeCenterY = ntTapeCenterY.getDouble(0);
-    double tapeArea = ntTapeArea.getDouble(0);
-
     double coneWidth = coneXMax - coneXMin;
     double coneCenterX = (coneXMin + coneXMax) / 2.0;
 
@@ -107,10 +103,16 @@ public class VisionSubsystem extends SubsystemBase {
     // Calculating values
 
     // Negative if cone is left, positive if cone is right
-    double tagCenterXDifference = tagCenterX - cameraCenterX;
+    double tagConeCenterXDifference = tagCenterX - tagConeTargetX;
 
     // Nagative if too far away, positive if too close
-    double tagAreaDifference = tagArea - tagTargetArea;
+    double tagConeAreaDifference = tagArea - tagConeTargetArea;
+
+    // Negative if cone is left, positive if cone is right
+    double tagCubeCenterXDifference = tagCenterX - tagCubeTargetX;
+
+    // Nagative if too far away, positive if too close
+    double tagCubeAreaDifference = tagArea - tagCubeTargetArea;
 
     // Negative if too far away, positive if too close
     double coneWidthDifference = coneWidth - coneTargetWidth;
@@ -123,12 +125,6 @@ public class VisionSubsystem extends SubsystemBase {
 
     // Negative if cube is left, positive if cube is right
     double cubeCenterDifference = cubeCenterX - cameraCenterX;
-
-    // Negative if tape is left, positive tape is right
-    double tapeCenterXDifference = tapeCenterX - tapeTargetX;
-
-    // Negative if too far away, positive if too close
-    double tapeAreaDifference = tapeArea - tapeTargetArea;
 
     // Distance from cone based on width
     if (Math.abs(coneWidthDifference) <= coneTargetWidthRange) // Close enough
@@ -179,71 +175,58 @@ public class VisionSubsystem extends SubsystemBase {
       adjustLeftRight = -1 * DecelerationSpeed(cubeCenterDifference, targetCenterXRange);
     }
 
-    // Tape near target X
-    if (Math.abs(tapeCenterXDifference) <= tapeTargetXRange) // Centered
-    {
-      adjustConePlacementLeftRight = 0;
-    } else if (tapeCenterX < 0) // Too far left
-    {
-      adjustConePlacementLeftRight = 1 * DecelerationSpeed(tapeCenterXDifference, tapeTargetXRange);
-    } else // Too far right
-    {
-      adjustConePlacementLeftRight =
-          -1 * DecelerationSpeed(tapeCenterXDifference, tapeTargetXRange);
-    }
-
-    /*  Tape near target Y
-    if (Math.abs(tapeCenterYDifference) <= tapeTargetYRange) // Centered
-    {
-
-    }
-    else if (tapeCenterY < 0) // Too low
-    {
-
-    }
-    else // Too high
-    {
-
-    }
-    */
-
-    // Distance from tape based on area
-    if (Math.abs(tapeAreaDifference) <= tapeTargetXRange) // Close enough
-    {
-      adjustConePlacementBackForward = 0;
-    } else if (tapeAreaDifference < 0) // Too far
-    {
-      adjustConePlacementBackForward = 1 * DecelerationSpeed(tapeAreaDifference, tapeTargetXRange);
-    } else // Too close
-    {
-      adjustConePlacementBackForward = -1 * DecelerationSpeed(tapeAreaDifference, tapeTargetXRange);
-    }
-
-    // Tag near target X
-    if (Math.abs(tagCenterXDifference) <= targetCenterXRange) // Centered
+    // Cube tag near target X
+    if (Math.abs(tagCubeCenterXDifference) <= tagCubeTargetXRange) // Centered
     {
       adjustCubePlacementLeftRight = 0;
-    } else if (tagCenterXDifference < 0) // Too far left
+    } else if (tagCubeCenterXDifference < 0) // Too far left
     {
       adjustCubePlacementLeftRight =
-          1 * DecelerationSpeed(tagCenterXDifference, targetCenterXRange);
+          1 * DecelerationSpeed(tagCubeCenterXDifference, tagCubeTargetXRange);
     } else // Too far right
     {
       adjustCubePlacementLeftRight =
-          -1 * DecelerationSpeed(tagCenterXDifference, targetCenterXRange);
+          -1 * DecelerationSpeed(tagCubeCenterXDifference, tagCubeTargetXRange);
     }
 
-    // Distance from tag based on area
-    if (Math.abs(tagAreaDifference) <= tagTargetAreaRange) // Close enough
+    // Distance from cube tag based on area
+    if (Math.abs(tagCubeAreaDifference) <= tagCubeTargetAreaRange) // Close enough
     {
       adjustCubePlacementBackForward = 0;
-    } else if (tapeAreaDifference < 0) // Too far
+    } else if (tagCubeAreaDifference < 0) // Too far
     {
-      adjustCubePlacementBackForward = 1 * DecelerationSpeed(tagAreaDifference, tagTargetAreaRange);
+      adjustCubePlacementBackForward = 1 * DecelerationSpeed(tagCubeAreaDifference, tagCubeTargetAreaRange);
     } else // Too close
     {
       adjustCubePlacementBackForward =
-          -1 * DecelerationSpeed(tagAreaDifference, tagTargetAreaRange);
+          -1 * DecelerationSpeed(tagCubeAreaDifference, tagCubeTargetAreaRange);
+    }
+
+    // Cone tag near target X
+    if (Math.abs(tagConeCenterXDifference) <= tagConeTargetXRange) // Centered
+    {
+      adjustConePlacementLeftRight = 0;
+    } else if (tagConeCenterXDifference < 0) // Too far left
+    {
+      adjustConePlacementLeftRight =
+          1 * DecelerationSpeed(tagConeCenterXDifference, tagConeTargetXRange);
+    } else // Too far right
+    {
+      adjustConePlacementLeftRight =
+          -1 * DecelerationSpeed(tagConeCenterXDifference, tagConeTargetXRange);
+    }
+
+    // Distance from cone tag based on area
+    if (Math.abs(tagConeAreaDifference) <= tagConeTargetAreaRange) // Close enough
+    {
+      adjustConePlacementBackForward = 0;
+    } else if (tagConeAreaDifference < 0) // Too far
+    {
+      adjustConePlacementBackForward = 1 * DecelerationSpeed(tagConeAreaDifference, tagConeTargetAreaRange);
+    } else // Too close
+    {
+      adjustConePlacementBackForward =
+          -1 * DecelerationSpeed(tagConeAreaDifference, tagConeTargetAreaRange);
     }
   }
 
