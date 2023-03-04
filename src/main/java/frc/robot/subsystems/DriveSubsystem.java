@@ -49,7 +49,7 @@ public class DriveSubsystem extends SubsystemBase {
   // The gyro sensor
   public final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
 
-  public final static Field2d m_field = new Field2d();
+  public static final Field2d m_field = new Field2d();
 
   // Slew rate filter variables for controlling lateral acceleration
   private double m_currentRotation = 0.0;
@@ -88,9 +88,8 @@ public class DriveSubsystem extends SubsystemBase {
           m_rearLeft.getPosition(),
           m_rearRight.getPosition()
         });
-    
-  m_field.setRobotPose(m_odometry.getPoseMeters());
 
+    m_field.setRobotPose(m_odometry.getPoseMeters());
   }
 
   /**
@@ -100,7 +99,6 @@ public class DriveSubsystem extends SubsystemBase {
    */
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
-
   }
 
   /**
