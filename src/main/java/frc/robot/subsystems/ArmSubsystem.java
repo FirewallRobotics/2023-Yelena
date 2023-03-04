@@ -47,9 +47,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     MasterArmMotor.restoreFactoryDefaults();
     MinionArmMotor.restoreFactoryDefaults();
 
-    MinionArmMotor.follow(MasterArmMotor);
-
-    MinionArmMotor.setInverted(true);
+    MinionArmMotor.follow(MasterArmMotor, true);
 
     ExtendingSolenoid =
         new DoubleSolenoid(
