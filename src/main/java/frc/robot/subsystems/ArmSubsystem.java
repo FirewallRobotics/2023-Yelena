@@ -27,7 +27,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     kI = 1e-4;
     kD = 1;
     kIz = 0;
-    kFF = 0.7;
+    kFF = 0.3;
     kMaxOutput = 1;
     kMinOutput = -1;
 
@@ -48,6 +48,8 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     MinionArmMotor.restoreFactoryDefaults();
 
     MinionArmMotor.follow(MasterArmMotor);
+
+    MinionArmMotor.setInverted(true);
 
     ExtendingSolenoid =
         new DoubleSolenoid(
@@ -94,22 +96,16 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
 
   public void ArmMidHeightCommand() {
     GravityOffset(ArmConstants.kMidHeight);
-    ArmPIDController.setReference(ArmConstants.kMidHeight, CANSparkMax.ControlType.kPosition);
-    MasterArmMotor.set(ArmConstants.kMidHeight);
     System.out.println("Raising arm to moderate elevation...");
   }
 
   public void ArmMaxHeightCommand() {
     GravityOffset(ArmConstants.kMaxHeight);
-    ArmPIDController.setReference(ArmConstants.kMaxHeight, CANSparkMax.ControlType.kPosition);
-    MasterArmMotor.set(ArmConstants.kMaxHeight);
     System.out.println("Raising arm to maximum elevation...");
   }
 
   public void ArmDefaultHeightCommand() {
     GravityOffset(ArmConstants.kDefaultHeight);
-    ArmPIDController.setReference(ArmConstants.kDefaultHeight, CANSparkMax.ControlType.kPosition);
-    MasterArmMotor.set(ArmConstants.kDefaultHeight);
     System.out.println("Returning to default elevation...");
   }
 

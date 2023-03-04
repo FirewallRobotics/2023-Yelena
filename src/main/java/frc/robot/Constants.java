@@ -68,6 +68,11 @@ public final class Constants {
     public static final double kGyroAngleRange = 10;
     public static final double kBalanceSpeedMultiplier = 0.1;
     public static final double kBalanceDecelerationDistance = 9;
+
+    // Drive speeds
+    public static final double kDefaultSpeed = 0.5;
+    public static final double kSprintSpeed = 1.0;
+    public static final double kSneakSpeed = 0.2;
   }
 
   public static final class ModuleConstants {
