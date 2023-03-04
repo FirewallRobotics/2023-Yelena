@@ -24,6 +24,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
@@ -31,6 +32,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.VisionSubsystem;
 import java.util.List;
 
 /*
@@ -45,6 +47,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final LEDSubsystem m_LEDSubsystem = new LEDSubsystem();
   private final ArmSubsystem m_robotArm = new ArmSubsystem();
+  private final VisionSubsystem m_VisionSubsystem = new VisionSubsystem();
 
   // The driver's controller
   /// Joystick m_driverJoystick = new Joystick(OIConstants.kDriverJoystickPort);
@@ -66,15 +69,19 @@ public class RobotContainer {
     m_robotDrive.setDefaultCommand(
         // The left stick controls translation of the robot.
         // Turning is controlled by the X axis bof the right stick.
+
         new RunCommand(
             () ->
                 m_robotDrive.drive(
                     -MathUtil.applyDeadband(
-                        m_driverController.getLeftY(), OIConstants.kDriveDeadband),
+                            m_driverController.getLeftY(), OIConstants.kDriveDeadband)
+                        * GetSpeed(),
                     -MathUtil.applyDeadband(
-                        m_driverController.getLeftX(), OIConstants.kDriveDeadband),
+                            m_driverController.getLeftX(), OIConstants.kDriveDeadband)
+                        * GetSpeed(),
                     -MathUtil.applyDeadband(
-                        m_driverController.getRightX(), OIConstants.kDriveDeadband),
+                            m_driverController.getRightX(), OIConstants.kDriveDeadband)
+                        * GetSpeed(),
                     true,
                     true),
             m_robotDrive));
@@ -131,8 +138,6 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kRightBumper.value)
         .whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
 
-    // The buttons created below were meant for LED testing, feel free to change
-
     new JoystickButton(m_driverController, Button.kX.value)
         .whileTrue(
             new SequentialCommandGroup(
@@ -157,6 +162,15 @@ public class RobotContainer {
 
     new JoystickButton(m_driverController, Axis.kRightTrigger.value)
         .toggleOnFalse(new ClawReleaseCommand(m_robotArm));
+
+    new JoystickButton(m_driverController, Button.kLeftBumper.value)
+        .onTrue(new AutoBalanceZeroGyroCommand(m_robotDrive));
+
+    new JoystickButton(m_driverController, Axis.kLeftTrigger.value)
+        .whileTrue(new AutoBalanceCommand(m_robotDrive, m_VisionSubsystem));
+
+    new POVButton(m_driverController, -1)
+        .whileFalse(new DriveDpadSneakCommand(m_robotDrive, m_driverController));
   }
 
   /**
@@ -219,5 +233,15 @@ public class RobotContainer {
 
   public Command getAutonomousDoubleShot(boolean isRedAlliance) {
     return null;
+  }
+
+  private double GetSpeed() {
+    if (m_driverController.getAButton()) {
+      return DriveConstants.kSprintSpeed;
+    } else if (m_driverController.getXButton()) {
+      return DriveConstants.kSneakSpeed;
+    } else {
+      return DriveConstants.kDefaultSpeed;
+    }
   }
 }
