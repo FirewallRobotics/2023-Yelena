@@ -49,7 +49,6 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
 
     MinionArmMotor.follow(MasterArmMotor, true);
 
-
     ExtendingSolenoid =
         new DoubleSolenoid(
             PneumaticsModuleType.CTREPCM, ArmConstants.kExtSolPort1, ArmConstants.kExtSolPort2);
