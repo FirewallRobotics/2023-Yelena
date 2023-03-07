@@ -7,13 +7,13 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
-public class AutoBalanceZeroGyroCommand extends CommandBase {
+public class BalanceGyroSetZeroCommand extends CommandBase {
   /** Creates a new AutoBalanceZeroGyro. */
   private DriveSubsystem m_drivetrain;
 
   private boolean isFinished = false;
 
-  public AutoBalanceZeroGyroCommand(DriveSubsystem dt_subsystem) {
+  public BalanceGyroSetZeroCommand(DriveSubsystem dt_subsystem) {
     // Use addRequirements() here to declare subsystem dependencies.
 
     m_drivetrain = dt_subsystem;
