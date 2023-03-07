@@ -99,14 +99,14 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putBoolean("isRedAlliance", red_alliance);
 
     // schedule the autonomous command (example)
-    TacticChooser.setDefaultOption(
-        "Double Shot", m_robotContainer.getAutonomousDoubleShot(red_alliance));
+    TacticChooser.setDefaultOption("Score & Balance", m_robotContainer.getAutonomousDoubleShot());
 
     TacticChooser.addOption(
-        "Shot and Power Station", m_robotContainer.getAutonomousShotAndPowerStation(red_alliance));
+        "Score & Get Cone", m_robotContainer.getAutonomousShotAndPowerStation());
 
-    TacticChooser.addOption(
-        "Power Station", m_robotContainer.getAutonomousPowerStation(red_alliance));
+    TacticChooser.addOption("Score & Get Cubue", m_robotContainer.getAutonomousPowerStation());
+
+    TacticChooser.addOption("Score Only", m_robotContainer.getAutonomousPowerStation());
 
     /*GridPosChooser.setDefaultOption("Red Grid Position 1",  m_robotContainer.getAutonomousRedGridPos1());
 

@@ -87,14 +87,44 @@ public class RobotContainer {
             m_robotDrive));
 
     m_chooser.setDefaultOption(
-        "Autonomous Score and Balance", new AutoBalanceZeroGyroCommand(m_robotDrive));
+        "Autonomous Score and Balance",
+        new SequentialCommandGroup(
+            new BalanceGyroSetZeroCommand(m_robotDrive),
+            new AutoGridAlignCommand(m_robotDrive, m_VisionSubsystem),
+            new ArmMaxHeightCommand(m_robotArm),
+            new ArmExtendCommand(m_robotArm),
+            new ClawReleaseCommand(m_robotArm),
+            new AutoDriveToBalanceCommand(m_robotDrive, m_VisionSubsystem),
+            new AutoBalanceCommand(m_robotDrive, m_VisionSubsystem)));
 
     m_chooser.addOption(
-        "Autonomous Score and Drive to pick up GamePiece",
-        new AutoBalanceZeroGyroCommand(m_robotDrive));
+        "Autonomous Score & Pick Up Cone",
+        new SequentialCommandGroup(
+            new BalanceGyroSetZeroCommand(m_robotDrive),
+            new AutoGridAlignCommand(m_robotDrive, m_VisionSubsystem),
+            new ArmMaxHeightCommand(m_robotArm),
+            new ArmExtendCommand(m_robotArm),
+            new ClawReleaseCommand(m_robotArm),
+            new AutoGetConeCommand(m_robotDrive, m_VisionSubsystem)));
 
     m_chooser.addOption(
-        "Autonomous Drive Shoot only", new AutoBalanceZeroGyroCommand(m_robotDrive));
+        "Autonomous Score & Pick Up Cube",
+        new SequentialCommandGroup(
+            new BalanceGyroSetZeroCommand(m_robotDrive),
+            new AutoGridAlignCommand(m_robotDrive, m_VisionSubsystem),
+            new ArmMaxHeightCommand(m_robotArm),
+            new ArmExtendCommand(m_robotArm),
+            new ClawReleaseCommand(m_robotArm),
+            new AutoGetCubeCommand(m_robotDrive, m_VisionSubsystem)));
+
+    m_chooser.addOption(
+        "Autonomous Score Only",
+        new SequentialCommandGroup(
+            new BalanceGyroSetZeroCommand(m_robotDrive),
+            new AutoGridAlignCommand(m_robotDrive, m_VisionSubsystem),
+            new ArmMaxHeightCommand(m_robotArm),
+            new ArmExtendCommand(m_robotArm),
+            new ClawReleaseCommand(m_robotArm)));
 
     SmartDashboard.putData("Auto Mode", m_chooser);
 
@@ -164,7 +194,7 @@ public class RobotContainer {
         .toggleOnFalse(new ClawReleaseCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
-        .onTrue(new AutoBalanceZeroGyroCommand(m_robotDrive));
+        .onTrue(new BalanceGyroSetZeroCommand(m_robotDrive));
 
     new JoystickButton(m_driverController, Axis.kLeftTrigger.value)
         .whileTrue(new AutoBalanceCommand(m_robotDrive, m_VisionSubsystem));
@@ -223,15 +253,15 @@ public class RobotContainer {
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
   }
 
-  public Command getAutonomousPowerStation(boolean isRedAlliance) {
+  public Command getAutonomousPowerStation() {
     return null;
   }
 
-  public Command getAutonomousShotAndPowerStation(boolean isRedAlliance) {
+  public Command getAutonomousShotAndPowerStation() {
     return null;
   }
 
-  public Command getAutonomousDoubleShot(boolean isRedAlliance) {
+  public Command getAutonomousDoubleShot() {
     return null;
   }
 
