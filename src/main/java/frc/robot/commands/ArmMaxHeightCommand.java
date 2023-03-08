@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmMaxHeightCommand extends CommandBase {
@@ -23,7 +24,9 @@ public class ArmMaxHeightCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    ArmSubsystem.ArmEncoder.getPosition();
+    if (m_Arm.ArmEncoder.getPosition() == ArmConstants.kMaxHeight) return true;
+    else return false;
   }
 
   @Override

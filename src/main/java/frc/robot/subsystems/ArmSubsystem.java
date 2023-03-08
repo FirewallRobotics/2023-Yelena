@@ -16,7 +16,7 @@ import frc.robot.Constants.ArmConstants;
 public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   public static CANSparkMax MasterArmMotor;
   public static CANSparkMax MinionArmMotor;
-  private final AbsoluteEncoder ArmEncoder;
+  public static AbsoluteEncoder ArmEncoder;
   public static DoubleSolenoid ExtendingSolenoid;
   public static DoubleSolenoid ClawSolenoid;
   private SparkMaxPIDController ArmPIDController;
