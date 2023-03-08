@@ -1,7 +1,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 public class ArmMidHeightCommand extends CommandBase {
 
@@ -23,7 +25,11 @@ public class ArmMidHeightCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    ArmSubsystem.ArmEncoder.getPosition();
+    if (m_Arm.ArmEncoder.getPosition() == ArmConstants.kMidHeight)
+      return true;
+    else
+      return false;
   }
 
   @Override

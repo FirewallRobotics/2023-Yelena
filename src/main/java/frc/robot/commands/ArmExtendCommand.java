@@ -23,7 +23,7 @@ public class ArmExtendCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 
   @Override
