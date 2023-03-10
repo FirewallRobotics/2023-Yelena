@@ -172,6 +172,7 @@ public class RobotContainer {
         .whileTrue(
             new SequentialCommandGroup(
                 new ArmMidHeightCommand(m_robotArm), new ArmExtendCommand(m_robotArm)));
+
     new JoystickButton(m_driverController, Button.kX.value)
         .whileFalse(
             new SequentialCommandGroup(
@@ -185,6 +186,11 @@ public class RobotContainer {
         .whileFalse(
             new SequentialCommandGroup(
                 new ArmRetractCommand(m_robotArm), new ArmDefaultHeightCommand(m_robotArm)));
+
+    new JoystickButton(m_driverController, Button.kStart.value)
+        .whileTrue(new ArmTestCommand(m_robotArm));
+    new JoystickButton(m_driverController, Button.kStart.value)
+        .whileFalse(new ArmTestOffCommand(m_robotArm));
 
     new JoystickButton(
             m_driverController, Axis.kRightTrigger.value) // does it not know what a trigger is?

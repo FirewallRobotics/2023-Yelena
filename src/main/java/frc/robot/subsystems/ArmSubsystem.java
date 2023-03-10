@@ -115,6 +115,14 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     System.out.println("Releasing claw...");
   }
 
+  public void ArmTestCommand() {
+    MasterArmMotor.set(.2);
+  }
+
+  public void ArmTestOffCommand() {
+    MasterArmMotor.set(0);
+  }
+
   @Override
   public void periodic() {
     ArmEncoder.getPosition();
@@ -154,7 +162,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
       kMaxOutput = max;
     }
 
-    ArmPIDController.setReference(rotations, CANSparkMax.ControlType.kPosition);
+    // ArmPIDController.setReference(rotations, CANSparkMax.ControlType.kPosition);
 
     SmartDashboard.putNumber("SetPoint", rotations);
     SmartDashboard.putNumber("ProcessVariable", ArmEncoder.getPosition());
