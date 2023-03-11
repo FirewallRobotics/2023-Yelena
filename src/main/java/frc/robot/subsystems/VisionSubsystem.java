@@ -64,7 +64,13 @@ public class VisionSubsystem extends SubsystemBase {
   public double tagCubeTargetXRange = Constants.VisionConstants.kAprilTagCubeTargetXRange;
   public double tagCubeTargetArea = Constants.VisionConstants.kAprilTagCubeTargetArea;
   public double tagCubeTargetAreaRange = Constants.VisionConstants.kAprilTagCubeTargetAreaRange;
+
   public double decelerationDistance = Constants.VisionConstants.kDecelerationDistance;
+
+  public double highestXDifferenceLED = Constants.VisionConstants.kHighestXDifferenceLED;
+  public double highestZDifferenceLED = Constants.VisionConstants.kHighestZDifferenceLED;
+  public double highestTagAreaDifferenceLED = Constants.VisionConstants.kHighestTagAreaDifferenceLED;
+  public int LEDProx;
 
   public VisionSubsystem() {}
 
@@ -104,25 +110,18 @@ public class VisionSubsystem extends SubsystemBase {
 
     // Negative if cone is left, positive if cone is right
     double tagConeCenterXDifference = tagCenterX - tagConeTargetX;
-
-    // Nagative if too far away, positive if too close
+    // Negative if too far away, positive if too close
     double tagConeAreaDifference = tagArea - tagConeTargetArea;
-
     // Negative if cone is left, positive if cone is right
     double tagCubeCenterXDifference = tagCenterX - tagCubeTargetX;
-
-    // Nagative if too far away, positive if too close
+    // Negative if too far away, positive if too close
     double tagCubeAreaDifference = tagArea - tagCubeTargetArea;
-
     // Negative if too far away, positive if too close
     double coneWidthDifference = coneWidth - coneTargetWidth;
-
     // Negative if cone is left, positive if cone is right
     double coneCenterDifference = coneCenterX - cameraCenterX;
-
     // Negative if too far away, positive if too close
     double cubeRadiusDifference = cubeRadius - cubeTargetRadius;
-
     // Negative if cube is left, positive if cube is right
     double cubeCenterDifference = cubeCenterX - cameraCenterX;
 
@@ -137,6 +136,7 @@ public class VisionSubsystem extends SubsystemBase {
     {
       adjustBackForward = -1 * DecelerationSpeed(coneWidthDifference, coneTargetWidthRange);
     }
+    
 
     // Cone left or right of robot
     if (Math.abs(coneCenterDifference) <= targetCenterXRange) // Centered
@@ -232,6 +232,22 @@ public class VisionSubsystem extends SubsystemBase {
     }
   }
 
+  private void ConePickUp() {
+
+  }
+
+  private void CubePickUp() {
+
+  }
+
+  private void ConeDropOff() {
+
+  }
+
+  private void CubeDropOff() {
+
+  }
+
   private double DecelerationSpeed(double positionDifference, double targetRange) {
     double distanceFromTarget = Math.abs(positionDifference) - targetRange;
     double speed = (distanceFromTarget / decelerationDistance) * 9.0 / 10.0 + 0.1;
@@ -242,5 +258,23 @@ public class VisionSubsystem extends SubsystemBase {
     } else {
       return 1.0;
     }
+  }
+
+  private void ChangeLEDProx(double positionDifference, double targetRange, double highestDifferenceLED) {
+    double distanceFromTarget = Math.abs(positionDifference) - targetRange;
+    
+    if (distanceFromTarget <= highestDifferenceLED) {
+      if (distanceFromTarget > 0) {
+        LEDProx = (int) ((distanceFromTarget / highestDifferenceLED) * 25.0);;
+      } else {
+        LEDProx = 25;
+      }
+    } else {
+      LEDProx = 0;
+    }
+  }
+
+  public int GetLEDProx() {
+    return LEDProx;
   }
 }

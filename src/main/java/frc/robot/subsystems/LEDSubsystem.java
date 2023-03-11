@@ -114,7 +114,7 @@ public class LEDSubsystem extends SubsystemBase {
     SetLights(rgb_red, rgb_green, rgb_blue);
   }
 
-  public void ProximityLight(int proximity) {
+  private void ProximityLight(int proximity) {
 
     // Displays from blue to light teal to indicate proximity to a goal (i.e. distance from scoring)
 
@@ -136,9 +136,6 @@ public class LEDSubsystem extends SubsystemBase {
 
     // NOTE: The rgb_green will be multipied by a number from 0-24
 
-    if (proximity < 0) proximity = 0;
-    if (proximity > 25) proximity = 25;
-
     if (proximity < 24) {
       SetLights(rgb_red, rgb_green * proximity, rgb_blue);
     } else {
@@ -146,7 +143,7 @@ public class LEDSubsystem extends SubsystemBase {
     }
   }
 
-  public void ReadyLight() {
+  private void ReadyLight() {
 
     // Displays green to indicate the robot is ready to perform an action (i.e. drop the game piece)
 
@@ -169,7 +166,7 @@ public class LEDSubsystem extends SubsystemBase {
     SetLights(rgb_red, rgb_green, rgb_blue);
   }
 
-  public void LightScroll() {
+  private void LightScroll() {
 
     // Meant to have scrolling lights for asthetic; run as default command
 
@@ -222,5 +219,14 @@ public class LEDSubsystem extends SubsystemBase {
 
     // Applies the m_ledbuffer data to the m_led object
     m_led.setData(m_ledBuffer);
+  }
+
+  public void RunDefaultLED(int LEDprox) {
+    if (LEDprox == 0) {
+      LightScroll();
+    }
+    else {
+      ProximityLight(LEDprox);
+    }
   }
 }

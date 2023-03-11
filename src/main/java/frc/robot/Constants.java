@@ -193,5 +193,9 @@ public final class Constants {
     public static final double kAprilTagCubeTargetArea = 100;
     public static final double kAprilTagCubeTargetAreaRange = 10;
     public static final double kDecelerationDistance = 9;
+
+    public static final double kHighestXDifferenceLED = 30;
+    public static final double kHighestZDifferenceLED = 30;
+    public static final double kHighestTagAreaDifferenceLED = 30;
   }
 }
