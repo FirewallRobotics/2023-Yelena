@@ -61,6 +61,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
 
     ArmPIDController = MasterArmMotor.getPIDController();
     ArmPIDController.setFeedbackDevice(ArmEncoder);
+    ArmPIDController.setPositionPIDWrappingEnabled(true);
 
     ArmPIDController.setP(kP);
     ArmPIDController.setI(kI);
@@ -105,7 +106,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     System.out.println("Returning to default elevation...");
   }
 
-  public void ClawGrabConeCommand() {
+  public void ClawGrabCommand() {
     ClawSolenoid.set(Value.kForward);
     System.out.println("Grabbing cone...");
   }

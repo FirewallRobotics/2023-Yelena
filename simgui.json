@@ -6,10 +6,20 @@
       }
     },
     "Other Devices": {
-      "SPARK MAX [2]": {
+      "Compressor[0]": {
         "header": {
           "open": true
         }
+      }
+    },
+    "Solenoids": {
+      "0": {
+        "header": {
+          "open": true
+        }
+      },
+      "window": {
+        "visible": true
       }
     }
   },

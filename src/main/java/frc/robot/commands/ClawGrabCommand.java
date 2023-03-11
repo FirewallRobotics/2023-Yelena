@@ -18,7 +18,7 @@ public class ClawGrabCommand extends CommandBase {
 
   @Override
   public void execute() {
-    m_Arm.ClawGrabConeCommand();
+    m_Arm.ClawGrabCommand();
   }
 
   @Override

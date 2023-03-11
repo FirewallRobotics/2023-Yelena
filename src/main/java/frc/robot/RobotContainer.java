@@ -192,12 +192,16 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kStart.value)
         .whileFalse(new ArmTestOffCommand(m_robotArm));
 
-    new JoystickButton(
-            m_driverController, Axis.kRightTrigger.value) // does it not know what a trigger is?
-        .toggleOnTrue(new ClawGrabCommand(m_robotArm));
+    new JoystickButton(m_driverController, Button.kBack.value)
+        .whileTrue(new ArmExtendCommand(m_robotArm));
+    new JoystickButton(m_driverController, Button.kBack.value)
+        .whileFalse(new ArmRetractCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Axis.kRightTrigger.value)
-        .toggleOnFalse(new ClawReleaseCommand(m_robotArm));
+        .whileTrue(new ClawGrabCommand(m_robotArm));
+
+    new JoystickButton(m_driverController, Axis.kRightTrigger.value)
+        .whileFalse(new ClawReleaseCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
         .onTrue(new BalanceGyroSetZeroCommand(m_robotDrive));

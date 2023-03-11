@@ -170,10 +170,10 @@ public final class Constants {
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;
-    public static final int kExtSolPort1 = 1;
-    public static final int kExtSolPort2 = 2;
-    public static final int kClawSolPort1 = 3;
-    public static final int kClawSolPort2 = 4;
+    public static final int kExtSolPort1 = 4;
+    public static final int kExtSolPort2 = 7;
+    public static final int kClawSolPort1 = 2;
+    public static final int kClawSolPort2 = 3;
   }
 
   public static final class VisionConstants {

@@ -26,8 +26,5 @@ public class ClawReleaseCommand extends CommandBase {
     return false;
   }
 
-  @Override
-  public void end(boolean interupted) {
-    m_Arm.ClawReleaseCommand();
-  }
+  
 }
