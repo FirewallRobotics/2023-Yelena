@@ -47,7 +47,7 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final LEDSubsystem m_LEDSubsystem = new LEDSubsystem();
   private final ArmSubsystem m_robotArm = new ArmSubsystem();
-  private final VisionSubsystem m_VisionSubsystem = new VisionSubsystem();
+  private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
 
   // The driver's controller
   /// Joystick m_driverJoystick = new Joystick(OIConstants.kDriverJoystickPort);
@@ -90,38 +90,38 @@ public class RobotContainer {
         "Autonomous Score and Balance",
         new SequentialCommandGroup(
             new BalanceGyroSetZeroCommand(m_robotDrive),
-            new AutoGridAlignCommand(m_robotDrive, m_VisionSubsystem),
+            new AutoGridAlignCommand(m_robotDrive, m_visionSubsystem),
             new ArmMaxHeightCommand(m_robotArm),
             new ArmExtendCommand(m_robotArm),
             new ClawReleaseCommand(m_robotArm),
-            new AutoDriveToBalanceCommand(m_robotDrive, m_VisionSubsystem),
-            new AutoBalanceCommand(m_robotDrive, m_VisionSubsystem)));
+            new AutoDriveToBalanceCommand(m_robotDrive, m_visionSubsystem),
+            new AutoBalanceCommand(m_robotDrive, m_visionSubsystem)));
 
     m_chooser.addOption(
         "Autonomous Score & Pick Up Cone",
         new SequentialCommandGroup(
             new BalanceGyroSetZeroCommand(m_robotDrive),
-            new AutoGridAlignCommand(m_robotDrive, m_VisionSubsystem),
+            new AutoGridAlignCommand(m_robotDrive, m_visionSubsystem),
             new ArmMaxHeightCommand(m_robotArm),
             new ArmExtendCommand(m_robotArm),
             new ClawReleaseCommand(m_robotArm),
-            new AutoGetConeCommand(m_robotDrive, m_VisionSubsystem)));
+            new AutoGetConeCommand(m_robotDrive, m_visionSubsystem)));
 
     m_chooser.addOption(
         "Autonomous Score & Pick Up Cube",
         new SequentialCommandGroup(
             new BalanceGyroSetZeroCommand(m_robotDrive),
-            new AutoGridAlignCommand(m_robotDrive, m_VisionSubsystem),
+            new AutoGridAlignCommand(m_robotDrive, m_visionSubsystem),
             new ArmMaxHeightCommand(m_robotArm),
             new ArmExtendCommand(m_robotArm),
             new ClawReleaseCommand(m_robotArm),
-            new AutoGetCubeCommand(m_robotDrive, m_VisionSubsystem)));
+            new AutoGetCubeCommand(m_robotDrive, m_visionSubsystem)));
 
     m_chooser.addOption(
         "Autonomous Score Only",
         new SequentialCommandGroup(
             new BalanceGyroSetZeroCommand(m_robotDrive),
-            new AutoGridAlignCommand(m_robotDrive, m_VisionSubsystem),
+            new AutoGridAlignCommand(m_robotDrive, m_visionSubsystem),
             new ArmMaxHeightCommand(m_robotArm),
             new ArmExtendCommand(m_robotArm),
             new ClawReleaseCommand(m_robotArm)));
@@ -139,7 +139,7 @@ public class RobotContainer {
 
     m_LEDSubsystem.setDefaultCommand(
         // The robot will display the scrolling purple lights by default
-        new RunCommand(() -> m_LEDSubsystem.LightScroll(), m_LEDSubsystem));
+        new SetLEDProximityCommand(m_visionSubsystem, m_LEDSubsystem));
   }
 
   /**
@@ -197,7 +197,7 @@ public class RobotContainer {
         .onTrue(new BalanceGyroSetZeroCommand(m_robotDrive));
 
     new JoystickButton(m_driverController, Axis.kLeftTrigger.value)
-        .whileTrue(new AutoBalanceCommand(m_robotDrive, m_VisionSubsystem));
+        .whileTrue(new AutoBalanceCommand(m_robotDrive, m_visionSubsystem));
 
     new POVButton(m_driverController, -1)
         .whileFalse(new DriveDpadSneakCommand(m_robotDrive, m_driverController));
