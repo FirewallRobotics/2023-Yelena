@@ -162,11 +162,10 @@ public final class Constants {
 
     public static final int kMasterArmMotorPort = 9;
     public static final int kMinionArmMotorPort = 10;
-    public static final int kMidHeight = 0;
-    public static final int kMidLength = 0;
-    public static final int kMaxHeight = 0;
-    public static final int kMaxLength = 0;
-    public static final int kDefaultHeight = 0;
+    public static final double kMidHeight = 0;
+    public static final double kMaxHeight = .511;
+    public static final double kStartingHeight = .883;
+    public static final double kDefaultHeight = .631;
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;
