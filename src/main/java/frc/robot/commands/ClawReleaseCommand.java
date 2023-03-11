@@ -25,6 +25,4 @@ public class ClawReleaseCommand extends CommandBase {
   public boolean isFinished() {
     return false;
   }
-
-  
 }
