@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.*;
 
 public class SetLEDProximityCommand extends CommandBase {
-  
+
   private VisionSubsystem m_vision;
   private LEDSubsystem m_LED;
 

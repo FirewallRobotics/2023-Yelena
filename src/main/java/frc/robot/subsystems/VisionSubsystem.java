@@ -69,7 +69,8 @@ public class VisionSubsystem extends SubsystemBase {
 
   public double highestXDifferenceLED = Constants.VisionConstants.kHighestXDifferenceLED;
   public double highestZDifferenceLED = Constants.VisionConstants.kHighestZDifferenceLED;
-  public double highestTagAreaDifferenceLED = Constants.VisionConstants.kHighestTagAreaDifferenceLED;
+  public double highestTagAreaDifferenceLED =
+      Constants.VisionConstants.kHighestTagAreaDifferenceLED;
   public int LEDProx;
 
   public VisionSubsystem() {}
@@ -78,7 +79,7 @@ public class VisionSubsystem extends SubsystemBase {
   public void periodic() {
 
     double tagCenterX = ntTagCenterX.getDouble(0);
-    double tagCenterY = ntTagCenterY.getDouble(0);
+    // double tagCenterY = ntTagCenterY.getDouble(0);
     double tagArea = ntTagArea.getDouble(0);
 
     // Code for some reason doesn't work unless I make the default list a variable
@@ -86,13 +87,13 @@ public class VisionSubsystem extends SubsystemBase {
     double[] poseInfo = ntPose.getDoubleArray(defaultArray);
 
     double cubeCenterX = ntCubeCenterX.getDouble(0);
-    double cubeCenterY = ntCubeCenterY.getDouble(0);
+    // double cubeCenterY = ntCubeCenterY.getDouble(0);
     double cubeRadius = ntCubeRadius.getDouble(0);
 
     double coneXMin = ntConeXMin.getDouble(0);
     double coneXMax = ntConeXMax.getDouble(0);
-    double coneYMin = ntConeYMin.getDouble(0);
-    double coneYMax = ntConeYMax.getDouble(0);
+    // double coneYMin = ntConeYMin.getDouble(0);
+    // double coneYMax = ntConeYMax.getDouble(0);
 
     double coneWidth = coneXMax - coneXMin;
     double coneCenterX = (coneXMin + coneXMax) / 2.0;
@@ -125,127 +126,52 @@ public class VisionSubsystem extends SubsystemBase {
     // Negative if cube is left, positive if cube is right
     double cubeCenterDifference = cubeCenterX - cameraCenterX;
 
-    // Distance from cone based on width
-    if (Math.abs(coneWidthDifference) <= coneTargetWidthRange) // Close enough
-    {
-      adjustBackForward = 0;
-    } else if (coneWidthDifference < 0) // Too far
-    {
-      adjustBackForward = 1 * DecelerationSpeed(coneWidthDifference, coneTargetWidthRange);
-    } else // Too close
-    {
-      adjustBackForward = -1 * DecelerationSpeed(coneWidthDifference, coneTargetWidthRange);
-    }
-    
+    // Set to lowest
+    LEDProx = 0;
+
+    // If statements decide which adjust code runs?
 
     // Cone left or right of robot
-    if (Math.abs(coneCenterDifference) <= targetCenterXRange) // Centered
-    {
-      adjustLeftRight = 0;
-    } else if (coneCenterDifference < 0) // Too far left
-    {
-      adjustLeftRight = 1 * DecelerationSpeed(coneCenterDifference, targetCenterXRange);
-
-    } else // Too far right
-    {
-      adjustLeftRight = -1 * DecelerationSpeed(coneCenterDifference, targetCenterXRange);
-    }
-
-    // Distance from cube based on radius
-    if (Math.abs(cubeRadiusDifference) <= cubeTargetRadiusRange) // Close enough
-    {
-      adjustBackForward = 0;
-    } else if (cubeRadiusDifference < 0) // Too far
-    {
-      adjustBackForward = 1 * DecelerationSpeed(cubeRadiusDifference, cubeTargetRadiusRange);
-    } else // Too close
-    {
-      adjustBackForward = -1 * DecelerationSpeed(cubeRadiusDifference, cubeTargetRadiusRange);
-    }
+    adjustLeftRight = VisionAdjust(coneCenterDifference, targetCenterXRange);
+    ChangeLEDProx(coneCenterDifference, targetCenterXRange, highestXDifferenceLED);
+    // Distance from cone based on width
+    adjustBackForward = VisionAdjust(coneWidthDifference, coneTargetWidthRange);
+    ChangeLEDProx(coneWidthDifference, coneTargetWidthRange, highestZDifferenceLED);
 
     // Cube left or right of robot
-    if (Math.abs(cubeCenterDifference) <= targetCenterXRange) // Centered
-    {
-      adjustLeftRight = 0;
-    } else if (cubeCenterDifference < 0) // Too far left
-    {
-      adjustLeftRight = 1 * DecelerationSpeed(cubeCenterDifference, targetCenterXRange);
-    } else // Too far right
-    {
-      adjustLeftRight = -1 * DecelerationSpeed(cubeCenterDifference, targetCenterXRange);
-    }
+    adjustLeftRight = VisionAdjust(cubeCenterDifference, targetCenterXRange);
+    ChangeLEDProx(cubeCenterDifference, targetCenterXRange, highestXDifferenceLED);
+    // Distance from cube based on radius
+    adjustBackForward = VisionAdjust(cubeRadiusDifference, cubeTargetRadiusRange);
+    ChangeLEDProx(cubeRadiusDifference, cubeTargetRadiusRange, highestZDifferenceLED);
 
     // Cube tag near target X
-    if (Math.abs(tagCubeCenterXDifference) <= tagCubeTargetXRange) // Centered
-    {
-      adjustCubePlacementLeftRight = 0;
-    } else if (tagCubeCenterXDifference < 0) // Too far left
-    {
-      adjustCubePlacementLeftRight =
-          1 * DecelerationSpeed(tagCubeCenterXDifference, tagCubeTargetXRange);
-    } else // Too far right
-    {
-      adjustCubePlacementLeftRight =
-          -1 * DecelerationSpeed(tagCubeCenterXDifference, tagCubeTargetXRange);
-    }
-
+    adjustCubePlacementLeftRight = VisionAdjust(tagCubeCenterXDifference, tagCubeTargetXRange);
+    ChangeLEDProx(tagCubeCenterXDifference, tagCubeTargetXRange, highestXDifferenceLED);
     // Distance from cube tag based on area
-    if (Math.abs(tagCubeAreaDifference) <= tagCubeTargetAreaRange) // Close enough
-    {
-      adjustCubePlacementBackForward = 0;
-    } else if (tagCubeAreaDifference < 0) // Too far
-    {
-      adjustCubePlacementBackForward =
-          1 * DecelerationSpeed(tagCubeAreaDifference, tagCubeTargetAreaRange);
-    } else // Too close
-    {
-      adjustCubePlacementBackForward =
-          -1 * DecelerationSpeed(tagCubeAreaDifference, tagCubeTargetAreaRange);
-    }
+    adjustCubePlacementBackForward = VisionAdjust(tagCubeAreaDifference, tagCubeTargetAreaRange);
+    ChangeLEDProx(tagCubeAreaDifference, tagCubeTargetAreaRange, highestTagAreaDifferenceLED);
 
     // Cone tag near target X
-    if (Math.abs(tagConeCenterXDifference) <= tagConeTargetXRange) // Centered
-    {
-      adjustConePlacementLeftRight = 0;
-    } else if (tagConeCenterXDifference < 0) // Too far left
-    {
-      adjustConePlacementLeftRight =
-          1 * DecelerationSpeed(tagConeCenterXDifference, tagConeTargetXRange);
-    } else // Too far right
-    {
-      adjustConePlacementLeftRight =
-          -1 * DecelerationSpeed(tagConeCenterXDifference, tagConeTargetXRange);
-    }
-
+    adjustConePlacementLeftRight = VisionAdjust(tagConeCenterXDifference, tagConeTargetXRange);
+    ChangeLEDProx(tagConeCenterXDifference, tagConeTargetXRange, highestXDifferenceLED);
     // Distance from cone tag based on area
-    if (Math.abs(tagConeAreaDifference) <= tagConeTargetAreaRange) // Close enough
+    adjustConePlacementBackForward = VisionAdjust(tagConeAreaDifference, tagConeTargetAreaRange);
+    ChangeLEDProx(tagConeAreaDifference, tagConeTargetAreaRange, highestTagAreaDifferenceLED);
+  }
+
+  private double VisionAdjust(double difference, double targetRange) {
+    // Distance from cone based on width
+    if (Math.abs(difference) <= targetRange) // Close enough
     {
-      adjustConePlacementBackForward = 0;
-    } else if (tagConeAreaDifference < 0) // Too far
+      return 0.0;
+    } else if (difference < 0) // Too far
     {
-      adjustConePlacementBackForward =
-          1 * DecelerationSpeed(tagConeAreaDifference, tagConeTargetAreaRange);
+      return 1 * DecelerationSpeed(difference, targetRange);
     } else // Too close
     {
-      adjustConePlacementBackForward =
-          -1 * DecelerationSpeed(tagConeAreaDifference, tagConeTargetAreaRange);
+      return -1 * DecelerationSpeed(difference, targetRange);
     }
-  }
-
-  private void ConePickUp() {
-
-  }
-
-  private void CubePickUp() {
-
-  }
-
-  private void ConeDropOff() {
-
-  }
-
-  private void CubeDropOff() {
-
   }
 
   private double DecelerationSpeed(double positionDifference, double targetRange) {
@@ -260,17 +186,17 @@ public class VisionSubsystem extends SubsystemBase {
     }
   }
 
-  private void ChangeLEDProx(double positionDifference, double targetRange, double highestDifferenceLED) {
+  private void ChangeLEDProx(
+      double positionDifference, double targetRange, double highestDifferenceLED) {
     double distanceFromTarget = Math.abs(positionDifference) - targetRange;
-    
+
     if (distanceFromTarget <= highestDifferenceLED) {
       if (distanceFromTarget > 0) {
-        LEDProx = (int) ((distanceFromTarget / highestDifferenceLED) * 25.0);;
+        int LEDProxTemp = (int) ((1 - (distanceFromTarget / highestDifferenceLED)) * 25.0);
+        if (LEDProxTemp > LEDProx) LEDProx = LEDProxTemp;
       } else {
         LEDProx = 25;
       }
-    } else {
-      LEDProx = 0;
     }
   }
 

@@ -224,8 +224,7 @@ public class LEDSubsystem extends SubsystemBase {
   public void RunDefaultLED(int LEDprox) {
     if (LEDprox == 0) {
       LightScroll();
-    }
-    else {
+    } else {
       ProximityLight(LEDprox);
     }
   }
