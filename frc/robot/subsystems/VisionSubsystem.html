@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10};
+var data = {"i0":10,"i1":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -238,8 +238,28 @@ extends edu.wpi.first.wpilibj2.command.SubsystemBase</pre>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="rowColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#highestTagAreaDifferenceLED">highestTagAreaDifferenceLED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#highestXDifferenceLED">highestXDifferenceLED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>double</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#highestZDifferenceLED">highestZDifferenceLED</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="altColor">
 <td class="colFirst"><code>edu.wpi.first.networktables.NetworkTableInstance</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#inst">inst</a></span></code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr class="rowColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#LEDProx">LEDProx</a></span></code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr class="altColor">
@@ -412,6 +432,11 @@ extends edu.wpi.first.wpilibj2.command.SubsystemBase</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr id="i0" class="altColor">
+<td class="colFirst"><code>int</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#GetLEDProx()">GetLEDProx</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#periodic()">periodic</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -436,7 +461,7 @@ extends edu.wpi.first.wpilibj2.command.SubsystemBase</pre>
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;edu.wpi.first.wpilibj2.command.Subsystem</h3>
-<code>getCurrentCommand, getDefaultCommand, register, run, runEnd, runOnce, setDefaultCommand, simulationPeriodic, startEnd</code></li>
+<code>getCurrentCommand, getDefaultCommand, register, removeDefaultCommand, run, runEnd, runOnce, setDefaultCommand, simulationPeriodic, startEnd</code></li>
 </ul>
 </li>
 </ul>
@@ -826,10 +851,46 @@ extends edu.wpi.first.wpilibj2.command.SubsystemBase</pre>
 <a id="decelerationDistance">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>decelerationDistance</h4>
 <pre>public&nbsp;double decelerationDistance</pre>
+</li>
+</ul>
+<a id="highestXDifferenceLED">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>highestXDifferenceLED</h4>
+<pre>public&nbsp;double highestXDifferenceLED</pre>
+</li>
+</ul>
+<a id="highestZDifferenceLED">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>highestZDifferenceLED</h4>
+<pre>public&nbsp;double highestZDifferenceLED</pre>
+</li>
+</ul>
+<a id="highestTagAreaDifferenceLED">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>highestTagAreaDifferenceLED</h4>
+<pre>public&nbsp;double highestTagAreaDifferenceLED</pre>
+</li>
+</ul>
+<a id="LEDProx">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>LEDProx</h4>
+<pre>public&nbsp;int LEDProx</pre>
 </li>
 </ul>
 </li>
@@ -864,10 +925,19 @@ extends edu.wpi.first.wpilibj2.command.SubsystemBase</pre>
 <a id="periodic()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>periodic</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;periodic()</pre>
+</li>
+</ul>
+<a id="GetLEDProx()">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>GetLEDProx</h4>
+<pre class="methodSignature">public&nbsp;int&nbsp;GetLEDProx()</pre>
 </li>
 </ul>
 </li>
