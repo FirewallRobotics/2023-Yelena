@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":9,"i2":10,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
+var data = {"i0":10,"i1":9,"i2":10,"i3":10,"i4":9,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -289,25 +289,35 @@ implements java.lang.AutoCloseable</pre>
 </tr>
 <tr id="i5" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ClawGrabConeCommand()">ClawGrabConeCommand</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ArmTestCommand()">ArmTestCommand</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i6" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ClawReleaseCommand()">ClawReleaseCommand</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ArmTestOffCommand()">ArmTestOffCommand</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i7" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#close()">close</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ClawGrabCommand()">ClawGrabCommand</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i8" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#GravityOffset(int)">GravityOffset</a></span>&#8203;(int&nbsp;ktargetPos)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ClawReleaseCommand()">ClawReleaseCommand</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i9" class="rowColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#close()">close</a></span>()</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i10" class="altColor">
+<td class="colFirst"><code>void</code></td>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#GravityOffset(double)">GravityOffset</a></span>&#8203;(double&nbsp;kdefaultheight)</code></th>
+<td class="colLast">&nbsp;</td>
+</tr>
+<tr id="i11" class="rowColor">
 <td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#periodic()">periodic</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -487,13 +497,13 @@ implements java.lang.AutoCloseable</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="GravityOffset(int)">
+<a id="GravityOffset(double)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>GravityOffset</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;GravityOffset&#8203;(int&nbsp;ktargetPos)</pre>
+<pre class="methodSignature">public&nbsp;void&nbsp;GravityOffset&#8203;(double&nbsp;kdefaultheight)</pre>
 </li>
 </ul>
 <a id="ArmExtendCommand()">
@@ -541,13 +551,13 @@ implements java.lang.AutoCloseable</pre>
 <pre class="methodSignature">public&nbsp;void&nbsp;ArmDefaultHeightCommand()</pre>
 </li>
 </ul>
-<a id="ClawGrabConeCommand()">
+<a id="ClawGrabCommand()">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>ClawGrabConeCommand</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;ClawGrabConeCommand()</pre>
+<h4>ClawGrabCommand</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;ClawGrabCommand()</pre>
 </li>
 </ul>
 <a id="ClawReleaseCommand()">
@@ -557,6 +567,24 @@ implements java.lang.AutoCloseable</pre>
 <li class="blockList">
 <h4>ClawReleaseCommand</h4>
 <pre class="methodSignature">public&nbsp;void&nbsp;ClawReleaseCommand()</pre>
+</li>
+</ul>
+<a id="ArmTestCommand()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ArmTestCommand</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;ArmTestCommand()</pre>
+</li>
+</ul>
+<a id="ArmTestOffCommand()">
+<!--   -->
+</a>
+<ul class="blockList">
+<li class="blockList">
+<h4>ArmTestOffCommand</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;ArmTestOffCommand()</pre>
 </li>
 </ul>
 <a id="periodic()">
