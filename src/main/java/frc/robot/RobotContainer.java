@@ -172,6 +172,7 @@ public class RobotContainer {
         .whileTrue(
             new SequentialCommandGroup(
                 new ArmMidHeightCommand(m_robotArm), new ArmExtendCommand(m_robotArm)));
+
     new JoystickButton(m_driverController, Button.kX.value)
         .whileFalse(
             new SequentialCommandGroup(
@@ -186,12 +187,21 @@ public class RobotContainer {
             new SequentialCommandGroup(
                 new ArmRetractCommand(m_robotArm), new ArmDefaultHeightCommand(m_robotArm)));
 
-    new JoystickButton(
-            m_driverController, Axis.kRightTrigger.value) // does it not know what a trigger is?
-        .toggleOnTrue(new ClawGrabCommand(m_robotArm));
+    new JoystickButton(m_driverController, Button.kStart.value)
+        .whileTrue(new ArmTestCommand(m_robotArm));
+    new JoystickButton(m_driverController, Button.kStart.value)
+        .whileFalse(new ArmTestOffCommand(m_robotArm));
 
-    new JoystickButton(m_driverController, Axis.kRightTrigger.value)
-        .toggleOnFalse(new ClawReleaseCommand(m_robotArm));
+    new JoystickButton(m_driverController, Button.kBack.value)
+        .whileTrue(new ArmExtendCommand(m_robotArm));
+    new JoystickButton(m_driverController, Button.kBack.value)
+        .whileFalse(new ArmRetractCommand(m_robotArm));
+
+    new JoystickButton(m_driverController, Button.kA.value)
+        .whileTrue(new ClawGrabCommand(m_robotArm));
+
+    new JoystickButton(m_driverController, Button.kA.value)
+        .whileFalse(new ClawReleaseCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
         .onTrue(new BalanceGyroSetZeroCommand(m_robotDrive));

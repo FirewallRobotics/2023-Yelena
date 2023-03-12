@@ -45,17 +45,17 @@ public final class Constants {
     public static final double kFrontLeftChassisAngularOffset = -Math.PI / 2;
     public static final double kFrontRightChassisAngularOffset = 0;
     public static final double kBackLeftChassisAngularOffset = Math.PI;
-    public static final double kBackRightChassisAngularOffset = -Math.PI / 2;
+    public static final double kBackRightChassisAngularOffset = Math.PI / 2;
 
     // SPARK MAX CAN IDs
-    public static final int kFrontLeftDrivingCanId = 6;
-    public static final int kRearLeftDrivingCanId = 7;
-    public static final int kFrontRightDrivingCanId = 1;
+    public static final int kFrontLeftDrivingCanId = 8;
+    public static final int kRearLeftDrivingCanId = 3;
+    public static final int kFrontRightDrivingCanId = 4;
     public static final int kRearRightDrivingCanId = 5;
 
-    public static final int kFrontLeftTurningCanId = 3;
-    public static final int kRearLeftTurningCanId = 8;
-    public static final int kFrontRightTurningCanId = 4;
+    public static final int kFrontLeftTurningCanId = 7;
+    public static final int kRearLeftTurningCanId = 6;
+    public static final int kFrontRightTurningCanId = 1;
     public static final int kRearRightTurningCanId = 2;
 
     public static final boolean kGyroReversed = false;
@@ -162,18 +162,17 @@ public final class Constants {
 
     public static final int kMasterArmMotorPort = 9;
     public static final int kMinionArmMotorPort = 10;
-    public static final int kMidHeight = 0;
-    public static final int kMidLength = 0;
-    public static final int kMaxHeight = 0;
-    public static final int kMaxLength = 0;
-    public static final int kDefaultHeight = 0;
+    public static final double kMidHeight = 0;
+    public static final double kMaxHeight = .511;
+    public static final double kStartingHeight = .883;
+    public static final double kDefaultHeight = .631;
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;
-    public static final int kExtSolPort1 = 1;
-    public static final int kExtSolPort2 = 2;
-    public static final int kClawSolPort1 = 3;
-    public static final int kClawSolPort2 = 4;
+    public static final int kExtSolPort1 = 4;
+    public static final int kExtSolPort2 = 7;
+    public static final int kClawSolPort1 = 2;
+    public static final int kClawSolPort2 = 3;
   }
 
   public static final class VisionConstants {

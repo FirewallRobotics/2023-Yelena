@@ -1,5 +1,3 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import com.revrobotics.REVPhysicsSim;
 import edu.wpi.first.hal.HAL;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
@@ -8,7 +6,6 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 class ArmTest {
   ArmSubsystem m_arm = new ArmSubsystem();
@@ -36,19 +33,5 @@ class ArmTest {
   @AfterEach
   void shutdown() throws Exception {
     m_arm.close();
-  }
-
-  @Test
-  void armExtendHighTest() {
-    m_arm.ArmExtendCommand();
-    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MasterArmMotor.get());
-    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MinionArmMotor.get());
-  }
-
-  @Test
-  void armDefualtPositionTest() {
-    m_arm.ArmRetractCommand();
-    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MasterArmMotor.get());
-    assertEquals(ArmConstants.kMaxLength, ArmSubsystem.MinionArmMotor.get());
   }
 }

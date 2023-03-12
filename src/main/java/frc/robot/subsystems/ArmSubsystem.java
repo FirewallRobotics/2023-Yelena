@@ -61,6 +61,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
 
     ArmPIDController = MasterArmMotor.getPIDController();
     ArmPIDController.setFeedbackDevice(ArmEncoder);
+    ArmPIDController.setPositionPIDWrappingEnabled(true);
 
     ArmPIDController.setP(kP);
     ArmPIDController.setI(kI);
@@ -70,14 +71,14 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     ArmPIDController.setOutputRange(kMinOutput, kMaxOutput);
   }
 
-  public void GravityOffset(int ktargetPos) {
+  public void GravityOffset(double kdefaultheight) {
     double kMeasuredPosHorizontal =
-        0.297; // position measured when arm is horizontal (with Pheonix Tuner)
+        0; // position measured when arm is horizontal (with Pheonix Tuner)
     double currentPos = ArmEncoder.getPosition();
     double radians = currentPos - kMeasuredPosHorizontal;
     double cosineScalar = java.lang.Math.cos(radians);
     ArmPIDController.setFF(kFF * cosineScalar);
-    ArmPIDController.setReference(ktargetPos, CANSparkMax.ControlType.kPosition);
+    ArmPIDController.setReference(kdefaultheight, CANSparkMax.ControlType.kPosition);
   }
 
   public static void ArmExtendCommand() {
@@ -105,7 +106,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     System.out.println("Returning to default elevation...");
   }
 
-  public void ClawGrabConeCommand() {
+  public void ClawGrabCommand() {
     ClawSolenoid.set(Value.kForward);
     System.out.println("Grabbing cone...");
   }
@@ -113,6 +114,14 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   public void ClawReleaseCommand() {
     ClawSolenoid.set(Value.kReverse);
     System.out.println("Releasing claw...");
+  }
+
+  public void ArmTestCommand() {
+    MasterArmMotor.set(.2);
+  }
+
+  public void ArmTestOffCommand() {
+    MasterArmMotor.set(0);
   }
 
   @Override
@@ -154,7 +163,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
       kMaxOutput = max;
     }
 
-    ArmPIDController.setReference(rotations, CANSparkMax.ControlType.kPosition);
+    // ArmPIDController.setReference(rotations, CANSparkMax.ControlType.kPosition);
 
     SmartDashboard.putNumber("SetPoint", rotations);
     SmartDashboard.putNumber("ProcessVariable", ArmEncoder.getPosition());
