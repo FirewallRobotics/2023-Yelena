@@ -47,6 +47,12 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     MasterArmMotor.restoreFactoryDefaults();
     MinionArmMotor.restoreFactoryDefaults();
 
+    MasterArmMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
+    MasterArmMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
+
+    MasterArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 48);
+    MasterArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0);
+
     MinionArmMotor.follow(MasterArmMotor, true);
 
     ExtendingSolenoid =
