@@ -165,27 +165,18 @@ public class RobotContainer {
     new JoystickButton(m_driverJoystick, 5)
         .whileTrue(new RunCommand(() -> m_LEDSubsystem.LightOff(), m_LEDSubsystem));*/
 
-    new JoystickButton(m_driverController, Button.kRightBumper.value)
+    new JoystickButton(m_driverController, Button.kB.value)
         .whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
 
     new JoystickButton(m_driverController, Button.kX.value)
-        .whileTrue(
-            new SequentialCommandGroup(
-                new ArmMidHeightCommand(m_robotArm), new ArmExtendCommand(m_robotArm)));
-
+        .toggleOnTrue(new ArmMidHeightCommand(m_robotArm));
     new JoystickButton(m_driverController, Button.kX.value)
-        .whileFalse(
-            new SequentialCommandGroup(
-                new ArmRetractCommand(m_robotArm), new ArmDefaultHeightCommand(m_robotArm)));
+        .toggleOnFalse(new ArmDefaultHeightCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Button.kY.value)
-        .whileTrue(
-            new SequentialCommandGroup(
-                new ArmMaxHeightCommand(m_robotArm), new ArmExtendCommand(m_robotArm)));
+        .toggleOnTrue(new ArmMaxHeightCommand(m_robotArm));
     new JoystickButton(m_driverController, Button.kY.value)
-        .whileFalse(
-            new SequentialCommandGroup(
-                new ArmRetractCommand(m_robotArm), new ArmDefaultHeightCommand(m_robotArm)));
+        .toggleOnFalse(new ArmDefaultHeightCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Button.kStart.value)
         .whileTrue(new ArmTestCommand(m_robotArm));
@@ -197,16 +188,20 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kBack.value)
         .whileFalse(new ArmRetractCommand(m_robotArm));
 
-    new JoystickButton(m_driverController, Button.kA.value)
-        .whileTrue(new ClawGrabCommand(m_robotArm));
-
-    new JoystickButton(m_driverController, Button.kA.value)
-        .whileFalse(new ClawReleaseCommand(m_robotArm));
+    new JoystickButton(m_driverController, Button.kRightBumper.value)
+        .toggleOnTrue(new ClawGrabCommand(m_robotArm));
+    new JoystickButton(m_driverController, Button.kRightBumper.value)
+        .toggleOnFalse(new ClawReleaseCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
-        .onTrue(new BalanceGyroSetZeroCommand(m_robotDrive));
+        .toggleOnTrue(new ArmExtendCommand(m_robotArm));
+    new JoystickButton(m_driverController, Button.kLeftBumper.value)
+        .toggleOnFalse(new ArmRetractCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Axis.kLeftTrigger.value)
+        .onTrue(new BalanceGyroSetZeroCommand(m_robotDrive));
+
+    new JoystickButton(m_driverController, Axis.kRightTrigger.value)
         .whileTrue(new AutoBalanceCommand(m_robotDrive, m_visionSubsystem));
 
     new POVButton(m_driverController, -1)
