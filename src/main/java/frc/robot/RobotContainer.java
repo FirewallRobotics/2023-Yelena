@@ -96,7 +96,7 @@ public class RobotContainer {
     m_chooser.addOption(
         "Autonomous Drive Shoot only", new AutoBalanceZeroGyroCommand(m_robotDrive));
 
-    SmartDashboard.putData("Auto Mode", m_chooser);
+    // SmartDashboard.putData("Auto Mode", m_chooser);
 
     /*m_robotDrive.drive(
                 -MathUtil.applyDeadband(m_driverJoystick.getY(), OIConstants.kDriveDeadband),
@@ -169,6 +169,9 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Axis.kLeftTrigger.value)
         .whileTrue(new AutoBalanceCommand(m_robotDrive, m_VisionSubsystem));
 
+    new JoystickButton(m_driverController, Button.kStart.value)
+        .toggleOnTrue(new TestArmMotorsComand(m_robotArm));
+
     new POVButton(m_driverController, -1)
         .whileFalse(new DriveDpadSneakCommand(m_robotDrive, m_driverController));
   }
@@ -178,7 +181,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
+  /*public Command getAutonomousCommand() {
     // Create config for trajectory
     TrajectoryConfig config =
         new TrajectoryConfig(
@@ -213,7 +216,7 @@ public class RobotContainer {
             new PIDController(AutoConstants.kPXController, 0, 0),
             new PIDController(AutoConstants.kPYController, 0, 0),
             thetaController,
-            m_robotDrive::setModuleStates,
+            m_robotDrive::setModuleStates,t
             m_robotDrive);
 
     // Reset odometry to the starting pose of the trajectory.
@@ -221,99 +224,548 @@ public class RobotContainer {
 
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
-  }
+  }*/
 
   public Command getAutonomousPowerStation(boolean isRedAlliance, int startingPos) {
-    // Create config for trajectory
-    TrajectoryConfig config =
-        new TrajectoryConfig(
-                AutoConstants.kMaxSpeedMetersPerSecond,
-                AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(DriveConstants.kDriveKinematics);
+    System.out.println("Get Autonomous Power Station " + isRedAlliance + " " + startingPos);
+    try {
+      // Create config for trajectory
+      TrajectoryConfig config =
+          new TrajectoryConfig(
+                  AutoConstants.kMaxSpeedMetersPerSecond,
+                  AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+              // Add kinematics to ensure max speed is actually obeyed
+              .setKinematics(DriveConstants.kDriveKinematics);
 
-    // An example trajectory to follow. All units in meters.
-    Trajectory exampleTrajectory =
-        TrajectoryGenerator.generateTrajectory(
-            // Start at the origin facing the +X direction
-            new Pose2d(0, 0, new Rotation2d(0)),
-            // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(0, 0)),
-            // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(0, 0, new Rotation2d(0)),
-            config);
-
-    if (startingPos == 1) {
-      exampleTrajectory =
+      // An example trajectory to follow. All units in meters.
+      Trajectory exampleTrajectory =
           TrajectoryGenerator.generateTrajectory(
               // Start at the origin facing the +X direction
-              new Pose2d(AutoConstants.startingX1, AutoConstants.startingY1, new Rotation2d(Math.PI)),
+              new Pose2d(0, 0, new Rotation2d(0)),
               // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(AutoConstants.startingX1 + 1.8, 0)),
+              List.of(new Translation2d(0, 0)),
               // End 3 meters straight ahead of where we started, facing forward
-              new Pose2d(AutoConstants.startingX1 + 1.8, AutoConstants.startingY1, new Rotation2d(0)),
+              new Pose2d(0, 0, new Rotation2d(0)),
               config);
+      if ((startingPos == 1) && (isRedAlliance == true)) {
+        exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(
+                    AutoConstants.startingX1, AutoConstants.startingY1, new Rotation2d(Math.PI)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(AutoConstants.startingX1 - .8, AutoConstants.startingY1)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX1 - 1.6,
+                    AutoConstants.startingY1,
+                    new Rotation2d(Math.PI)),   
+                config);
+            //SmartDashboard.putData(DriveSubsystem.m_field);
+
+            //DriveSubsystem.m_field.getObject("traj").setTrajectory(exampleTrajectory);
+      } else if ((startingPos == 1) && (isRedAlliance == false)) {
+        exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(AutoConstants.startingX4, AutoConstants.startingY4, new Rotation2d(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(AutoConstants.startingX4 + .8, 0)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX4 + 1.6, AutoConstants.startingY4, new Rotation2d(0)),
+                config);
+      } else {
+        exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(0, 0, new Rotation2d(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(0, 0)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(0, 0, new Rotation2d(0)),
+                config);
+      }
+
+      var thetaController =
+          new ProfiledPIDController(
+              AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
+      thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+      SwerveControllerCommand swerveControllerCommand =
+          new SwerveControllerCommand(
+              exampleTrajectory,
+              m_robotDrive::getPose, // Functional interface to feed supplier
+              DriveConstants.kDriveKinematics,
+
+              // Position controllers
+              new PIDController(AutoConstants.kPXController, 0, 0),
+              new PIDController(AutoConstants.kPYController, 0, 0),
+              thetaController,
+              m_robotDrive::setModuleStates,
+              m_robotDrive);
+
+      // Reset odometry to the starting pose of the trajectory.
+      m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
+
+      // Run path following command, then stop at the end.
+      return new AutoBalanceZeroGyroCommand(m_robotDrive)
+          .andThen(swerveControllerCommand)
+          .andThen(new AutoBalanceCommand(m_robotDrive, m_VisionSubsystem));
+    } catch (Exception e) {
+      System.out.println("Error: " + e);
     }
-    if (startingPos == 2) {
-      exampleTrajectory =
-          TrajectoryGenerator.generateTrajectory(
-              // Start at the origin facing the +X direction
-              new Pose2d(AutoConstants.startingX2, AutoConstants.startingY2, new Rotation2d(Math.PI)),
-              // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(-5, 0)),
-              // End 3 meters straight ahead of where we started, facing forward
-              new Pose2d(-5, 0, new Rotation2d(0)),
-              config);
-    }
-    if (startingPos == 3) {
-      exampleTrajectory =
-          TrajectoryGenerator.generateTrajectory(
-              // Start at the origin facing the +X direction
-              new Pose2d(AutoConstants.startingX3, AutoConstants.startingY3, new Rotation2d(Math.PI)),
-              // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(-5, 0)),
-              // End 3 meters straight ahead of where we started, facing forward
-              new Pose2d(-5, 0, new Rotation2d(0)),
-              config);
-    }
-    if (startingPos == 4) {
-      exampleTrajectory =
-          TrajectoryGenerator.generateTrajectory(
-              // Start at the origin facing the +X direction
-              new Pose2d(AutoConstants.startingX4, AutoConstants.startingY4, new Rotation2d(Math.PI)),
-              // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(-5, 0)),
-              // End 3 meters straight ahead of where we started, facing forward
-              new Pose2d(-5, 0, new Rotation2d(0)),
-              config);
-    }
-
-    var thetaController =
-        new ProfiledPIDController(
-            AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    SwerveControllerCommand swerveControllerCommand =
-        new SwerveControllerCommand(
-            exampleTrajectory,
-            m_robotDrive::getPose, // Functional interface to feed supplier
-            DriveConstants.kDriveKinematics,
-
-            // Position controllers
-            new PIDController(AutoConstants.kPXController, 0, 0),
-            new PIDController(AutoConstants.kPYController, 0, 0),
-            thetaController,
-            m_robotDrive::setModuleStates,
-            m_robotDrive);
-
-    // Reset odometry to the starting pose of the trajectory.
-    m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
-
-    // Run path following command, then stop at the end.
-    return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
+    return new AutoBalanceZeroGyroCommand(m_robotDrive);
   }
 
-  public Command getAutonomousShotAndPowerStation(boolean isRedAlliance, int startingPos) {
+  public Command getAutonomousScore(boolean isRedAlliance, int startingPos) {
+    try {
+      TrajectoryConfig config =
+          new TrajectoryConfig(
+                  AutoConstants.kMaxSpeedMetersPerSecond,
+                  AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+              // Add kinematics to ensure max speed is actually obeyed
+              .setKinematics(DriveConstants.kDriveKinematics);
+
+      // An example trajectory to follow. All units in meters.
+      Trajectory exampleTrajectory =
+          TrajectoryGenerator.generateTrajectory(
+              // Start at the origin facing the +X direction
+              new Pose2d(0, 0, new Rotation2d(0)),
+              // Pass through these two interior waypoints, making an 's' curve path
+              List.of(new Translation2d(0, 0)),
+              // End 3 meters straight ahead of where we started, facing forward
+              new Pose2d(0, 0, new Rotation2d(0)),
+              config);
+
+      Trajectory exampleTrajectory2 =
+          TrajectoryGenerator.generateTrajectory(
+              // Start at the origin facing the +X direction
+              new Pose2d(0, 0, new Rotation2d(0)),
+              // Pass through these two interior waypoints, making an 's' curve path
+              List.of(new Translation2d(0, 0)),
+              // End 3 meters straight ahead of where we started, facing forward
+              new Pose2d(0, 0, new Rotation2d(0)),
+              config);
+
+      if ((startingPos == 1) && (isRedAlliance == true)) {
+        exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(AutoConstants.startingX1, AutoConstants.startingY1, new Rotation2d(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(AutoConstants.startingX1 + .2, AutoConstants.startingY1)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX1 + .4, AutoConstants.startingY1, new Rotation2d(0)),
+                config);
+
+        exampleTrajectory2 =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(
+                    AutoConstants.startingX1 + .4,
+                    AutoConstants.startingY1,
+                    new Rotation2d(Math.PI)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(
+                    new Translation2d(AutoConstants.startingX1 - 1.7, AutoConstants.startingY1)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX1 - 3.4,
+                    AutoConstants.startingY1,
+                    new Rotation2d(Math.PI)),
+                config);
+      } else if ((startingPos == 1) && (isRedAlliance == false)) {
+        exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(
+                    AutoConstants.startingX4, AutoConstants.startingY4, new Rotation2d(Math.PI)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(AutoConstants.startingX4 - .2, AutoConstants.startingY4)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX4 - .4,
+                    AutoConstants.startingY4,
+                    new Rotation2d(Math.PI)),
+                config);
+
+        exampleTrajectory2 =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(
+                    AutoConstants.startingX4 - .4, AutoConstants.startingY4, new Rotation2d(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(
+                    new Translation2d(AutoConstants.startingX4 + 1.7, AutoConstants.startingY4)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX4 + 3.4, AutoConstants.startingY4, new Rotation2d(0)),
+                config);
+
+      } else if ((startingPos == 2) && (isRedAlliance == true)) {
+        exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(AutoConstants.startingX2, AutoConstants.startingY2, new Rotation2d(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(AutoConstants.startingX2 + .2, AutoConstants.startingY2)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX2 + .4, AutoConstants.startingY2, new Rotation2d(0)),
+                config);
+
+        exampleTrajectory2 =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                List.of(
+                    new Pose2d(
+                        AutoConstants.startingX2 + .4,
+                        AutoConstants.startingY2,
+                        new Rotation2d((Math.PI * 3) / 2)),
+                    new Pose2d(
+                        AutoConstants.startingX2 + .4,
+                        AutoConstants.startingY2 - .375,
+                        new Rotation2d((Math.PI * 3) / 2)),
+                    new Pose2d(
+                        AutoConstants.startingX2 + .4,
+                        AutoConstants.startingY2 - .75,
+                        new Rotation2d(0)),
+                    new Pose2d(
+                        AutoConstants.startingX2 - 1.7,
+                        AutoConstants.startingY2 - .75,
+                        new Rotation2d(0)),
+                    new Pose2d(
+                        AutoConstants.startingX2 - 3.4,
+                        AutoConstants.startingY2 - .75,
+                        new Rotation2d(0))),
+                config);
+      } else if ((startingPos == 2) && (isRedAlliance == false)) {
+        exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(
+                    AutoConstants.startingX5, AutoConstants.startingY5, new Rotation2d(Math.PI)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(AutoConstants.startingX5 - .2, AutoConstants.startingY5)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX5 - .4,
+                    AutoConstants.startingY5,
+                    new Rotation2d(Math.PI)),
+                config);
+
+        exampleTrajectory2 =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                List.of(
+                    new Pose2d(
+                        AutoConstants.startingX5 - .4,
+                        AutoConstants.startingY5,
+                        new Rotation2d((Math.PI * 3) / 2)),
+                    new Pose2d(
+                        AutoConstants.startingX5 - .4,
+                        AutoConstants.startingY5 - .375,
+                        new Rotation2d((Math.PI * 3) / 2)),
+                    new Pose2d(
+                        AutoConstants.startingX5 - .4,
+                        AutoConstants.startingY5 - .75,
+                        new Rotation2d(0)),
+                    new Pose2d(
+                        AutoConstants.startingX5 + 1.7,
+                        AutoConstants.startingY5 - .75,
+                        new Rotation2d(0)),
+                    new Pose2d(
+                        AutoConstants.startingX5 + 3.4,
+                        AutoConstants.startingY5 - .75,
+                        new Rotation2d(0))),
+                config);
+
+      } else if ((startingPos == 3) && (isRedAlliance == true)) {
+        exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(AutoConstants.startingX3, AutoConstants.startingY3, new Rotation2d(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(AutoConstants.startingX3 + .2, AutoConstants.startingY3)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX3 + .4, AutoConstants.startingY3, new Rotation2d(0)),
+                config);
+
+        exampleTrajectory2 =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                List.of(
+                    new Pose2d(
+                        AutoConstants.startingX3 + .4,
+                        AutoConstants.startingY3,
+                        new Rotation2d(Math.PI / 2)),
+                    new Pose2d(
+                        AutoConstants.startingX3 + .4,
+                        AutoConstants.startingY3 + .375,
+                        new Rotation2d(Math.PI / 2)),
+                    new Pose2d(
+                        AutoConstants.startingX3 + .4,
+                        AutoConstants.startingY3 + .75,
+                        new Rotation2d(0)),
+                    new Pose2d(
+                        AutoConstants.startingX3 - 1.7,
+                        AutoConstants.startingY3 + .75,
+                        new Rotation2d(0)),
+                    new Pose2d(
+                        AutoConstants.startingX3 - 3.4,
+                        AutoConstants.startingY3 + .75,
+                        new Rotation2d(0))),
+                config);
+      } else if ((startingPos == 3) && (isRedAlliance == false)) {
+        exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(
+                    AutoConstants.startingX6, AutoConstants.startingY6, new Rotation2d(Math.PI)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(AutoConstants.startingX6 - .2, AutoConstants.startingY6)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX6 - .4,
+                    AutoConstants.startingY6,
+                    new Rotation2d(Math.PI)),
+                config);
+
+        exampleTrajectory2 =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                List.of(
+                    new Pose2d(
+                        AutoConstants.startingX6 - .4,
+                        AutoConstants.startingY6,
+                        new Rotation2d(Math.PI / 2)),
+                    new Pose2d(
+                        AutoConstants.startingX6 - .4,
+                        AutoConstants.startingY6 + .375,
+                        new Rotation2d(Math.PI / 2)),
+                    new Pose2d(
+                        AutoConstants.startingX6 - .4,
+                        AutoConstants.startingY6 + .75,
+                        new Rotation2d(0)),
+                    new Pose2d(
+                        AutoConstants.startingX6 + 1.7,
+                        AutoConstants.startingY6 + .75,
+                        new Rotation2d(0)),
+                    new Pose2d(
+                        AutoConstants.startingX6 + 3.4,
+                        AutoConstants.startingY6 + .75,
+                        new Rotation2d(0))),
+                config);
+      } else {
+        exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(0, 0, new Rotation2d(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(0, 0)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(0, 0, new Rotation2d(0)),
+                config);
+      }
+
+      var thetaController =
+          new ProfiledPIDController(
+              AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
+      thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+      SwerveControllerCommand swerveControllerCommand =
+          new SwerveControllerCommand(
+              exampleTrajectory,
+              m_robotDrive::getPose, // Functional interface to feed supplier
+              DriveConstants.kDriveKinematics,
+
+              // Position controllers
+              new PIDController(AutoConstants.kPXController, 0, 0),
+              new PIDController(AutoConstants.kPYController, 0, 0),
+              thetaController,
+              m_robotDrive::setModuleStates,
+              m_robotDrive);
+
+      SwerveControllerCommand swerveControllerCommand2 =
+          new SwerveControllerCommand(
+              exampleTrajectory2,
+              m_robotDrive::getPose, // Functional interface to feed supplier
+              DriveConstants.kDriveKinematics,
+
+              // Position controllers
+              new PIDController(AutoConstants.kPXController, 0, 0),
+              new PIDController(AutoConstants.kPYController, 0, 0),
+              thetaController,
+              m_robotDrive::setModuleStates,
+              m_robotDrive);
+
+      // Reset odometry to the starting pose of the trajectory.
+      m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
+
+      // Run path following command, then stop at the end.
+      return new AutoBalanceZeroGyroCommand(m_robotDrive)
+          .andThen(swerveControllerCommand)
+          .andThen(new ArmMaxHeightCommand(m_robotArm))
+          .andThen(new ArmExtendCommand(m_robotArm))
+          .andThen(new ClawReleaseCommand(m_robotArm))
+          .andThen(new ArmRetractCommand(m_robotArm))
+          .andThen(swerveControllerCommand2)
+          .andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
+      // .andThen(new DriveAdjustCommand(m_robotDrive))
+    } catch (Exception e) {
+      System.out.println("Error: " + e);
+    }
+    return new AutoBalanceZeroGyroCommand(m_robotDrive);
+  }
+
+  public Command getAutonomousScoreAndPowerStation(boolean isRedAlliance, int startingPos) {
+    try {
+      TrajectoryConfig config =
+          new TrajectoryConfig(
+                  AutoConstants.kMaxSpeedMetersPerSecond,
+                  AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+              // Add kinematics to ensure max speed is actually obeyed
+              .setKinematics(DriveConstants.kDriveKinematics);
+
+      // An example trajectory to follow. All units in meters.
+      Trajectory exampleTrajectory =
+          TrajectoryGenerator.generateTrajectory(
+              // Start at the origin facing the +X direction
+              new Pose2d(0, 0, new Rotation2d(0)),
+              // Pass through these two interior waypoints, making an 's' curve path
+              List.of(new Translation2d(0, 0)),
+              // End 3 meters straight ahead of where we started, facing forward
+              new Pose2d(0, 0, new Rotation2d(0)),
+              config);
+
+      Trajectory exampleTrajectory2 =
+          TrajectoryGenerator.generateTrajectory(
+              // Start at the origin facing the +X direction
+              new Pose2d(0, 0, new Rotation2d(0)),
+              // Pass through these two interior waypoints, making an 's' curve path
+              List.of(new Translation2d(0, 0)),
+              // End 3 meters straight ahead of where we started, facing forward
+              new Pose2d(0, 0, new Rotation2d(0)),
+              config);
+
+      if ((startingPos == 1) && (isRedAlliance == true)) {
+        exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(AutoConstants.startingX1, AutoConstants.startingY1, new Rotation2d(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(AutoConstants.startingX1 + .2, AutoConstants.startingY1)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX1 + .4, AutoConstants.startingY1, new Rotation2d(0)),
+                config);
+
+        exampleTrajectory2 =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(
+                    AutoConstants.startingX1 + .4,
+                    AutoConstants.startingY1,
+                    new Rotation2d(Math.PI)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(AutoConstants.startingX1 - .8, AutoConstants.startingY1)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX1 - 1.6,
+                    AutoConstants.startingY1,
+                    new Rotation2d(Math.PI)),
+                config);
+      } else if ((startingPos == 1) && (isRedAlliance == false)) {
+        exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(
+                    AutoConstants.startingX4, AutoConstants.startingY4, new Rotation2d(Math.PI)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(AutoConstants.startingX4 - .2, AutoConstants.startingY4)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX4 - .4,
+                    AutoConstants.startingY4,
+                    new Rotation2d(Math.PI)),
+                config);
+
+        exampleTrajectory2 =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(
+                    AutoConstants.startingX4 - .4, AutoConstants.startingY4, new Rotation2d(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(AutoConstants.startingX4 + .8, AutoConstants.startingY4)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(
+                    AutoConstants.startingX4 + 1.6, AutoConstants.startingY4, new Rotation2d(0)),
+                config);
+      } else {
+        exampleTrajectory =
+            TrajectoryGenerator.generateTrajectory(
+                // Start at the origin facing the +X direction
+                new Pose2d(0, 0, new Rotation2d(0)),
+                // Pass through these two interior waypoints, making an 's' curve path
+                List.of(new Translation2d(0, 0)),
+                // End 3 meters straight ahead of where we started, facing forward
+                new Pose2d(0, 0, new Rotation2d(0)),
+                config);
+      }
+
+      var thetaController =
+          new ProfiledPIDController(
+              AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
+      thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+      SwerveControllerCommand swerveControllerCommand =
+          new SwerveControllerCommand(
+              exampleTrajectory,
+              m_robotDrive::getPose, // Functional interface to feed supplier
+              DriveConstants.kDriveKinematics,
+
+              // Position controllers
+              new PIDController(AutoConstants.kPXController, 0, 0),
+              new PIDController(AutoConstants.kPYController, 0, 0),
+              thetaController,
+              m_robotDrive::setModuleStates,
+              m_robotDrive);
+
+      SwerveControllerCommand swerveControllerCommand2 =
+          new SwerveControllerCommand(
+              exampleTrajectory2,
+              m_robotDrive::getPose, // Functional interface to feed supplier
+              DriveConstants.kDriveKinematics,
+
+              // Position controllers
+              new PIDController(AutoConstants.kPXController, 0, 0),
+              new PIDController(AutoConstants.kPYController, 0, 0),
+              thetaController,
+              m_robotDrive::setModuleStates,
+              m_robotDrive);
+
+      // Reset odometry to the starting pose of the trajectory.
+      m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
+
+      // Run path following command, then stop at the end.
+      return new AutoBalanceZeroGyroCommand(m_robotDrive)
+          .andThen(swerveControllerCommand)
+          .andThen(new ArmMaxHeightCommand(m_robotArm))
+          .andThen(new ArmExtendCommand(m_robotArm))
+          .andThen(new ClawReleaseCommand(m_robotArm))
+          .andThen(new ArmRetractCommand(m_robotArm))
+          .andThen(swerveControllerCommand2)
+          .andThen(new AutoBalanceCommand(m_robotDrive, m_VisionSubsystem));
+    } catch (Exception e) {
+      System.out.println("Error: " + e);
+    }
+    return new AutoBalanceZeroGyroCommand(m_robotDrive);
+  }
+
+  /*public Command getAutonomousDoubleScore(boolean isRedAlliance, int startingPos) {
     TrajectoryConfig config =
         new TrajectoryConfig(
                 AutoConstants.kMaxSpeedMetersPerSecond,
@@ -338,9 +790,10 @@ public class RobotContainer {
               // Start at the origin facing the +X direction
               new Pose2d(AutoConstants.startingX1, AutoConstants.startingY1, new Rotation2d(0)),
               // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(-5, 0)),
+              List.of(new Translation2d(AutoConstants.startingX1 + .4, AutoConstants.startingY1)),
               // End 3 meters straight ahead of where we started, facing forward
-              new Pose2d(-5, 0, new Rotation2d(0)),
+              new Pose2d(
+                  AutoConstants.startingX1 + .4, AutoConstants.startingY1, new Rotation2d(0)),
               config);
     }
     if (startingPos == 2) {
@@ -349,9 +802,10 @@ public class RobotContainer {
               // Start at the origin facing the +X direction
               new Pose2d(AutoConstants.startingX2, AutoConstants.startingY2, new Rotation2d(0)),
               // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(-5, 0)),
+              List.of(new Translation2d(AutoConstants.startingX2 + .4, AutoConstants.startingY2)),
               // End 3 meters straight ahead of where we started, facing forward
-              new Pose2d(-5, 0, new Rotation2d(0)),
+              new Pose2d(
+                  AutoConstants.startingX2 + .4, AutoConstants.startingY2, new Rotation2d(0)),
               config);
     }
     if (startingPos == 3) {
@@ -360,20 +814,10 @@ public class RobotContainer {
               // Start at the origin facing the +X direction
               new Pose2d(AutoConstants.startingX3, AutoConstants.startingY3, new Rotation2d(0)),
               // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(-5, 0)),
+              List.of(new Translation2d(AutoConstants.startingX3 + .4, AutoConstants.startingY3)),
               // End 3 meters straight ahead of where we started, facing forward
-              new Pose2d(-5, 0, new Rotation2d(0)),
-              config);
-    }
-    if (startingPos == 4) {
-      exampleTrajectory =
-          TrajectoryGenerator.generateTrajectory(
-              // Start at the origin facing the +X direction
-              new Pose2d(AutoConstants.startingX4, AutoConstants.startingY4, new Rotation2d(0)),
-              // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(-5, 0)),
-              // End 3 meters straight ahead of where we started, facing forward
-              new Pose2d(-5, 0, new Rotation2d(0)),
+              new Pose2d(
+                  AutoConstants.startingX3 + .4, AutoConstants.startingY3, new Rotation2d(0)),
               config);
     }
 
@@ -400,102 +844,11 @@ public class RobotContainer {
 
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
-  }
-
-  public Command getAutonomousDoubleShot(boolean isRedAlliance, int startingPos) {
-    TrajectoryConfig config =
-        new TrajectoryConfig(
-                AutoConstants.kMaxSpeedMetersPerSecond,
-                AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(DriveConstants.kDriveKinematics);
-
-    // An example trajectory to follow. All units in meters.
-    Trajectory exampleTrajectory =
-        TrajectoryGenerator.generateTrajectory(
-            // Start at the origin facing the +X direction
-            new Pose2d(0, 0, new Rotation2d(0)),
-            // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(0, 0)),
-            // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(0, 0, new Rotation2d(0)),
-            config);
-
-    if (startingPos == 1) {
-      exampleTrajectory =
-          TrajectoryGenerator.generateTrajectory(
-              // Start at the origin facing the +X direction
-              new Pose2d(AutoConstants.startingX1, AutoConstants.startingY1, new Rotation2d(0)),
-              // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(-5, 0)),
-              // End 3 meters straight ahead of where we started, facing forward
-              new Pose2d(-5, 0, new Rotation2d(0)),
-              config);
-    }
-    if (startingPos == 2) {
-      exampleTrajectory =
-          TrajectoryGenerator.generateTrajectory(
-              // Start at the origin facing the +X direction
-              new Pose2d(AutoConstants.startingX2, AutoConstants.startingY2, new Rotation2d(0)),
-              // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(-5, 0)),
-              // End 3 meters straight ahead of where we started, facing forward
-              new Pose2d(-5, 0, new Rotation2d(0)),
-              config);
-    }
-    if (startingPos == 3) {
-      exampleTrajectory =
-          TrajectoryGenerator.generateTrajectory(
-              // Start at the origin facing the +X direction
-              new Pose2d(AutoConstants.startingX3, AutoConstants.startingY3, new Rotation2d(0)),
-              // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(-5, 0)),
-              // End 3 meters straight ahead of where we started, facing forward
-              new Pose2d(-5, 0, new Rotation2d(0)),
-              config);
-    }
-    if (startingPos == 4) {
-      exampleTrajectory =
-          TrajectoryGenerator.generateTrajectory(
-              // Start at the origin facing the +X direction
-              new Pose2d(AutoConstants.startingX4, AutoConstants.startingY4, new Rotation2d(0)),
-              // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(-5, 0)),
-              // End 3 meters straight ahead of where we started, facing forward
-              new Pose2d(-5, 0, new Rotation2d(0)),
-              config);
-    }
-
-    var thetaController =
-        new ProfiledPIDController(
-            AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
-    thetaController.enableContinuousInput(-Math.PI, Math.PI);
-
-    SwerveControllerCommand swerveControllerCommand =
-        new SwerveControllerCommand(
-            exampleTrajectory,
-            m_robotDrive::getPose, // Functional interface to feed supplier
-            DriveConstants.kDriveKinematics,
-
-            // Position controllers
-            new PIDController(AutoConstants.kPXController, 0, 0),
-            new PIDController(AutoConstants.kPYController, 0, 0),
-            thetaController,
-            m_robotDrive::setModuleStates,
-            m_robotDrive);
-
-    // Reset odometry to the starting pose of the trajectory.
-    m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
-
-    // Run path following command, then stop at the end.
-    return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
-  }
+  } */
 
   private double GetSpeed() {
     if (m_driverController.getAButton()) {
       return DriveConstants.kSprintSpeed;
-    } else if (m_driverController.getXButton()) {
-      return DriveConstants.kSneakSpeed;
     } else {
       return DriveConstants.kDefaultSpeed;
     }

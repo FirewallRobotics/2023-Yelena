@@ -47,9 +47,8 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     MasterArmMotor.restoreFactoryDefaults();
     MinionArmMotor.restoreFactoryDefaults();
 
+    MasterArmMotor.setInverted(true);
     MinionArmMotor.follow(MasterArmMotor);
-
-    MinionArmMotor.setInverted(true);
 
     ExtendingSolenoid =
         new DoubleSolenoid(
@@ -117,6 +116,11 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   public void ClawReleaseCommand() {
     ClawSolenoid.set(Value.kReverse);
     System.out.println("Releasing claw...");
+  }
+
+  public void TestArmMotorsCommand() {
+    MasterArmMotor.set(.5);
+    System.out.println("TestingArmMotors");
   }
 
   @Override
