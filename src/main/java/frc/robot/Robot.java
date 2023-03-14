@@ -10,7 +10,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -19,7 +18,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.DriveConstants;
 import java.util.List;
 
 /**
@@ -46,17 +46,34 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
 
     m_robotContainer = new RobotContainer();
-
+    TrajectoryConfig config =
+        new TrajectoryConfig(
+                AutoConstants.kMaxSpeedMetersPerSecond,
+                AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(DriveConstants.kDriveKinematics);
     m_trajectory =
+        /*.generateTrajectory(
+        List.of(
+                new Pose2d(AutoConstants.startingX3 + .4, AutoConstants.startingY3, new Rotation2d(Math.PI/2)),
+                new Pose2d(AutoConstants.startingX3 + .4, AutoConstants.startingY3 + .375, new Rotation2d(Math.PI/2)),
+                new Pose2d(AutoConstants.startingX3 + .4, AutoConstants.startingY3 + .75, new Rotation2d (Math.PI)),
+                new Pose2d(AutoConstants.startingX3 - 1.7, AutoConstants.startingY3 + .75, new Rotation2d (Math.PI)),
+                new Pose2d(AutoConstants.startingX3 - 3.4, AutoConstants.startingY3 + .75, new Rotation2d (Math.PI))),
+                config);*/
+
+        // Start at the origin facing the +X direction
         TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-            List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-            new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
-            new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0)));
+            new Pose2d(AutoConstants.startingX4 - .4, AutoConstants.startingY4, new Rotation2d(0)),
+            // Pass through these two interior waypoints, making an 's' curve path
+            List.of(new Translation2d(AutoConstants.startingX4 + .8, AutoConstants.startingY4)),
+            // End 3 meters straight ahead of where we started, facing forward
+            new Pose2d(AutoConstants.startingX4 + 1.6, AutoConstants.startingY4, new Rotation2d(0)),
+            config);
 
-    SmartDashboard.putData(DriveSubsystem.m_field);
+    // SmartDashboard.putData(DriveSubsystem.m_field);
 
-    DriveSubsystem.m_field.getObject("traj").setTrajectory(m_trajectory);
+    // DriveSubsystem.m_field.getObject("traj").setTrajectory(m_trajectory);
   }
 
   /**
@@ -96,17 +113,28 @@ public class Robot extends TimedRobot {
     NetworkTable fmsinfo = inst.getTable("FMSInfo");
     NetworkTableEntry isRedAlliance = fmsinfo.getEntry("IsRedAlliance");
     boolean red_alliance = isRedAlliance.getBoolean(false);
-    // SmartDashboard.putBoolean("isRedAlliance", red_alliance);
+    SmartDashboard.putNumber("Auto Start Position", 1);
+    int startingPos =
+        Math.toIntExact(Math.round(SmartDashboard.getNumber("Auto Start Position", 1)));
+    SmartDashboard.putBoolean("isRedAlliance", red_alliance);
 
     // schedule the autonomous command (example)
-    TacticChooser.setDefaultOption("Score & Balance", m_robotContainer.getAutonomousDoubleShot());
+    /*TacticChooser.setDefaultOption(
+    "Double Shot", m_robotContainer.getAutonomousDoubleShot(red_alliance, startingPos));*/
+    TacticChooser.addOption(
+        "Power Station", m_robotContainer.getAutonomousPowerStation(red_alliance, startingPos));
 
     TacticChooser.addOption(
-        "Score & Get Cone", m_robotContainer.getAutonomousShotAndPowerStation());
+        "Single Score", m_robotContainer.getAutonomousScore(red_alliance, startingPos));
 
-    TacticChooser.addOption("Score & Get Cubue", m_robotContainer.getAutonomousPowerStation());
+    TacticChooser.addOption(
+        "Power Station and Score",
+        m_robotContainer.getAutonomousScoreAndPowerStation(red_alliance, startingPos));
 
-    TacticChooser.addOption("Score Only", m_robotContainer.getAutonomousPowerStation());
+    TacticChooser.addOption(
+        "Double Score", m_robotContainer.getAutonomousScore(red_alliance, startingPos));
+
+    SmartDashboard.putData("Autonomous Mode", TacticChooser);
 
     /*GridPosChooser.setDefaultOption("Red Grid Position 1",  m_robotContainer.getAutonomousRedGridPos1());
 

@@ -25,7 +25,7 @@ public class AutoBalanceCommand extends CommandBase {
   public void execute() {
     // TODO Auto-generated method stub
 
-    double angle = m_drive.m_gyro.getXComplementaryAngle();
+    double angle = m_drive.m_gyro.getYComplementaryAngle();
 
     if (Math.abs(angle) <= gyroAngleRange) // Balanced
     {
