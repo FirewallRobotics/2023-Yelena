@@ -116,7 +116,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("Auto Start Position", 1);
     int startingPos =
         Math.toIntExact(Math.round(SmartDashboard.getNumber("Auto Start Position", 1)));
-    SmartDashboard.putBoolean("isRedAlliance", red_alliance);
+    // SmartDashboard.putBoolean("isRedAlliance", red_alliance);
 
     // schedule the autonomous command (example)
     /*TacticChooser.setDefaultOption(
@@ -131,8 +131,8 @@ public class Robot extends TimedRobot {
         "Power Station and Score",
         m_robotContainer.getAutonomousScoreAndPowerStation(red_alliance, startingPos));
 
-    TacticChooser.addOption(
-        "Double Score", m_robotContainer.getAutonomousScore(red_alliance, startingPos));
+    /*TacticChooser.addOption(
+    "Double Score", m_robotContainer.getAutonomousScore(red_alliance, startingPos));*/
 
     SmartDashboard.putData("Autonomous Mode", TacticChooser);
 
@@ -144,10 +144,11 @@ public class Robot extends TimedRobot {
 
     GridPosChooser.addOption("Blue Grid Position 2",  m_robotContainer.getAutonomousBlueGridPos2());*/
 
-    m_autonomousCommand = GridPosChooser.getSelected();
+    m_autonomousCommand = TacticChooser.getSelected();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
+      System.out.println("Scheduled");
     }
   }
 
@@ -163,6 +164,7 @@ public class Robot extends TimedRobot {
     // this line or comment it out.
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
+      System.out.println("Cancel");
     }
   }
 
