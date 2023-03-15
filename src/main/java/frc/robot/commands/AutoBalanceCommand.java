@@ -35,7 +35,7 @@ public class AutoBalanceCommand extends CommandBase {
     } else if (angle < 0) // Too far back
     {
       m_drive.drive(
-          1.0 * DecelerationSpeed(angle, angle) * balanceSpeedMultiplier,
+          1.0 * DecelerationSpeed(angle, gyroAngleRange) * balanceSpeedMultiplier,
           0.0,
           0.0,
           true,
@@ -44,7 +44,7 @@ public class AutoBalanceCommand extends CommandBase {
     } else // Too far forward
     {
       m_drive.drive(
-          -1.0 * DecelerationSpeed(angle, angle) * balanceSpeedMultiplier,
+          -1.0 * DecelerationSpeed(angle, gyroAngleRange) * balanceSpeedMultiplier,
           0.0,
           0.0,
           true,

@@ -116,7 +116,8 @@ public class Robot extends TimedRobot {
 
     GridPosChooser.addOption("Blue Grid Position 2",  m_robotContainer.getAutonomousBlueGridPos2());*/
 
-    m_autonomousCommand = GridPosChooser.getSelected();
+    // m_autonomousCommand = GridPosChooser.getSelected();
+    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
