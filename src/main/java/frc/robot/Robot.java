@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -121,7 +122,7 @@ public class Robot extends TimedRobot {
     GridPosChooser.addOption("Blue Grid Position 1",  m_robotContainer.getAutonomousBlueGridPos1());
 
     GridPosChooser.addOption("Blue Grid Position 2",  m_robotContainer.getAutonomousBlueGridPos2());*/
-
+    CameraServer.startAutomaticCapture();
   }
 
   /**
