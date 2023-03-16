@@ -4,13 +4,13 @@
 
 package frc.robot;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
@@ -19,7 +19,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.DriveConstants;
 import java.util.List;
 
 /**
@@ -30,7 +31,7 @@ import java.util.List;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  SendableChooser<Command> GridPosChooser = new SendableChooser();
+  // SendableChooser<Command> GridPosChooser = new SendableChooser();
   SendableChooser<Command> TacticChooser = new SendableChooser();
 
   private RobotContainer m_robotContainer;
@@ -46,17 +47,82 @@ public class Robot extends TimedRobot {
     // autonomous chooser on the dashboard.
 
     m_robotContainer = new RobotContainer();
-
+    TrajectoryConfig config =
+        new TrajectoryConfig(
+                AutoConstants.kMaxSpeedMetersPerSecond,
+                AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(DriveConstants.kDriveKinematics);
     m_trajectory =
+        /*.generateTrajectory(
+        List.of(
+                new Pose2d(AutoConstants.startingX3 + .4, AutoConstants.startingY3, new Rotation2d(Math.PI/2)),
+                new Pose2d(AutoConstants.startingX3 + .4, AutoConstants.startingY3 + .375, new Rotation2d(Math.PI/2)),
+                new Pose2d(AutoConstants.startingX3 + .4, AutoConstants.startingY3 + .75, new Rotation2d (Math.PI)),
+                new Pose2d(AutoConstants.startingX3 - 1.7, AutoConstants.startingY3 + .75, new Rotation2d (Math.PI)),
+                new Pose2d(AutoConstants.startingX3 - 3.4, AutoConstants.startingY3 + .75, new Rotation2d (Math.PI))),
+                config);*/
+
+        // Start at the origin facing the +X direction
         TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, Rotation2d.fromDegrees(0)),
-            List.of(new Translation2d(1, 1), new Translation2d(2, -1)),
-            new Pose2d(3, 0, Rotation2d.fromDegrees(0)),
-            new TrajectoryConfig(Units.feetToMeters(3.0), Units.feetToMeters(3.0)));
+            new Pose2d(AutoConstants.startingX4 - .4, AutoConstants.startingY4, new Rotation2d(0)),
+            // Pass through these two interior waypoints, making an 's' curve path
+            List.of(new Translation2d(AutoConstants.startingX4 + .8, AutoConstants.startingY4)),
+            // End 3 meters straight ahead of where we started, facing forward
+            new Pose2d(AutoConstants.startingX4 + 1.6, AutoConstants.startingY4, new Rotation2d(0)),
+            config);
 
-    SmartDashboard.putData(DriveSubsystem.m_field);
+    // SmartDashboard.putData(DriveSubsystem.m_field);
 
-    DriveSubsystem.m_field.getObject("traj").setTrajectory(m_trajectory);
+    // DriveSubsystem.m_field.getObject("traj").setTrajectory(m_trajectory);
+
+    /*
+     * String autoSelected = SmartDashboard.getString("Auto Selector",
+     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+     * = new MyAutoCommand(); break; case "Default Auto": default:
+     * autonomousCommand = new ExampleCommand(); break; }
+     */
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    NetworkTable fmsinfo = inst.getTable("FMSInfo");
+    NetworkTableEntry isRedAlliance = fmsinfo.getEntry("IsRedAlliance");
+    boolean red_alliance = isRedAlliance.getBoolean(false);
+    SmartDashboard.putNumber("Auto Start Position", 1);
+    // int startingPos =
+    Math.toIntExact(Math.round(SmartDashboard.getNumber("Auto Start Position", 1)));
+    // SmartDashboard.putBoolean("isRedAlliance", red_alliance);
+
+    // schedule the autonomous command (example)
+    /*TacticChooser.setDefaultOption(
+    "Double Shot", m_robotContainer.getAutonomousDoubleShot(red_alliance, startingPos));*/
+    TacticChooser.setDefaultOption(
+        "Power Station Pos 1", m_robotContainer.getAutonomousPowerStation(red_alliance, 1));
+
+    TacticChooser.addOption(
+        "Single Score Pos 1", m_robotContainer.getAutonomousScore(red_alliance, 1));
+
+    TacticChooser.addOption(
+        "Single Score Pos 2", m_robotContainer.getAutonomousScore(red_alliance, 2));
+
+    TacticChooser.addOption(
+        "Single Score Pos 3", m_robotContainer.getAutonomousScore(red_alliance, 3));
+
+    TacticChooser.addOption(
+        "Power Station and Score Pos 1",
+        m_robotContainer.getAutonomousScoreAndPowerStation(red_alliance, 1));
+
+    /*TacticChooser.addOption(
+    "Double Score", m_robotContainer.getAutonomousScore(red_alliance, startingPos));*/
+
+    SmartDashboard.putData("Autonomous Mode", TacticChooser);
+
+    /*GridPosChooser.setDefaultOption("Red Grid Position 1",  m_robotContainer.getAutonomousRedGridPos1());
+
+    GridPosChooser.addOption("Red Grid Position 2",  m_robotContainer.getAutonomousRedGridPos2());
+
+    GridPosChooser.addOption("Blue Grid Position 1",  m_robotContainer.getAutonomousBlueGridPos1());
+
+    GridPosChooser.addOption("Blue Grid Position 2",  m_robotContainer.getAutonomousBlueGridPos2());*/
+    CameraServer.startAutomaticCapture();
   }
 
   /**
@@ -85,42 +151,11 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    NetworkTable fmsinfo = inst.getTable("FMSInfo");
-    NetworkTableEntry isRedAlliance = fmsinfo.getEntry("IsRedAlliance");
-    boolean red_alliance = isRedAlliance.getBoolean(false);
-    // SmartDashboard.putBoolean("isRedAlliance", red_alliance);
-
-    // schedule the autonomous command (example)
-    TacticChooser.setDefaultOption("Score & Balance", m_robotContainer.getAutonomousDoubleShot());
-
-    TacticChooser.addOption(
-        "Score & Get Cone", m_robotContainer.getAutonomousShotAndPowerStation());
-
-    TacticChooser.addOption("Score & Get Cubue", m_robotContainer.getAutonomousPowerStation());
-
-    TacticChooser.addOption("Score Only", m_robotContainer.getAutonomousPowerStation());
-
-    /*GridPosChooser.setDefaultOption("Red Grid Position 1",  m_robotContainer.getAutonomousRedGridPos1());
-
-    GridPosChooser.addOption("Red Grid Position 2",  m_robotContainer.getAutonomousRedGridPos2());
-
-    GridPosChooser.addOption("Blue Grid Position 1",  m_robotContainer.getAutonomousBlueGridPos1());
-
-    GridPosChooser.addOption("Blue Grid Position 2",  m_robotContainer.getAutonomousBlueGridPos2());*/
-
-    // m_autonomousCommand = GridPosChooser.getSelected();
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+    m_autonomousCommand = TacticChooser.getSelected();
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
+      System.out.println("Scheduled");
     }
   }
 
@@ -136,6 +171,7 @@ public class Robot extends TimedRobot {
     // this line or comment it out.
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
+      System.out.println("Cancel");
     }
   }
 
