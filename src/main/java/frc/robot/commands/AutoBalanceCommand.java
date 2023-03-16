@@ -1,12 +1,12 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
 public class AutoBalanceCommand extends CommandBase {
   private DriveSubsystem m_drive;
-  private VisionSubsystem m_vision;
   private boolean isFinished = false;
 
   private double gyroAngleRange = Constants.DriveConstants.kGyroAngleRange;
@@ -16,16 +16,19 @@ public class AutoBalanceCommand extends CommandBase {
 
   public AutoBalanceCommand(DriveSubsystem d_subsystem) {
     m_drive = d_subsystem;
-    // m_vision = v_subsystem;
+    
     addRequirements(d_subsystem);
-    // addRequirements(v_subsystem);
+
   }
 
   @Override
   public void execute() {
     // TODO Auto-generated method stub
 
-    double angle = m_drive.m_gyro.getYComplementaryAngle();
+    m_drive.m_gyro.setYawAxis(ADIS16470_IMU.IMUAxis.kX);
+    double angle = m_drive.m_gyro.getAngle();
+    m_drive.m_gyro.setYawAxis(ADIS16470_IMU.IMUAxis.kY);
+
 
     if (Math.abs(angle) <= gyroAngleRange) // Balanced
     {
@@ -35,7 +38,7 @@ public class AutoBalanceCommand extends CommandBase {
     } else if (angle < 0) // Too far back
     {
       m_drive.drive(
-          1.0 * DecelerationSpeed(angle, angle) * balanceSpeedMultiplier,
+          1.0 * DecelerationSpeed(angle, gyroAngleRange) * balanceSpeedMultiplier,
           0.0,
           0.0,
           true,
@@ -44,7 +47,7 @@ public class AutoBalanceCommand extends CommandBase {
     } else // Too far forward
     {
       m_drive.drive(
-          -1.0 * DecelerationSpeed(angle, angle) * balanceSpeedMultiplier,
+          -1.0 * DecelerationSpeed(angle, gyroAngleRange) * balanceSpeedMultiplier,
           0.0,
           0.0,
           true,
