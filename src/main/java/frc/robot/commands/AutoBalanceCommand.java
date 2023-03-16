@@ -16,9 +16,8 @@ public class AutoBalanceCommand extends CommandBase {
 
   public AutoBalanceCommand(DriveSubsystem d_subsystem) {
     m_drive = d_subsystem;
-    
-    addRequirements(d_subsystem);
 
+    addRequirements(d_subsystem);
   }
 
   @Override
@@ -28,7 +27,6 @@ public class AutoBalanceCommand extends CommandBase {
     m_drive.m_gyro.setYawAxis(ADIS16470_IMU.IMUAxis.kX);
     double angle = m_drive.m_gyro.getAngle();
     m_drive.m_gyro.setYawAxis(ADIS16470_IMU.IMUAxis.kY);
-
 
     if (Math.abs(angle) <= gyroAngleRange) // Balanced
     {
