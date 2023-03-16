@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -178,24 +178,22 @@ extends java.lang.Object</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>edu.wpi.first.wpilibj2.command.Command</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAutonomousCommand()">getAutonomousCommand</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAutonomousPowerStation(boolean,int)">getAutonomousPowerStation</a></span>&#8203;(boolean&nbsp;isRedAlliance,
+                         int&nbsp;startingPos)</code></th>
 <td class="colLast">
 <div class="block">Use this to pass the autonomous command to the main <a href="Robot.html" title="class in frc.robot"><code>Robot</code></a> class.</div>
 </td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>edu.wpi.first.wpilibj2.command.Command</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAutonomousDoubleShot()">getAutonomousDoubleShot</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAutonomousScore(boolean,int)">getAutonomousScore</a></span>&#8203;(boolean&nbsp;isRedAlliance,
+                  int&nbsp;startingPos)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
 <td class="colFirst"><code>edu.wpi.first.wpilibj2.command.Command</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAutonomousPowerStation()">getAutonomousPowerStation</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>edu.wpi.first.wpilibj2.command.Command</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAutonomousShotAndPowerStation()">getAutonomousShotAndPowerStation</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAutonomousScoreAndPowerStation(boolean,int)">getAutonomousScoreAndPowerStation</a></span>&#8203;(boolean&nbsp;isRedAlliance,
+                                 int&nbsp;startingPos)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -242,13 +240,14 @@ extends java.lang.Object</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="getAutonomousCommand()">
+<a id="getAutonomousPowerStation(boolean,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getAutonomousCommand</h4>
-<pre class="methodSignature">public&nbsp;edu.wpi.first.wpilibj2.command.Command&nbsp;getAutonomousCommand()</pre>
+<h4>getAutonomousPowerStation</h4>
+<pre class="methodSignature">public&nbsp;edu.wpi.first.wpilibj2.command.Command&nbsp;getAutonomousPowerStation&#8203;(boolean&nbsp;isRedAlliance,
+                                                                        int&nbsp;startingPos)</pre>
 <div class="block">Use this to pass the autonomous command to the main <a href="Robot.html" title="class in frc.robot"><code>Robot</code></a> class.</div>
 <dl>
 <dt><span class="returnLabel">Returns:</span></dt>
@@ -256,31 +255,24 @@ extends java.lang.Object</pre>
 </dl>
 </li>
 </ul>
-<a id="getAutonomousPowerStation()">
+<a id="getAutonomousScore(boolean,int)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
-<h4>getAutonomousPowerStation</h4>
-<pre class="methodSignature">public&nbsp;edu.wpi.first.wpilibj2.command.Command&nbsp;getAutonomousPowerStation()</pre>
+<h4>getAutonomousScore</h4>
+<pre class="methodSignature">public&nbsp;edu.wpi.first.wpilibj2.command.Command&nbsp;getAutonomousScore&#8203;(boolean&nbsp;isRedAlliance,
+                                                                 int&nbsp;startingPos)</pre>
 </li>
 </ul>
-<a id="getAutonomousShotAndPowerStation()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAutonomousShotAndPowerStation</h4>
-<pre class="methodSignature">public&nbsp;edu.wpi.first.wpilibj2.command.Command&nbsp;getAutonomousShotAndPowerStation()</pre>
-</li>
-</ul>
-<a id="getAutonomousDoubleShot()">
+<a id="getAutonomousScoreAndPowerStation(boolean,int)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
-<h4>getAutonomousDoubleShot</h4>
-<pre class="methodSignature">public&nbsp;edu.wpi.first.wpilibj2.command.Command&nbsp;getAutonomousDoubleShot()</pre>
+<h4>getAutonomousScoreAndPowerStation</h4>
+<pre class="methodSignature">public&nbsp;edu.wpi.first.wpilibj2.command.Command&nbsp;getAutonomousScoreAndPowerStation&#8203;(boolean&nbsp;isRedAlliance,
+                                                                                int&nbsp;startingPos)</pre>
 </li>
 </ul>
 </li>

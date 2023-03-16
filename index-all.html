@@ -167,7 +167,7 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><a href="frc/robot/commands/AutoBalanceCommand.html" title="class in frc.robot.commands"><span class="typeNameLink">AutoBalanceCommand</span></a> - Class in <a href="frc/robot/commands/package-summary.html">frc.robot.commands</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="frc/robot/commands/AutoBalanceCommand.html#%3Cinit%3E(frc.robot.subsystems.DriveSubsystem,frc.robot.subsystems.VisionSubsystem)">AutoBalanceCommand(DriveSubsystem, VisionSubsystem)</a></span> - Constructor for class frc.robot.commands.<a href="frc/robot/commands/AutoBalanceCommand.html" title="class in frc.robot.commands">AutoBalanceCommand</a></dt>
+<dt><span class="memberNameLink"><a href="frc/robot/commands/AutoBalanceCommand.html#%3Cinit%3E(frc.robot.subsystems.DriveSubsystem)">AutoBalanceCommand(DriveSubsystem)</a></span> - Constructor for class frc.robot.commands.<a href="frc/robot/commands/AutoBalanceCommand.html" title="class in frc.robot.commands">AutoBalanceCommand</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/robot/Constants.AutoConstants.html#%3Cinit%3E()">AutoConstants()</a></span> - Constructor for class frc.robot.<a href="frc/robot/Constants.AutoConstants.html" title="class in frc.robot">Constants.AutoConstants</a></dt>
 <dd>&nbsp;</dd>
@@ -358,6 +358,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/robot/commands/AutoDriveToBalanceCommand.html#execute()">execute()</a></span> - Method in class frc.robot.commands.<a href="frc/robot/commands/AutoDriveToBalanceCommand.html" title="class in frc.robot.commands">AutoDriveToBalanceCommand</a></dt>
 <dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/commands/AutoGridAlignCommand.html#execute()">execute()</a></span> - Method in class frc.robot.commands.<a href="frc/robot/commands/AutoGridAlignCommand.html" title="class in frc.robot.commands">AutoGridAlignCommand</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/robot/commands/BalanceGyroSetZeroCommand.html#execute()">execute()</a></span> - Method in class frc.robot.commands.<a href="frc/robot/commands/BalanceGyroSetZeroCommand.html" title="class in frc.robot.commands">BalanceGyroSetZeroCommand</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/robot/commands/ClawGrabCommand.html#execute()">execute()</a></span> - Method in class frc.robot.commands.<a href="frc/robot/commands/ClawGrabCommand.html" title="class in frc.robot.commands">ClawGrabCommand</a></dt>
@@ -396,15 +398,13 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 </a>
 <h2 class="title">G</h2>
 <dl>
-<dt><span class="memberNameLink"><a href="frc/robot/RobotContainer.html#getAutonomousCommand()">getAutonomousCommand()</a></span> - Method in class frc.robot.<a href="frc/robot/RobotContainer.html" title="class in frc.robot">RobotContainer</a></dt>
+<dt><span class="memberNameLink"><a href="frc/robot/RobotContainer.html#getAutonomousPowerStation(boolean,int)">getAutonomousPowerStation(boolean, int)</a></span> - Method in class frc.robot.<a href="frc/robot/RobotContainer.html" title="class in frc.robot">RobotContainer</a></dt>
 <dd>
 <div class="block">Use this to pass the autonomous command to the main <a href="frc/robot/Robot.html" title="class in frc.robot"><code>Robot</code></a> class.</div>
 </dd>
-<dt><span class="memberNameLink"><a href="frc/robot/RobotContainer.html#getAutonomousDoubleShot()">getAutonomousDoubleShot()</a></span> - Method in class frc.robot.<a href="frc/robot/RobotContainer.html" title="class in frc.robot">RobotContainer</a></dt>
+<dt><span class="memberNameLink"><a href="frc/robot/RobotContainer.html#getAutonomousScore(boolean,int)">getAutonomousScore(boolean, int)</a></span> - Method in class frc.robot.<a href="frc/robot/RobotContainer.html" title="class in frc.robot">RobotContainer</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="frc/robot/RobotContainer.html#getAutonomousPowerStation()">getAutonomousPowerStation()</a></span> - Method in class frc.robot.<a href="frc/robot/RobotContainer.html" title="class in frc.robot">RobotContainer</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="frc/robot/RobotContainer.html#getAutonomousShotAndPowerStation()">getAutonomousShotAndPowerStation()</a></span> - Method in class frc.robot.<a href="frc/robot/RobotContainer.html" title="class in frc.robot">RobotContainer</a></dt>
+<dt><span class="memberNameLink"><a href="frc/robot/RobotContainer.html#getAutonomousScoreAndPowerStation(boolean,int)">getAutonomousScoreAndPowerStation(boolean, int)</a></span> - Method in class frc.robot.<a href="frc/robot/RobotContainer.html" title="class in frc.robot">RobotContainer</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/robot/subsystems/DriveSubsystem.html#getHeading()">getHeading()</a></span> - Method in class frc.robot.subsystems.<a href="frc/robot/subsystems/DriveSubsystem.html" title="class in frc.robot.subsystems">DriveSubsystem</a></dt>
 <dd>
@@ -909,6 +909,30 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>
 <div class="block">Sets the wheels into an X formation to prevent movement.</div>
 </dd>
+<dt><span class="memberNameLink"><a href="frc/robot/Constants.AutoConstants.html#startingX1">startingX1</a></span> - Static variable in class frc.robot.<a href="frc/robot/Constants.AutoConstants.html" title="class in frc.robot">Constants.AutoConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/Constants.AutoConstants.html#startingX2">startingX2</a></span> - Static variable in class frc.robot.<a href="frc/robot/Constants.AutoConstants.html" title="class in frc.robot">Constants.AutoConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/Constants.AutoConstants.html#startingX3">startingX3</a></span> - Static variable in class frc.robot.<a href="frc/robot/Constants.AutoConstants.html" title="class in frc.robot">Constants.AutoConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/Constants.AutoConstants.html#startingX4">startingX4</a></span> - Static variable in class frc.robot.<a href="frc/robot/Constants.AutoConstants.html" title="class in frc.robot">Constants.AutoConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/Constants.AutoConstants.html#startingX5">startingX5</a></span> - Static variable in class frc.robot.<a href="frc/robot/Constants.AutoConstants.html" title="class in frc.robot">Constants.AutoConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/Constants.AutoConstants.html#startingX6">startingX6</a></span> - Static variable in class frc.robot.<a href="frc/robot/Constants.AutoConstants.html" title="class in frc.robot">Constants.AutoConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/Constants.AutoConstants.html#startingY1">startingY1</a></span> - Static variable in class frc.robot.<a href="frc/robot/Constants.AutoConstants.html" title="class in frc.robot">Constants.AutoConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/Constants.AutoConstants.html#startingY2">startingY2</a></span> - Static variable in class frc.robot.<a href="frc/robot/Constants.AutoConstants.html" title="class in frc.robot">Constants.AutoConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/Constants.AutoConstants.html#startingY3">startingY3</a></span> - Static variable in class frc.robot.<a href="frc/robot/Constants.AutoConstants.html" title="class in frc.robot">Constants.AutoConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/Constants.AutoConstants.html#startingY4">startingY4</a></span> - Static variable in class frc.robot.<a href="frc/robot/Constants.AutoConstants.html" title="class in frc.robot">Constants.AutoConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/Constants.AutoConstants.html#startingY5">startingY5</a></span> - Static variable in class frc.robot.<a href="frc/robot/Constants.AutoConstants.html" title="class in frc.robot">Constants.AutoConstants</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/Constants.AutoConstants.html#startingY6">startingY6</a></span> - Static variable in class frc.robot.<a href="frc/robot/Constants.AutoConstants.html" title="class in frc.robot">Constants.AutoConstants</a></dt>
+<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/utils/SwerveUtils.html#StepTowards(double,double,double)">StepTowards(double, double, double)</a></span> - Static method in class frc.utils.<a href="frc/utils/SwerveUtils.html" title="class in frc.utils">SwerveUtils</a></dt>
 <dd>
 <div class="block">Steps a value towards a target with a specified step size.</div>
