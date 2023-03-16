@@ -17,7 +17,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.XboxController.Axis;
 // import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController.Button;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -50,8 +49,6 @@ public class RobotContainer {
   // The driver's controller
   /// Joystick m_driverJoystick = new Joystick(OIConstants.kDriverJoystickPort);
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
-
-  SendableChooser<Command> m_chooser = new SendableChooser<>();
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -200,7 +197,7 @@ public class RobotContainer {
         .onTrue(new BalanceGyroSetZeroCommand(m_robotDrive));
 
     new JoystickButton(m_driverController, Axis.kRightTrigger.value)
-        .whileTrue(new AutoBalanceCommand(m_robotDrive, m_visionSubsystem));
+        .whileTrue(new AutoBalanceCommand(m_robotDrive));
 
     new JoystickButton(m_driverController, Button.kStart.value)
         .toggleOnTrue(new ArmTestCommand(m_robotArm));
@@ -345,7 +342,7 @@ public class RobotContainer {
     // Run path following command, then stop at the end.
     return new BalanceGyroSetZeroCommand(m_robotDrive)
         .andThen(swerveControllerCommand)
-        .andThen(new AutoBalanceCommand(m_robotDrive, m_visionSubsystem));
+        .andThen(new AutoBalanceCommand(m_robotDrive));
   }
 
   public Command getAutonomousScore(boolean isRedAlliance, int startingPos) {
@@ -770,7 +767,7 @@ public class RobotContainer {
         .andThen(new ClawReleaseCommand(m_robotArm))
         .andThen(new ArmRetractCommand(m_robotArm))
         .andThen(swerveControllerCommand2)
-        .andThen(new AutoBalanceCommand(m_robotDrive, m_visionSubsystem));
+        .andThen(new AutoBalanceCommand(m_robotDrive));
   }
 
   /*public Command getAutonomousDoubleScore(boolean isRedAlliance, int startingPos) {

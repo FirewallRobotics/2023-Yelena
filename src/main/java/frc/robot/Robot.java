@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
-  SendableChooser<Command> GridPosChooser = new SendableChooser();
+  // SendableChooser<Command> GridPosChooser = new SendableChooser();
   SendableChooser<Command> TacticChooser = new SendableChooser();
 
   private RobotContainer m_robotContainer;
@@ -74,6 +74,54 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putData(DriveSubsystem.m_field);
 
     // DriveSubsystem.m_field.getObject("traj").setTrajectory(m_trajectory);
+
+    /*
+     * String autoSelected = SmartDashboard.getString("Auto Selector",
+     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
+     * = new MyAutoCommand(); break; case "Default Auto": default:
+     * autonomousCommand = new ExampleCommand(); break; }
+     */
+    NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    NetworkTable fmsinfo = inst.getTable("FMSInfo");
+    NetworkTableEntry isRedAlliance = fmsinfo.getEntry("IsRedAlliance");
+    boolean red_alliance = isRedAlliance.getBoolean(false);
+    SmartDashboard.putNumber("Auto Start Position", 1);
+    // int startingPos =
+    Math.toIntExact(Math.round(SmartDashboard.getNumber("Auto Start Position", 1)));
+    // SmartDashboard.putBoolean("isRedAlliance", red_alliance);
+
+    // schedule the autonomous command (example)
+    /*TacticChooser.setDefaultOption(
+    "Double Shot", m_robotContainer.getAutonomousDoubleShot(red_alliance, startingPos));*/
+    TacticChooser.setDefaultOption(
+        "Power Station Pos 1", m_robotContainer.getAutonomousPowerStation(red_alliance, 1));
+
+    TacticChooser.addOption(
+        "Single Score Pos 1", m_robotContainer.getAutonomousScore(red_alliance, 1));
+
+    TacticChooser.addOption(
+        "Single Score Pos 2", m_robotContainer.getAutonomousScore(red_alliance, 2));
+
+    TacticChooser.addOption(
+        "Single Score Pos 3", m_robotContainer.getAutonomousScore(red_alliance, 3));
+
+    TacticChooser.addOption(
+        "Power Station and Score Pos 1",
+        m_robotContainer.getAutonomousScoreAndPowerStation(red_alliance, 1));
+
+    /*TacticChooser.addOption(
+    "Double Score", m_robotContainer.getAutonomousScore(red_alliance, startingPos));*/
+
+    SmartDashboard.putData("Autonomous Mode", TacticChooser);
+
+    /*GridPosChooser.setDefaultOption("Red Grid Position 1",  m_robotContainer.getAutonomousRedGridPos1());
+
+    GridPosChooser.addOption("Red Grid Position 2",  m_robotContainer.getAutonomousRedGridPos2());
+
+    GridPosChooser.addOption("Blue Grid Position 1",  m_robotContainer.getAutonomousBlueGridPos1());
+
+    GridPosChooser.addOption("Blue Grid Position 2",  m_robotContainer.getAutonomousBlueGridPos2());*/
+
   }
 
   /**
@@ -102,47 +150,6 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-
-    /*
-     * String autoSelected = SmartDashboard.getString("Auto Selector",
-     * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
-     * = new MyAutoCommand(); break; case "Default Auto": default:
-     * autonomousCommand = new ExampleCommand(); break; }
-     */
-    NetworkTableInstance inst = NetworkTableInstance.getDefault();
-    NetworkTable fmsinfo = inst.getTable("FMSInfo");
-    NetworkTableEntry isRedAlliance = fmsinfo.getEntry("IsRedAlliance");
-    boolean red_alliance = isRedAlliance.getBoolean(false);
-    SmartDashboard.putNumber("Auto Start Position", 1);
-    int startingPos =
-        Math.toIntExact(Math.round(SmartDashboard.getNumber("Auto Start Position", 1)));
-    // SmartDashboard.putBoolean("isRedAlliance", red_alliance);
-
-    // schedule the autonomous command (example)
-    /*TacticChooser.setDefaultOption(
-    "Double Shot", m_robotContainer.getAutonomousDoubleShot(red_alliance, startingPos));*/
-    TacticChooser.addOption(
-        "Power Station", m_robotContainer.getAutonomousPowerStation(red_alliance, startingPos));
-
-    TacticChooser.addOption(
-        "Single Score", m_robotContainer.getAutonomousScore(red_alliance, startingPos));
-
-    TacticChooser.addOption(
-        "Power Station and Score",
-        m_robotContainer.getAutonomousScoreAndPowerStation(red_alliance, startingPos));
-
-    /*TacticChooser.addOption(
-    "Double Score", m_robotContainer.getAutonomousScore(red_alliance, startingPos));*/
-
-    SmartDashboard.putData("Autonomous Mode", TacticChooser);
-
-    /*GridPosChooser.setDefaultOption("Red Grid Position 1",  m_robotContainer.getAutonomousRedGridPos1());
-
-    GridPosChooser.addOption("Red Grid Position 2",  m_robotContainer.getAutonomousRedGridPos2());
-
-    GridPosChooser.addOption("Blue Grid Position 1",  m_robotContainer.getAutonomousBlueGridPos1());
-
-    GridPosChooser.addOption("Blue Grid Position 2",  m_robotContainer.getAutonomousBlueGridPos2());*/
 
     m_autonomousCommand = TacticChooser.getSelected();
 

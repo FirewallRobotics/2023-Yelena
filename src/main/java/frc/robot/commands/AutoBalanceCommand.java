@@ -14,11 +14,11 @@ public class AutoBalanceCommand extends CommandBase {
   private double balanceDecelerationDistance =
       Constants.DriveConstants.kBalanceDecelerationDistance;
 
-  public AutoBalanceCommand(DriveSubsystem d_subsystem, VisionSubsystem v_subsystem) {
+  public AutoBalanceCommand(DriveSubsystem d_subsystem) {
     m_drive = d_subsystem;
-    m_vision = v_subsystem;
+    // m_vision = v_subsystem;
     addRequirements(d_subsystem);
-    addRequirements(v_subsystem);
+    // addRequirements(v_subsystem);
   }
 
   @Override
