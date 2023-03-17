@@ -79,7 +79,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
 
   public void GravityOffset(double kdefaultheight) {
     double kMeasuredPosHorizontal =
-        0; // position measured when arm is horizontal (with Pheonix Tuner)
+        .155; // position measured when arm is horizontal (with Pheonix Tuner)
     double currentPos = ArmEncoder.getPosition();
     double radians = currentPos - kMeasuredPosHorizontal;
     double cosineScalar = java.lang.Math.cos(radians);
@@ -112,22 +112,26 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     System.out.println("Returning to default elevation...");
   }
 
-  public void ClawGrabCommand() {
+  public static void ClawGrabCommand() {
     ClawSolenoid.set(Value.kForward);
     System.out.println("Grabbing cone...");
   }
 
-  public void ClawReleaseCommand() {
+  public static void ClawReleaseCommand() {
     ClawSolenoid.set(Value.kReverse);
     System.out.println("Releasing claw...");
   }
 
-  public void ArmTestCommand() {
-    MasterArmMotor.set(.2);
+  public void ArmUpCommand() {
+    MasterArmMotor.set(ArmConstants.kArmSpeed);
   }
 
-  public void ArmTestOffCommand() {
+  public void ArmOffCommand() {
     MasterArmMotor.set(0);
+  }
+
+  public void ArmDownCommand() {
+    MasterArmMotor.set(-ArmConstants.kArmSpeed);
   }
 
   @Override
