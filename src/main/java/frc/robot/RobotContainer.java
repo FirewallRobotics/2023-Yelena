@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -179,24 +180,24 @@ public class RobotContainer {
         .toggleOnFalse(new ArmDefaultHeightCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Button.kStart.value)
-        .whileTrue(new ArmTestCommand(m_robotArm));
-    new JoystickButton(m_driverController, Button.kStart.value)
-        .whileFalse(new ArmTestOffCommand(m_robotArm));
+        .whileTrue(new ArmUpCommand(m_robotArm));
+    new JoystickButton(m_driverController, Button.kStart.value).whileFalse(new ArmOffCommand());
 
-    // new JoystickButton(m_driverController, Button.kBack.value)
-    //     .whileTrue(new ArmExtendCommand(m_robotArm));
-    // new JoystickButton(m_driverController, Button.kBack.value)
-    //     .whileFalse(new ArmRetractCommand(m_robotArm));
+    new JoystickButton(m_driverController, Button.kBack.value)
+        .whileTrue(new ArmDownCommand(m_robotArm));
+    new JoystickButton(m_driverController, Button.kBack.value).whileFalse(new ArmOffCommand());
 
     new JoystickButton(m_driverController, Button.kRightBumper.value)
-        .toggleOnTrue(new ClawGrabCommand(m_robotArm));
+        .toggleOnTrue(
+            Commands.startEnd(
+                ArmSubsystem::ClawGrabCommand, ArmSubsystem::ClawReleaseCommand, (m_robotArm)));
     new JoystickButton(m_driverController, Button.kRightBumper.value)
         .toggleOnFalse(new ClawReleaseCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
-        .toggleOnTrue(new ArmExtendCommand(m_robotArm));
-    new JoystickButton(m_driverController, Button.kLeftBumper.value)
-        .toggleOnFalse(new ArmRetractCommand(m_robotArm));
+        .toggleOnTrue(
+            Commands.startEnd(
+                ArmSubsystem::ArmExtendCommand, ArmSubsystem::ArmRetractCommand, (m_robotArm)));
 
     new JoystickButton(m_driverController, Axis.kLeftTrigger.value)
         .onTrue(new BalanceGyroSetZeroCommand(m_robotDrive));

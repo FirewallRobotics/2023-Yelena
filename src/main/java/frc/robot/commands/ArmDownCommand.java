@@ -3,7 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ArmSubsystem;
 
-public class ArmTestCommand extends CommandBase {
+public class ArmDownCommand extends CommandBase {
 
   @Override
   public void initialize() {}
@@ -11,23 +11,18 @@ public class ArmTestCommand extends CommandBase {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ArmSubsystem m_Arm;
 
-  public ArmTestCommand(ArmSubsystem subsystem) {
+  public ArmDownCommand(ArmSubsystem subsystem) {
     m_Arm = subsystem;
     addRequirements(subsystem);
   }
 
   @Override
   public void execute() {
-    m_Arm.ArmTestCommand();
+    m_Arm.ArmDownCommand();
   }
 
   @Override
   public boolean isFinished() {
     return false;
-  }
-
-  @Override
-  public void end(boolean interupted) {
-    m_Arm.ArmTestOffCommand();
   }
 }

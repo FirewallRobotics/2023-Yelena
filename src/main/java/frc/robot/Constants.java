@@ -166,6 +166,7 @@ public final class Constants {
     public static final double kMaxHeight = .077;
     public static final double kStartingHeight = .837;
     public static final double kDefaultHeight = 0;
+    public static final double kArmSpeed = .2;
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;
