@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClawSubsystem;
 
 public class ClawGrabCommand extends CommandBase {
 
@@ -9,25 +9,20 @@ public class ClawGrabCommand extends CommandBase {
   public void initialize() {}
 
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ArmSubsystem m_Arm;
+  private final ClawSubsystem m_Claw;
 
-  public ClawGrabCommand(ArmSubsystem subsystem) {
-    m_Arm = subsystem;
+  public ClawGrabCommand(ClawSubsystem subsystem) {
+    m_Claw = subsystem;
     addRequirements(subsystem);
   }
 
   @Override
   public void execute() {
-    m_Arm.ClawGrabCommand();
+    m_Claw.ClawGrabCommand();
   }
 
   @Override
   public boolean isFinished() {
     return false;
-  }
-
-  @Override
-  public void end(boolean interupted) {
-    m_Arm.ClawReleaseCommand();
   }
 }
