@@ -71,7 +71,7 @@ public final class Constants {
 
     // Drive speeds
     public static final double kDefaultSpeed = 0.25;
-    public static final double kSprintSpeed = 0.75;
+    public static final double kSprintSpeed = 1.0;
     public static final double kSneakSpeed = 0.1;
   }
 
