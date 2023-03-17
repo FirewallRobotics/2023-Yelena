@@ -79,7 +79,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
 
   public void GravityOffset(double kdefaultheight) {
     double kMeasuredPosHorizontal =
-        0; // position measured when arm is horizontal (with Pheonix Tuner)
+        .155; // position measured when arm is horizontal (with Pheonix Tuner)
     double currentPos = ArmEncoder.getPosition();
     double radians = currentPos - kMeasuredPosHorizontal;
     double cosineScalar = java.lang.Math.cos(radians);

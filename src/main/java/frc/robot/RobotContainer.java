@@ -183,10 +183,10 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kStart.value)
         .whileFalse(new ArmTestOffCommand(m_robotArm));
 
-    new JoystickButton(m_driverController, Button.kBack.value)
-        .whileTrue(new ArmExtendCommand(m_robotArm));
-    new JoystickButton(m_driverController, Button.kBack.value)
-        .whileFalse(new ArmRetractCommand(m_robotArm));
+    // new JoystickButton(m_driverController, Button.kBack.value)
+    //     .whileTrue(new ArmExtendCommand(m_robotArm));
+    // new JoystickButton(m_driverController, Button.kBack.value)
+    //     .whileFalse(new ArmRetractCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Button.kRightBumper.value)
         .toggleOnTrue(new ClawGrabCommand(m_robotArm));
