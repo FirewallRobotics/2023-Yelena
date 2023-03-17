@@ -18,7 +18,6 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   public static CANSparkMax MinionArmMotor;
   public static AbsoluteEncoder ArmEncoder;
   public static DoubleSolenoid ExtendingSolenoid;
-  public static DoubleSolenoid ClawSolenoid;
   private SparkMaxPIDController ArmPIDController;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
@@ -58,9 +57,6 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     ExtendingSolenoid =
         new DoubleSolenoid(
             PneumaticsModuleType.CTREPCM, ArmConstants.kExtSolPort1, ArmConstants.kExtSolPort2);
-    ClawSolenoid =
-        new DoubleSolenoid(
-            PneumaticsModuleType.CTREPCM, ArmConstants.kClawSolPort1, ArmConstants.kClawSolPort2);
 
     ArmEncoder = MasterArmMotor.getAbsoluteEncoder(Type.kDutyCycle);
     ArmEncoder.setInverted(true);
@@ -110,16 +106,6 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   public void ArmDefaultHeightCommand() {
     GravityOffset(ArmConstants.kDefaultHeight);
     System.out.println("Returning to default elevation...");
-  }
-
-  public static void ClawGrabCommand() {
-    ClawSolenoid.set(Value.kForward);
-    System.out.println("Grabbing cone...");
-  }
-
-  public static void ClawReleaseCommand() {
-    ClawSolenoid.set(Value.kReverse);
-    System.out.println("Releasing claw...");
   }
 
   public void ArmUpCommand() {
@@ -184,7 +170,6 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     MasterArmMotor.close();
     MinionArmMotor.close();
     ExtendingSolenoid.close();
-    ClawSolenoid.close();
     // ArmEncoder.close();
   }
 }

@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ClawSubsystem;
 
 public class ClawReleaseCommand extends CommandBase {
 
@@ -9,16 +9,16 @@ public class ClawReleaseCommand extends CommandBase {
   public void initialize() {}
 
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ArmSubsystem m_Arm;
+  private final ClawSubsystem m_Claw;
 
-  public ClawReleaseCommand(ArmSubsystem subsystem) {
-    m_Arm = subsystem;
+  public ClawReleaseCommand(ClawSubsystem subsystem) {
+    m_Claw = subsystem;
     addRequirements(subsystem);
   }
 
   @Override
   public void execute() {
-    m_Arm.ClawReleaseCommand();
+    m_Claw.ClawReleaseCommand();
   }
 
   @Override
