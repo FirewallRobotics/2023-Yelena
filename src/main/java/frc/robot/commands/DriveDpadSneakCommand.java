@@ -36,19 +36,19 @@ public class DriveDpadSneakCommand extends CommandBase {
     if (m_robotController.getPOV() == 0) {
       m_drivetrain.drive(sneakSpeed, 0, 0, isFinished(), isFinished());
     } else if (m_robotController.getPOV() == 45) {
-      m_drivetrain.drive(sneakSpeed, sneakSpeed, 0, isFinished(), isFinished());
+      m_drivetrain.drive(sneakSpeed, -sneakSpeed, 0, isFinished(), isFinished());
     } else if (m_robotController.getPOV() == 90) {
-      m_drivetrain.drive(0, sneakSpeed, 0, isFinished(), isFinished());
+      m_drivetrain.drive(0, -sneakSpeed, 0, isFinished(), isFinished());
     } else if (m_robotController.getPOV() == 135) {
-      m_drivetrain.drive(-sneakSpeed, sneakSpeed, 0, isFinished(), isFinished());
+      m_drivetrain.drive(-sneakSpeed, -sneakSpeed, 0, isFinished(), isFinished());
     } else if (m_robotController.getPOV() == 180) {
       m_drivetrain.drive(-sneakSpeed, 0, 0, isFinished(), isFinished());
     } else if (m_robotController.getPOV() == 225) {
-      m_drivetrain.drive(-sneakSpeed, -sneakSpeed, 0, isFinished(), isFinished());
+      m_drivetrain.drive(-sneakSpeed, sneakSpeed, 0, isFinished(), isFinished());
     } else if (m_robotController.getPOV() == 270) {
-      m_drivetrain.drive(0, -sneakSpeed, 0, isFinished(), isFinished());
+      m_drivetrain.drive(0, sneakSpeed, 0, isFinished(), isFinished());
     } else if (m_robotController.getPOV() == 315) {
-      m_drivetrain.drive(sneakSpeed, -sneakSpeed, 0, isFinished(), isFinished());
+      m_drivetrain.drive(sneakSpeed, sneakSpeed, 0, isFinished(), isFinished());
     } else {
       m_drivetrain.drive(0, 0, 0, isFinished(), isFinished());
     }
