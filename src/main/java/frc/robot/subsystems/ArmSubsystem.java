@@ -63,7 +63,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
 
     ArmPIDController = MasterArmMotor.getPIDController();
     ArmPIDController.setFeedbackDevice(ArmEncoder);
-    ArmPIDController.setPositionPIDWrappingEnabled(true);
+    // ArmPIDController.setPositionPIDWrappingEnabled(true);
 
     ArmPIDController.setP(kP);
     ArmPIDController.setI(kI);
@@ -123,7 +123,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   @Override
   public void periodic() {
     ArmEncoder.getPosition();
-    double p = SmartDashboard.getNumber("P Gain", 0);
+    /*double p = SmartDashboard.getNumber("P Gain", 0);
     double i = SmartDashboard.getNumber("I Gain", 0);
     double d = SmartDashboard.getNumber("D Gain", 0);
     double iz = SmartDashboard.getNumber("I Zone", 0);
@@ -157,11 +157,11 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
       ArmPIDController.setOutputRange(min, max);
       kMinOutput = min;
       kMaxOutput = max;
-    }
+    } */
 
     // ArmPIDController.setReference(rotations, CANSparkMax.ControlType.kPosition);
 
-    SmartDashboard.putNumber("SetPoint", rotations);
+    // SmartDashboard.putNumber("SetPoint", rotations);
     SmartDashboard.putNumber("ProcessVariable", ArmEncoder.getPosition());
   }
 
