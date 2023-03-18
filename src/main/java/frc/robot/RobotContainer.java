@@ -200,9 +200,6 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Axis.kRightTrigger.value)
         .whileTrue(new AutoBalanceCommand(m_robotDrive));
 
-    new JoystickButton(m_driverController, Button.kStart.value)
-        .toggleOnTrue(new ArmTestCommand(m_robotArm));
-
     new POVButton(m_driverController, -1)
         .whileFalse(new DriveDpadSneakCommand(m_robotDrive, m_driverController));
   }
