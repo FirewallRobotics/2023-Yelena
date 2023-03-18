@@ -5,9 +5,6 @@ import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmUpCommand extends CommandBase {
 
-  @Override
-  public void initialize() {}
-
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   private final ArmSubsystem m_Arm;
 
@@ -24,5 +21,10 @@ public class ArmUpCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
+  }
+
+  @Override
+  public void end(boolean interupted) {
+    m_Arm.ArmOffCommand();
   }
 }

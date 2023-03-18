@@ -49,7 +49,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     MasterArmMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kForward, true);
     MasterArmMotor.enableSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, true);
 
-    MasterArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 48);
+    MasterArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 10);
     MasterArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0);
 
     MinionArmMotor.follow(MasterArmMotor, true);
@@ -95,12 +95,17 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
 
   public void ArmMidHeightCommand() {
     GravityOffset(ArmConstants.kMidHeight);
-    System.out.println("Raising arm to moderate elevation...");
+    System.out.println("Setting arm to moderate elevation...");
   }
 
   public void ArmMaxHeightCommand() {
     GravityOffset(ArmConstants.kMaxHeight);
-    System.out.println("Raising arm to maximum elevation...");
+    System.out.println("Setting arm to maximum elevation...");
+  }
+
+  public void ArmGrabHeightCommand() {
+    GravityOffset(ArmConstants.kGrabbingHeight);
+    System.out.println("Setting arm to grabbing elevation...");
   }
 
   public void ArmDefaultHeightCommand() {
@@ -109,15 +114,18 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   public void ArmUpCommand() {
-    MasterArmMotor.set(ArmConstants.kArmSpeed);
+    MasterArmMotor.set(ArmConstants.kArmUpSpeed);
+    System.out.println("Raising arm...");
   }
 
   public void ArmOffCommand() {
     MasterArmMotor.set(0);
+    System.out.println("Stopping arm...");
   }
 
   public void ArmDownCommand() {
-    MasterArmMotor.set(-ArmConstants.kArmSpeed);
+    MasterArmMotor.set(ArmConstants.kArmDownSpeed);
+    System.out.println("Lowering arm...");
   }
 
   @Override
