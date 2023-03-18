@@ -219,12 +219,12 @@ extends edu.wpi.first.wpilibj2.command.CommandBase</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#execute()">execute</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#end(boolean)">end</a></span>&#8203;(boolean&nbsp;interupted)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initialize()">initialize</a></span>()</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#execute()">execute</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i2" class="altColor">
@@ -252,7 +252,7 @@ extends edu.wpi.first.wpilibj2.command.CommandBase</pre>
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;edu.wpi.first.wpilibj2.command.Command</h3>
-<code>alongWith, andThen, andThen, asProxy, beforeStarting, beforeStarting, cancel, deadlineWith, end, finallyDo, getInterruptionBehavior, handleInterrupt, hasRequirement, ignoringDisable, isScheduled, perpetually, raceWith, repeatedly, runsWhenDisabled, schedule, unless, until, withInterrupt, withInterruptBehavior, withName, withTimeout</code></li>
+<code>alongWith, andThen, andThen, asProxy, beforeStarting, beforeStarting, cancel, deadlineWith, finallyDo, getInterruptionBehavior, handleInterrupt, hasRequirement, ignoringDisable, initialize, isScheduled, perpetually, raceWith, repeatedly, runsWhenDisabled, schedule, unless, until, withInterrupt, withInterruptBehavior, withName, withTimeout</code></li>
 </ul>
 </li>
 </ul>
@@ -289,15 +289,6 @@ extends edu.wpi.first.wpilibj2.command.CommandBase</pre>
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a id="initialize()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>initialize</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;initialize()</pre>
-</li>
-</ul>
 <a id="execute()">
 <!--   -->
 </a>
@@ -310,10 +301,19 @@ extends edu.wpi.first.wpilibj2.command.CommandBase</pre>
 <a id="isFinished()">
 <!--   -->
 </a>
-<ul class="blockListLast">
+<ul class="blockList">
 <li class="blockList">
 <h4>isFinished</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;isFinished()</pre>
+</li>
+</ul>
+<a id="end(boolean)">
+<!--   -->
+</a>
+<ul class="blockListLast">
+<li class="blockList">
+<h4>end</h4>
+<pre class="methodSignature">public&nbsp;void&nbsp;end&#8203;(boolean&nbsp;interupted)</pre>
 </li>
 </ul>
 </li>
