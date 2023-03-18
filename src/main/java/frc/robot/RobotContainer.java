@@ -166,15 +166,14 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kB.value)
         .whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
 
+    new JoystickButton((m_driverController), Axis.kRightTrigger.value)
+        .onTrue(new ArmGrabHeightCommand(m_robotArm));
+
     new JoystickButton(m_driverController, Button.kX.value)
-        .toggleOnTrue(new ArmMidHeightCommand(m_robotArm));
-    new JoystickButton(m_driverController, Button.kX.value)
-        .toggleOnFalse(new ArmDefaultHeightCommand(m_robotArm));
+        .onTrue(new ArmMidHeightCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Button.kY.value)
-        .toggleOnTrue(new ArmMaxHeightCommand(m_robotArm));
-    new JoystickButton(m_driverController, Button.kY.value)
-        .toggleOnFalse(new ArmDefaultHeightCommand(m_robotArm));
+        .onTrue(new ArmMaxHeightCommand(m_robotArm));
 
     new JoystickButton(m_driverController, Button.kStart.value)
         .whileTrue(new ArmUpCommand(m_robotArm));
@@ -197,10 +196,6 @@ public class RobotContainer {
 
     // new JoystickButton(m_driverController, Axis.kRightTrigger.value)
     //     .whileTrue(new AutoBalanceCommand(m_robotDrive));
-
-    // new JoystickButton((m_driverController), Axis.kRightTrigger.value)
-    //     .toggleOnTrue(new ArmGrabHeightCommand(m_robotArm));
-    //     .toggleOnFalse(new ArmDefaultHeightCommand(m_robotArm));
 
     new POVButton(m_driverController, -1)
         .whileFalse(new DriveDpadSneakCommand(m_robotDrive, m_driverController));

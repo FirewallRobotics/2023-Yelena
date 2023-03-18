@@ -31,6 +31,6 @@ public class ArmMaxHeightCommand extends CommandBase {
 
   @Override
   public void end(boolean interupted) {
-    m_Arm.ArmRetractCommand();
+    m_Arm.ArmDefaultHeightCommand();
   }
 }
