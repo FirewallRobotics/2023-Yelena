@@ -35,7 +35,7 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> TacticChooser = new SendableChooser();
 
   private RobotContainer m_robotContainer;
-
+  public NetworkTableEntry robotState;
   public Trajectory m_trajectory;
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -123,6 +123,8 @@ public class Robot extends TimedRobot {
 
     GridPosChooser.addOption("Blue Grid Position 2",  m_robotContainer.getAutonomousBlueGridPos2());*/
     CameraServer.startAutomaticCapture();
+    robotState = inst.getEntry("RobotState");
+    robotState.setString("init");
   }
 
   /**
@@ -143,7 +145,9 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    robotState.setString("disabled");
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -157,6 +161,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.schedule();
       System.out.println("Scheduled");
     }
+    robotState.setString("autonomous");
   }
 
   /** This function is called periodically during autonomous. */
@@ -173,6 +178,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
       System.out.println("Cancel");
     }
+    robotState.setString("teleop");
   }
 
   /** This function is called periodically during operator control. */
@@ -183,6 +189,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    robotState.setString("test");
   }
 
   /** This function is called periodically during test mode. */
