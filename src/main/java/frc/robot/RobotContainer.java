@@ -41,7 +41,7 @@ import java.util.List;
 public class RobotContainer {
   // The robot's subsystems
 
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  public final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final LEDSubsystem m_LEDSubsystem = new LEDSubsystem();
   private final ArmSubsystem m_robotArm = new ArmSubsystem();
   private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
@@ -90,7 +90,7 @@ public class RobotContainer {
             new ArmMaxHeightCommand(m_robotArm),
             new ArmExtendCommand(m_robotArm),
             new ClawReleaseCommand(m_robotArm),
-            new AutoDriveToBalanceCommand(m_robotDrive, m_visionSubsystem),
+            new AutoDriveToBalanceCommand(m_robotDrive),
             new AutoBalanceCommand(m_robotDrive, m_visionSubsystem)));
 
     m_chooser.addOption(

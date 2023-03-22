@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
@@ -23,35 +22,38 @@ public class AutoBalanceCommand extends CommandBase {
   @Override
   public void execute() {
     // TODO Auto-generated method stub
+    ;
+    double xAngle = m_drive.m_gyro.getXComplementaryAngle();
+    double yAngle = m_drive.m_gyro.getYComplementaryAngle();
 
-    m_drive.m_gyro.setYawAxis(ADIS16470_IMU.IMUAxis.kX);
-    double angle = m_drive.m_gyro.getAngle();
-    m_drive.m_gyro.setYawAxis(ADIS16470_IMU.IMUAxis.kY);
+    double xVeloc;
+    double yVeloc;
 
-    if (Math.abs(angle) <= gyroAngleRange) // Balanced
+    if (Math.abs(xAngle) <= gyroAngleRange) // Balanced
     {
-      m_drive.drive(
-          0.0, 0.0, 0.0, true, true // Not sure here
-          );
-    } else if (angle < 0) // Too far back
+      xVeloc = 0.0;
+    } else if (xAngle < 0) // Too far back
     {
-      m_drive.drive(
-          1.0 * DecelerationSpeed(angle, gyroAngleRange) * balanceSpeedMultiplier,
-          0.0,
-          0.0,
-          true,
-          true // Not sure here
-          );
+      xVeloc = 1.0 * DecelerationSpeed(xAngle, gyroAngleRange) * balanceSpeedMultiplier;
     } else // Too far forward
     {
-      m_drive.drive(
-          -1.0 * DecelerationSpeed(angle, gyroAngleRange) * balanceSpeedMultiplier,
-          0.0,
-          0.0,
-          true,
-          true // Not sure here
-          );
+      xVeloc = -1.0 * DecelerationSpeed(xAngle, gyroAngleRange) * balanceSpeedMultiplier;
     }
+
+    if (Math.abs(yAngle) <= gyroAngleRange) // Balanced
+    {
+      yVeloc = 0.0;
+    } else if (yAngle < 0) // Too far back
+    {
+      yVeloc = 1.0 * DecelerationSpeed(yAngle, gyroAngleRange) * balanceSpeedMultiplier;
+    } else // Too far forward
+    {
+      yVeloc = -1.0 * DecelerationSpeed(yAngle, gyroAngleRange) * balanceSpeedMultiplier;
+    }
+
+    m_drive.drive(
+        xVeloc, yVeloc, 0.0, true, true // Not sure here
+        );
   }
 
   private double DecelerationSpeed(double positionDifference, double targetRange) {

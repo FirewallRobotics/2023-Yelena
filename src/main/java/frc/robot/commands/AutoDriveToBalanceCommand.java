@@ -11,17 +11,14 @@ import frc.robot.subsystems.*;
 public class AutoDriveToBalanceCommand extends CommandBase {
 
   private DriveSubsystem m_drive;
-  private VisionSubsystem m_vision;
   private boolean isFinished = false;
 
   private double driveToBalanceSpeed = Constants.DriveConstants.kDriveToBalanceSpeedMultiplier;
   private double driveGyroAngleRange = Constants.DriveConstants.kDriveToBalanceGyroAngleRange;
 
-  public AutoDriveToBalanceCommand(DriveSubsystem d_subsystem, VisionSubsystem v_subsystem) {
+  public AutoDriveToBalanceCommand(DriveSubsystem d_subsystem) {
     m_drive = d_subsystem;
-    m_vision = v_subsystem;
     addRequirements(d_subsystem);
-    addRequirements(v_subsystem);
   }
 
   // Called when the command is initially scheduled.
@@ -31,10 +28,10 @@ public class AutoDriveToBalanceCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double angle = m_drive.m_gyro.getYComplementaryAngle();
+    double yAngle = m_drive.m_gyro.getYComplementaryAngle();
 
-    if (Math.abs(angle) <= driveGyroAngleRange) {
-      m_drive.drive(-1 * driveToBalanceSpeed, 0, 0, isFinished, isFinished);
+    if (Math.abs(yAngle) <= driveGyroAngleRange) {
+      m_drive.drive(-1 * driveToBalanceSpeed, 0, 0, true, true);
     } else {
       isFinished = true;
     }
