@@ -27,6 +27,7 @@ public class BalanceGyroSetZeroCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    System.out.println("Resetting gyro, zero heading");
     m_drivetrain.m_gyro.reset();
     m_drivetrain.zeroHeading();
     isFinished = true;

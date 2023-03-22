@@ -70,9 +70,9 @@ public final class Constants {
     public static final double kBalanceDecelerationDistance = 9;
 
     // Drive speeds
-    public static final double kDefaultSpeed = 0.25;
+    public static final double kDefaultSpeed = 0.45;
     public static final double kSprintSpeed = 1.0;
-    public static final double kSneakSpeed = 0.1;
+    public static final double kSneakSpeed = 0.3;
   }
 
   public static final class ModuleConstants {
