@@ -14,7 +14,6 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.XboxController.Axis;
 // import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController.Button;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.POVButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
@@ -161,10 +159,10 @@ public class RobotContainer {
         .whileTrue(new RunCommand(() -> m_LEDSubsystem.ReadyLight(), m_LEDSubsystem));
 
     new JoystickButton(m_driverJoystick, 5)
-        .whileTrue(new RunCommand(() -> m_LEDSubsystem.LightOff(), m_LEDSubsystem));*/
+        .whileTrue(new RunCommand(() -> m_LEDSubsystem.LightOff(), m_LEDSubsystem));
 
     new JoystickButton(m_driverController, Button.kB.value)
-        .whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));
+        .whileTrue(new RunCommand(() -> m_robotDrive.setX(), m_robotDrive));*/
 
     new JoystickButton(m_driverController, Button.kX.value)
         .toggleOnTrue(new ArmMidHeightCommand(m_robotArm));
@@ -192,7 +190,7 @@ public class RobotContainer {
             Commands.startEnd(
                 ArmSubsystem::ArmExtendCommand, ArmSubsystem::ArmRetractCommand, (m_robotArm)));
 
-    new JoystickButton(m_driverController, Axis.kLeftTrigger.value)
+    new JoystickButton(m_driverController, Button.kB.value)
         .onTrue(new BalanceGyroSetZeroCommand(m_robotDrive));
 
     // new JoystickButton(m_driverController, Axis.kRightTrigger.value)
@@ -201,11 +199,11 @@ public class RobotContainer {
     // new JoystickButton((m_driverController), Axis.kRightTrigger.value)
     //     .toggleOnTrue(new ArmGrabHeightCommand(m_robotArm));
     //     .toggleOnFalse(new ArmDefaultHeightCommand(m_robotArm));
-
-    new POVButton(m_driverController, -1)
-        .whileFalse(new DriveDpadSneakCommand(m_robotDrive, m_driverController));
+    /*
+        new POVButton(m_driverController, -1)
+            .whileFalse(new DriveDpadSneakCommand(m_robotDrive, m_driverController));
+    */
   }
-
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -265,6 +263,7 @@ public class RobotContainer {
                 AutoConstants.kMaxAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(DriveConstants.kDriveKinematics);
+    config.setReversed(true);
 
     // An example trajectory to follow. All units in meters.
     Trajectory exampleTrajectory =
@@ -278,42 +277,50 @@ public class RobotContainer {
             config);
 
     if ((startingPos == 1) && (isRedAlliance == true)) {
+      System.out.println("pos 1 red alliance");
       exampleTrajectory =
           TrajectoryGenerator.generateTrajectory(
               // Start at the origin facing the +X direction
-              new Pose2d(
-                  AutoConstants.startingX1, AutoConstants.startingY1, new Rotation2d(Math.PI)),
+              new Pose2d(AutoConstants.startingX1, AutoConstants.startingY1, new Rotation2d(0)),
               // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(AutoConstants.startingX1 - .8, AutoConstants.startingY1)),
+              // List.of(new Translation2d(AutoConstants.startingX1 - 1.6,
+              // AutoConstants.startingY1)),
+              List.of(),
               // End 3 meters straight ahead of where we started, facing forward
               new Pose2d(
-                  AutoConstants.startingX1 - 1.6,
-                  AutoConstants.startingY1,
-                  new Rotation2d(Math.PI)),
+                  AutoConstants.startingX1 - 3.1, AutoConstants.startingY1, new Rotation2d(0)),
               config);
       // SmartDashboard.putData(DriveSubsystem.m_field);
 
       // DriveSubsystem.m_field.getObject("traj").setTrajectory(exampleTrajectory);
     } else if ((startingPos == 1) && (isRedAlliance == false)) {
+      System.out.println("pos 1 blue alliance");
+
       exampleTrajectory =
           TrajectoryGenerator.generateTrajectory(
               // Start at the origin facing the +X direction
-              new Pose2d(AutoConstants.startingX4, AutoConstants.startingY4, new Rotation2d(0)),
+              new Pose2d(
+                  AutoConstants.startingX4, AutoConstants.startingY4, new Rotation2d(Math.PI)),
               // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(AutoConstants.startingX4 + .8, 0)),
+              // List.of(new Translation2d(AutoConstants.startingX4 + 1.6,
+              // AutoConstants.startingY4)),
+              List.of(),
               // End 3 meters straight ahead of where we started, facing forward
               new Pose2d(
-                  AutoConstants.startingX4 + 1.6, AutoConstants.startingY4, new Rotation2d(0)),
+                  AutoConstants.startingX4 + 3.1,
+                  AutoConstants.startingY4,
+                  new Rotation2d(Math.PI)),
               config);
     } else {
       exampleTrajectory =
           TrajectoryGenerator.generateTrajectory(
               // Start at the origin facing the +X direction
-              new Pose2d(8, 3, new Rotation2d(Math.PI)),
+              new Pose2d(8, 3, new Rotation2d(0)),
               // Pass through these two interior waypoints, making an 's' curve path
-              List.of(new Translation2d(0, 0)),
+              // List.of(new Translation2d(0, 0)),
+              List.of(),
               // End 3 meters straight ahead of where we started, facing forward
-              new Pose2d(8, 3, new Rotation2d(Math.PI)),
+              new Pose2d(8, 3, new Rotation2d(0)),
               config);
     }
 
@@ -340,9 +347,8 @@ public class RobotContainer {
     System.out.println("End Auto Power");
 
     // Run path following command, then stop at the end.
-    return new BalanceGyroSetZeroCommand(m_robotDrive)
-        .andThen(swerveControllerCommand)
-        .andThen(new AutoBalanceCommand(m_robotDrive));
+    return new BalanceGyroSetZeroCommand(m_robotDrive).andThen(swerveControllerCommand);
+    // .andThen(new AutoBalanceCommand(m_robotDrive));
   }
 
   public Command getAutonomousScore(boolean isRedAlliance, int startingPos) {
@@ -774,7 +780,7 @@ public class RobotContainer {
     TrajectoryConfig config =
         new TrajectoryConfig(
                 AutoConstants.kMaxSpeedMetersPerSecond,
-                AutoConstans.kMaxAccelerationMetersPerSecondSquared)
+                AutoConstants.kMaxAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
             .setKinematics(DriveConstants.kDriveKinematics);
 
