@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
@@ -29,11 +28,9 @@ public class AutoDriveToBalanceCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.m_gyro.setYawAxis(ADIS16470_IMU.IMUAxis.kX);
-    double xAngle = m_drive.m_gyro.getAngle();
-    m_drive.m_gyro.setYawAxis(ADIS16470_IMU.IMUAxis.kY);
+    double yAngle = m_drive.m_gyro.getYComplementaryAngle();
 
-    if (Math.abs(xAngle) <= driveGyroAngleRange) {
+    if (Math.abs(yAngle) <= driveGyroAngleRange) {
       m_drive.drive(-1 * driveToBalanceSpeed, 0, 0, true, true);
     } else {
       isFinished = true;

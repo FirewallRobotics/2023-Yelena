@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
@@ -22,11 +21,9 @@ public class AutoBalanceCommand extends CommandBase {
   @Override
   public void execute() {
     // TODO Auto-generated method stub
-
-    m_drive.m_gyro.setYawAxis(ADIS16470_IMU.IMUAxis.kX);
-    double xAngle = m_drive.m_gyro.getAngle();
-    m_drive.m_gyro.setYawAxis(ADIS16470_IMU.IMUAxis.kY);
-    double yAngle = m_drive.m_gyro.getAngle();
+    ;
+    double xAngle = m_drive.m_gyro.getXComplementaryAngle();
+    double yAngle = m_drive.m_gyro.getYComplementaryAngle();
 
     double xVeloc;
     double yVeloc;
