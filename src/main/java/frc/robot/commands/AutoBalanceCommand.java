@@ -24,33 +24,38 @@ public class AutoBalanceCommand extends CommandBase {
     // TODO Auto-generated method stub
 
     m_drive.m_gyro.setYawAxis(ADIS16470_IMU.IMUAxis.kX);
-    double angle = m_drive.m_gyro.getAngle();
+    double xAngle = m_drive.m_gyro.getAngle();
     m_drive.m_gyro.setYawAxis(ADIS16470_IMU.IMUAxis.kY);
+    double yAngle = m_drive.m_gyro.getAngle();
 
-    if (Math.abs(angle) <= gyroAngleRange) // Balanced
+    double xVeloc;
+    double yVeloc;
+
+    if (Math.abs(xAngle) <= gyroAngleRange) // Balanced
     {
-      m_drive.drive(
-          0.0, 0.0, 0.0, true, true // Not sure here
-          );
-    } else if (angle < 0) // Too far back
+      xVeloc = 0.0;
+    } else if (xAngle < 0) // Too far back
     {
-      m_drive.drive(
-          1.0 * DecelerationSpeed(angle, gyroAngleRange) * balanceSpeedMultiplier,
-          0.0,
-          0.0,
-          true,
-          true // Not sure here
-          );
+      xVeloc = 1.0 * DecelerationSpeed(xAngle, gyroAngleRange) * balanceSpeedMultiplier;
     } else // Too far forward
     {
-      m_drive.drive(
-          -1.0 * DecelerationSpeed(angle, gyroAngleRange) * balanceSpeedMultiplier,
-          0.0,
-          0.0,
-          true,
-          true // Not sure here
-          );
+      xVeloc = -1.0 * DecelerationSpeed(xAngle, gyroAngleRange) * balanceSpeedMultiplier;
     }
+
+    if (Math.abs(yAngle) <= gyroAngleRange) // Balanced
+    {
+      yVeloc = 0.0;
+    } else if (yAngle < 0) // Too far back
+    {
+      yVeloc = 1.0 * DecelerationSpeed(yAngle, gyroAngleRange) * balanceSpeedMultiplier;
+    } else // Too far forward
+    {
+      yVeloc = -1.0 * DecelerationSpeed(yAngle, gyroAngleRange) * balanceSpeedMultiplier;
+    }
+
+    m_drive.drive(
+        xVeloc, yVeloc, 0.0, true, true // Not sure here
+        );
   }
 
   private double DecelerationSpeed(double positionDifference, double targetRange) {
