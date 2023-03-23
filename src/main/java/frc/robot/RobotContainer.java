@@ -169,10 +169,10 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kX.value)
         .toggleOnFalse(new ArmDefaultHeightCommand(m_robotArm));
 
-    new JoystickButton(m_driverController, Button.kY.value)
+    /*new JoystickButton(m_driverController, Button.kY.value)
         .toggleOnTrue(new ArmMaxHeightCommand(m_robotArm));
     new JoystickButton(m_driverController, Button.kY.value)
-        .toggleOnFalse(new ArmDefaultHeightCommand(m_robotArm));
+        .toggleOnFalse(new ArmDefaultHeightCommand(m_robotArm));*/
 
     new JoystickButton(m_driverController, Button.kStart.value)
         .whileTrue(new ArmUpCommand(m_robotArm));
@@ -193,8 +193,8 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kB.value)
         .onTrue(new BalanceGyroSetZeroCommand(m_robotDrive));
 
-    // new JoystickButton(m_driverController, Axis.kRightTrigger.value)
-    //     .whileTrue(new AutoBalanceCommand(m_robotDrive));
+    new JoystickButton(m_driverController, Button.kY.value)
+        .whileTrue(new AutoBalanceCommand(m_robotDrive));
 
     // new JoystickButton((m_driverController), Axis.kRightTrigger.value)
     //     .toggleOnTrue(new ArmGrabHeightCommand(m_robotArm));
@@ -347,8 +347,13 @@ public class RobotContainer {
     System.out.println("End Auto Power");
 
     // Run path following command, then stop at the end.
-    return new BalanceGyroSetZeroCommand(m_robotDrive).andThen(swerveControllerCommand);
+    // return new BalanceGyroSetZeroCommand(m_robotDrive)
+    // .andThen(swerveControllerCommand);
     // .andThen(new AutoBalanceCommand(m_robotDrive));
+
+    return new BalanceGyroSetZeroCommand(m_robotDrive)
+        .andThen(new AutoDriveToBalanceCommand(m_robotDrive))
+        .andThen(new AutoBalanceCommand(m_robotDrive));
   }
 
   public Command getAutonomousScore(boolean isRedAlliance, int startingPos) {
