@@ -131,19 +131,21 @@ public class VisionSubsystem extends SubsystemBase {
 
     // If statements decide which adjust code runs?
 
-    // Cone left or right of robot
-    adjustLeftRight = VisionAdjust(coneCenterDifference, targetCenterXRange);
-    ChangeLEDProx(coneCenterDifference, targetCenterXRange, highestXDifferenceLED);
-    // Distance from cone based on width
-    adjustBackForward = VisionAdjust(coneWidthDifference, coneTargetWidthRange);
-    ChangeLEDProx(coneWidthDifference, coneTargetWidthRange, highestZDifferenceLED);
-
-    // Cube left or right of robot
-    adjustLeftRight = VisionAdjust(cubeCenterDifference, targetCenterXRange);
-    ChangeLEDProx(cubeCenterDifference, targetCenterXRange, highestXDifferenceLED);
-    // Distance from cube based on radius
-    adjustBackForward = VisionAdjust(cubeRadiusDifference, cubeTargetRadiusRange);
-    ChangeLEDProx(cubeRadiusDifference, cubeTargetRadiusRange, highestZDifferenceLED);
+    if (coneWidth > (cubeRadius * 2)) {
+      // Cone left or right of robot
+      adjustLeftRight = VisionAdjust(coneCenterDifference, targetCenterXRange);
+      ChangeLEDProx(coneCenterDifference, targetCenterXRange, highestXDifferenceLED);
+      // Distance from cone based on width
+      adjustBackForward = VisionAdjust(coneWidthDifference, coneTargetWidthRange);
+      ChangeLEDProx(coneWidthDifference, coneTargetWidthRange, highestZDifferenceLED);
+    } else {
+      // Cube left or right of robot
+      adjustLeftRight = VisionAdjust(cubeCenterDifference, targetCenterXRange);
+      ChangeLEDProx(cubeCenterDifference, targetCenterXRange, highestXDifferenceLED);
+      // Distance from cube based on radius
+      adjustBackForward = VisionAdjust(cubeRadiusDifference, cubeTargetRadiusRange);
+      ChangeLEDProx(cubeRadiusDifference, cubeTargetRadiusRange, highestZDifferenceLED);
+    }
 
     // Cube tag near target X
     adjustCubePlacementLeftRight = VisionAdjust(tagCubeCenterXDifference, tagCubeTargetXRange);
