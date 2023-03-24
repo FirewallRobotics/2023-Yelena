@@ -51,9 +51,13 @@ public class AutoBalanceCommand extends CommandBase {
       yVeloc = -1.0 * DecelerationSpeed(yAngle, gyroAngleRange) * balanceSpeedMultiplier;
     }
 
-    m_drive.drive(
-        xVeloc, yVeloc, 0.0, true, true // Not sure here
-        );
+    if (xVeloc == 0.0 && yVeloc == 0.0) {
+      m_drive.setX();
+    } else {
+      m_drive.drive(
+          xVeloc, yVeloc, 0.0, true, true // Not sure here
+          );
+    }
   }
 
   private double DecelerationSpeed(double positionDifference, double targetRange) {

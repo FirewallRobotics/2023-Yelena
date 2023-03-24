@@ -15,6 +15,7 @@ public class AutoDriveToBalanceCommand extends CommandBase {
 
   private double driveToBalanceSpeed = Constants.DriveConstants.kDriveToBalanceSpeedMultiplier;
   private double driveGyroAngleRange = Constants.DriveConstants.kDriveToBalanceGyroAngleRange;
+  private boolean onBalance = false;
 
   public AutoDriveToBalanceCommand(DriveSubsystem d_subsystem) {
     m_drive = d_subsystem;
@@ -28,12 +29,20 @@ public class AutoDriveToBalanceCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double yAngle = m_drive.m_gyro.getYComplementaryAngle();
+    double xAngle = m_drive.m_gyro.getXComplementaryAngle();
 
-    if (Math.abs(yAngle) <= driveGyroAngleRange) {
-      m_drive.drive(-1 * driveToBalanceSpeed, 0, 0, true, true);
+    if (onBalance) {
+      if (Math.abs(xAngle) > driveGyroAngleRange) {
+        m_drive.drive(-1 * driveToBalanceSpeed, 0, 0, true, true);
+      } else {
+        isFinished = true;
+      }
     } else {
-      isFinished = true;
+      if (Math.abs(xAngle) <= driveGyroAngleRange) {
+        m_drive.drive(-1 * driveToBalanceSpeed, 0, 0, true, true);
+      } else {
+        onBalance = true;
+      }
     }
   }
   // Called once the command ends or is interrupted.
