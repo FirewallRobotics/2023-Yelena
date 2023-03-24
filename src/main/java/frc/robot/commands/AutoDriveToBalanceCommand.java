@@ -30,23 +30,20 @@ public class AutoDriveToBalanceCommand extends CommandBase {
   @Override
   public void execute() {
     double xAngle = m_drive.m_gyro.getXComplementaryAngle();
-    
-    if(onBalance)
-    {
+
+    if (onBalance) {
       if (Math.abs(xAngle) > driveGyroAngleRange) {
         m_drive.drive(-1 * driveToBalanceSpeed, 0, 0, true, true);
       } else {
         isFinished = true;
       }
-    }
-    else{
+    } else {
       if (Math.abs(xAngle) <= driveGyroAngleRange) {
         m_drive.drive(-1 * driveToBalanceSpeed, 0, 0, true, true);
       } else {
         onBalance = true;
       }
     }
-    
   }
   // Called once the command ends or is interrupted.
   @Override
