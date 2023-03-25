@@ -25,7 +25,8 @@ public class ArmGrabHeightCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     ArmSubsystem.ArmEncoder.getPosition();
-    if (m_Arm.ArmEncoder.getPosition() == ArmConstants.kGrabbingHeight) return true;
+    if (m_Arm.ArmEncoder.getPosition()
+        == (ArmSubsystem.StartupPosition + ArmConstants.kGrabbingOffset)) return true;
     else return false;
   }
 }

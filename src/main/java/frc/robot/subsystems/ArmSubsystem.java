@@ -20,13 +20,14 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   public static DoubleSolenoid ExtendingSolenoid;
   private SparkMaxPIDController ArmPIDController;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
+  public static double StartupPosition;
 
   public ArmSubsystem() {
     kP = 0.1;
     kI = 1e-4;
     kD = 1;
     kIz = 0;
-    kFF = 0.3;
+    kFF = .039;
     kMaxOutput = 1;
     kMinOutput = -1;
 
@@ -52,7 +53,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     MasterArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 10);
     MasterArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0);
 
-    MinionArmMotor.follow(MasterArmMotor, true);
+    MinionArmMotor.follow(MasterArmMotor, false);
 
     ExtendingSolenoid =
         new DoubleSolenoid(
@@ -73,16 +74,19 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     ArmPIDController.setOutputRange(kMinOutput, kMaxOutput);
 
     ArmRetractCommand();
+
+    StartupPosition = ArmEncoder.getPosition();
   }
 
   public void GravityOffset(double kdefaultheight) {
     double kMeasuredPosHorizontal =
-        .512; // position measured when arm is horizontal (with Pheonix Tuner)
+        StartupPosition + 0.7979; // position measured when arm is horizontal (with Pheonix Tuner)
     double currentPos = ArmEncoder.getPosition();
     double radians = currentPos - kMeasuredPosHorizontal;
     double cosineScalar = java.lang.Math.cos(radians);
     ArmPIDController.setFF(kFF * cosineScalar);
-    ArmPIDController.setReference(kdefaultheight, CANSparkMax.ControlType.kPosition);
+    ArmPIDController.setReference(
+        StartupPosition + kdefaultheight, CANSparkMax.ControlType.kPosition);
   }
 
   public static void ArmExtendCommand() {
@@ -96,17 +100,17 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   }
 
   public void ArmMidHeightCommand() {
-    GravityOffset(ArmConstants.kMidHeight);
+    GravityOffset(ArmConstants.kMidOffset);
     System.out.println("Setting arm to moderate elevation...");
   }
 
   public void ArmMaxHeightCommand() {
-    GravityOffset(ArmConstants.kMaxHeight);
+    GravityOffset(ArmConstants.kMaxOffset);
     System.out.println("Setting arm to maximum elevation...");
   }
 
   public void ArmGrabHeightCommand() {
-    GravityOffset(ArmConstants.kGrabbingHeight);
+    GravityOffset(ArmConstants.kGrabbingOffset);
     System.out.println("Setting arm to grabbing elevation...");
   }
 

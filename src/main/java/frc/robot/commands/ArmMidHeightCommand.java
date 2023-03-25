@@ -25,12 +25,8 @@ public class ArmMidHeightCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     ArmSubsystem.ArmEncoder.getPosition();
-    if (m_Arm.ArmEncoder.getPosition() == ArmConstants.kMidHeight) return true;
+    if (m_Arm.ArmEncoder.getPosition() == (ArmSubsystem.StartupPosition + ArmConstants.kMidOffset))
+      return true;
     else return false;
-  }
-
-  @Override
-  public void end(boolean interupted) {
-    m_Arm.ArmRetractCommand();
   }
 }

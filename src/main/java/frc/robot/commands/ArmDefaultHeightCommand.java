@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.ArmSubsystem;
 
 public class ArmDefaultHeightCommand extends CommandBase {
@@ -23,11 +24,9 @@ public class ArmDefaultHeightCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return false;
-  }
-
-  @Override
-  public void end(boolean interupted) {
-    m_Arm.ArmDefaultHeightCommand();
+    ArmSubsystem.ArmEncoder.getPosition();
+    if (m_Arm.ArmEncoder.getPosition()
+        == (ArmSubsystem.StartupPosition + ArmConstants.kDefaultHeight)) return true;
+    else return false;
   }
 }

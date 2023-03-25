@@ -176,9 +176,9 @@ public final class Constants {
 
     public static final int kMasterArmMotorPort = 9;
     public static final int kMinionArmMotorPort = 10;
-    public static final double kMidHeight = .155;
-    public static final double kMaxHeight = .077;
-    public static final double kGrabbingHeight = .837;
+    public static final double kMidOffset = +0.7979;
+    public static final double kMaxOffset = +0.987;
+    public static final double kGrabbingOffset = +0.1493;
     public static final double kDefaultHeight = 0;
     public static final double kArmUpSpeed = .25;
     public static final double kArmDownSpeed = -.2;
