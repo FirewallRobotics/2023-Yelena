@@ -570,9 +570,6 @@ public class RobotContainer {
         .andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
   }
 
-
-
-
   public Command getAutonomousScore(boolean isRedAlliance, int startingPos) {
     System.out.println("Get Autonomous Score " + isRedAlliance + " " + startingPos);
     TrajectoryConfig config =
@@ -996,7 +993,7 @@ public class RobotContainer {
         .andThen(new ArmRetractCommand(m_robotArm))
         .andThen(swerveControllerCommand2)
         .andThen(new AutoBalanceCommand(m_robotDrive));
-  } 
+  }
 
   /*public Command getAutonomousDoubleScore(boolean isRedAlliance, int startingPos) {
     TrajectoryConfig config =
