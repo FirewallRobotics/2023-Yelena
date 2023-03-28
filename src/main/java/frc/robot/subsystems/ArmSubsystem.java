@@ -82,7 +82,10 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     double kMeasuredPosHorizontal =
         StartupPosition + 0.7979; // position measured when arm is horizontal (with Pheonix Tuner)
     double currentPos = ArmEncoder.getPosition();
-    double radians = currentPos - kMeasuredPosHorizontal;
+    //double radians = currentPos - kMeasuredPosHorizontal;
+    double ticks = currentPos - kMeasuredPosHorizontal;
+    double radiansPerTick = 1.222/0.7979;
+    double radians = ticks*radiansPerTick;
     double cosineScalar = java.lang.Math.cos(radians);
     ArmPIDController.setFF(kFF * cosineScalar);
     ArmPIDController.setReference(
