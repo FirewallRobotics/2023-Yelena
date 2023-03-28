@@ -59,7 +59,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
             PneumaticsModuleType.CTREPCM, ArmConstants.kExtSolPort1, ArmConstants.kExtSolPort2);
 
     ArmEncoder = MasterArmMotor.getAbsoluteEncoder(Type.kDutyCycle);
-    ArmEncoder.setInverted(true);
+    ArmEncoder.setInverted(false);
 
     ArmPIDController = MasterArmMotor.getPIDController();
     ArmPIDController.setFeedbackDevice(ArmEncoder);
