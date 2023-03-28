@@ -87,6 +87,11 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     double radiansPerTick = 1.222/0.7979;
     double radians = ticks*radiansPerTick;
     double cosineScalar = java.lang.Math.cos(radians);
+    double newHeight = StartupPosition + kdefaultheight;
+    System.out.println("new height " + newHeight + " new cosineScalar " + cosineScalar + " new FF " + kFF*cosineScalar);
+    SmartDashboard.putNumber("Height Setpoint", newHeight);
+    SmartDashboard.putNumber("Cosine Scalar", cosineScalar);
+    SmartDashboard.putNumber("Feed Forward", kFF*cosineScalar);
     ArmPIDController.setFF(kFF * cosineScalar);
     ArmPIDController.setReference(
         StartupPosition + kdefaultheight, CANSparkMax.ControlType.kPosition);
