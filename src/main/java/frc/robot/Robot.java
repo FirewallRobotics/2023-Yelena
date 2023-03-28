@@ -101,7 +101,8 @@ public class Robot extends TimedRobot {
         "Leave Community Pos 1", m_robotContainer.getAutonomousLeaveCommunity(red_alliance, 1));
 
     TacticChooser.addOption(
-        "Leave Community Then Power Pos 1", m_robotContainer.getAutonomousOverPowerStation(red_alliance, 1));
+        "Leave Community Then Power Pos 1",
+        m_robotContainer.getAutonomousOverPowerStation(red_alliance, 1));
 
     TacticChooser.addOption(
         "Single Score Pos 1", m_robotContainer.getAutonomousScore(red_alliance, 1));
