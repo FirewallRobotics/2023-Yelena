@@ -352,8 +352,116 @@ public class RobotContainer {
     // .andThen(new AutoBalanceCommand(m_robotDrive));
 
     return new BalanceGyroSetZeroCommand(m_robotDrive)
+        .andThen(new ArmUpCommand(m_robotArm))
+        .withTimeout(0.2)
+        // .andThen(new ArmDownCommand(m_robotArm)).withTimeout(0.5)
         .andThen(new AutoDriveToBalanceCommand(m_robotDrive))
         .andThen(new AutoBalanceCommand(m_robotDrive));
+  }
+
+  public Command getAutonomousLeaveCommunity(boolean isRedAlliance, int startingPos) {
+    System.out.println("Get Autonomous Power Station " + isRedAlliance + " " + startingPos);
+    // Create config for trajectory
+    TrajectoryConfig config =
+        new TrajectoryConfig(
+                AutoConstants.kMaxSpeedMetersPerSecond,
+                AutoConstants.kMaxAccelerationMetersPerSecondSquared)
+            // Add kinematics to ensure max speed is actually obeyed
+            .setKinematics(DriveConstants.kDriveKinematics);
+    config.setReversed(true);
+
+    // An example trajectory to follow. All units in meters.
+    Trajectory exampleTrajectory =
+        TrajectoryGenerator.generateTrajectory(
+            // Start at the origin facing the +X direction
+            new Pose2d(8, 3, new Rotation2d(Math.PI)),
+            // Pass through these two interior waypoints, making an 's' curve path
+            List.of(new Translation2d(0, 0)),
+            // End 3 meters straight ahead of where we started, facing forward
+            new Pose2d(8, 3, new Rotation2d(Math.PI)),
+            config);
+
+    if ((startingPos == 1) && (isRedAlliance == true)) {
+      System.out.println("pos 1 red alliance");
+      exampleTrajectory =
+          TrajectoryGenerator.generateTrajectory(
+              // Start at the origin facing the +X direction
+              new Pose2d(AutoConstants.startingX1, AutoConstants.startingY1, new Rotation2d(0)),
+              // Pass through these two interior waypoints, making an 's' curve path
+              // List.of(new Translation2d(AutoConstants.startingX1 - 1.6,
+              // AutoConstants.startingY1)),
+              List.of(),
+              // End 3 meters straight ahead of where we started, facing forward
+              new Pose2d(
+                  AutoConstants.startingX1 - 3.8, AutoConstants.startingY1, new Rotation2d(0)),
+              config);
+      // SmartDashboard.putData(DriveSubsystem.m_field);
+
+      // DriveSubsystem.m_field.getObject("traj").setTrajectory(exampleTrajectory);
+    } else if ((startingPos == 1) && (isRedAlliance == false)) {
+      System.out.println("pos 1 blue alliance");
+
+      exampleTrajectory =
+          TrajectoryGenerator.generateTrajectory(
+              // Start at the origin facing the +X direction
+              new Pose2d(
+                  AutoConstants.startingX4, AutoConstants.startingY4, new Rotation2d(Math.PI)),
+              // Pass through these two interior waypoints, making an 's' curve path
+              // List.of(new Translation2d(AutoConstants.startingX4 + 1.6,
+              // AutoConstants.startingY4)),
+              List.of(),
+              // End 3 meters straight ahead of where we started, facing forward
+              new Pose2d(
+                  AutoConstants.startingX4 + 3.8,
+                  AutoConstants.startingY4,
+                  new Rotation2d(Math.PI)),
+              config);
+    } else {
+      exampleTrajectory =
+          TrajectoryGenerator.generateTrajectory(
+              // Start at the origin facing the +X direction
+              new Pose2d(8, 3, new Rotation2d(0)),
+              // Pass through these two interior waypoints, making an 's' curve path
+              // List.of(new Translation2d(0, 0)),
+              List.of(),
+              // End 3 meters straight ahead of where we started, facing forward
+              new Pose2d(8, 3, new Rotation2d(0)),
+              config);
+    }
+
+    var thetaController =
+        new ProfiledPIDController(
+            AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
+    thetaController.enableContinuousInput(-Math.PI, Math.PI);
+
+    SwerveControllerCommand swerveControllerCommand =
+        new SwerveControllerCommand(
+            exampleTrajectory,
+            m_robotDrive::getPose, // Functional interface to feed supplier
+            DriveConstants.kDriveKinematics,
+
+            // Position controllers
+            new PIDController(AutoConstants.kPXController, 0, 0),
+            new PIDController(AutoConstants.kPYController, 0, 0),
+            thetaController,
+            m_robotDrive::setModuleStates,
+            m_robotDrive);
+
+    // Reset odometry to the starting pose of the trajectory.
+    m_robotDrive.resetOdometry(exampleTrajectory.getInitialPose());
+    System.out.println("End Auto Power");
+
+    // Run path following command, then stop at the end.
+    // return new BalanceGyroSetZeroCommand(m_robotDrive)
+    // .andThen(swerveControllerCommand);
+    // .andThen(new AutoBalanceCommand(m_robotDrive));
+
+    return new BalanceGyroSetZeroCommand(m_robotDrive)
+        .andThen(new ArmUpCommand(m_robotArm))
+        .withTimeout(0.2)
+        // .andThen(new ArmDownCommand(m_robotArm)).withTimeout(0.5)
+        .andThen(swerveControllerCommand)
+        .andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
   }
 
   public Command getAutonomousScore(boolean isRedAlliance, int startingPos) {
