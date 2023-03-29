@@ -53,14 +53,14 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     MasterArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kForward, 10);
     MasterArmMotor.setSoftLimit(CANSparkMax.SoftLimitDirection.kReverse, 0);
 
-    MinionArmMotor.follow(MasterArmMotor, false);
+    MinionArmMotor.follow(MasterArmMotor, true);
 
     ExtendingSolenoid =
         new DoubleSolenoid(
             PneumaticsModuleType.CTREPCM, ArmConstants.kExtSolPort1, ArmConstants.kExtSolPort2);
 
     ArmEncoder = MasterArmMotor.getAbsoluteEncoder(Type.kDutyCycle);
-    ArmEncoder.setInverted(true);
+    ArmEncoder.setInverted(false);
 
     ArmPIDController = MasterArmMotor.getPIDController();
     ArmPIDController.setFeedbackDevice(ArmEncoder);
