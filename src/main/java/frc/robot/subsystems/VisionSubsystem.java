@@ -4,13 +4,27 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.apriltag.AprilTagDetection;
+import edu.wpi.first.apriltag.AprilTagDetector;
+import edu.wpi.first.apriltag.AprilTagPoseEstimator;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.CvSink;
+import edu.wpi.first.cscore.CvSource;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
+import edu.wpi.first.math.geometry.Transform3d;
+import edu.wpi.first.networktables.IntegerArrayPublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import java.util.ArrayList;
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
 
 public class VisionSubsystem extends SubsystemBase {
 
@@ -74,9 +88,6 @@ public class VisionSubsystem extends SubsystemBase {
   public int LEDProx;
 
   public VisionSubsystem() {}
-  
-
- 
 
   @Override
   public void periodic() {
@@ -209,7 +220,7 @@ public class VisionSubsystem extends SubsystemBase {
     return LEDProx;
   }
 
-  void apriltagVisionThreadProc() {
+  public void apriltagVisionThreadProc() {
     var detector = new AprilTagDetector();
     // look for tag16h5, don't correct any error bits
     detector.addFamily("tag16h5", 0);
