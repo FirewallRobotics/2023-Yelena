@@ -136,6 +136,10 @@ public class RobotContainer {
     m_LEDSubsystem.setDefaultCommand(
         // The robot will display the scrolling purple lights by default
         new SetLEDProximityCommand(m_visionSubsystem, m_LEDSubsystem));
+    var visionThread = new Thread(() -> m_visionSubsystem.apriltagVisionThreadProc());
+    visionThread.setDaemon(true);
+    visionThread.start();
+  
   }
 
   /**
