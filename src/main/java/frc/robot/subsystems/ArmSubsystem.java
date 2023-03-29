@@ -82,16 +82,28 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     double kMeasuredPosHorizontal =
         StartupPosition + 0.7979; // position measured when arm is horizontal (with Pheonix Tuner)
     double currentPos = ArmEncoder.getPosition();
-    //double radians = currentPos - kMeasuredPosHorizontal;
+    // double radians = currentPos - kMeasuredPosHorizontal;
     double ticks = currentPos - kMeasuredPosHorizontal;
-    double radiansPerTick = 1.222/0.7979;
-    double radians = ticks*radiansPerTick;
+    double radiansPerTick = 1.222 / 0.7979;
+    double radians = ticks * radiansPerTick;
     double cosineScalar = java.lang.Math.cos(radians);
     double newHeight = StartupPosition + kdefaultheight;
-    System.out.println("new height " + newHeight + " new cosineScalar " + cosineScalar + " new FF " + kFF*cosineScalar);
+    System.out.println(
+        "current arm pos "
+            + currentPos
+            + " radians "
+            + radians
+            + " new height "
+            + newHeight
+            + " new cosineScalar "
+            + cosineScalar
+            + " new FF "
+            + kFF * cosineScalar);
+    SmartDashboard.putNumber("Current arm pos", currentPos);
+    SmartDashboard.putNumber("Radians", radians);
     SmartDashboard.putNumber("Height Setpoint", newHeight);
     SmartDashboard.putNumber("Cosine Scalar", cosineScalar);
-    SmartDashboard.putNumber("Feed Forward", kFF*cosineScalar);
+    SmartDashboard.putNumber("Feed Forward", kFF * cosineScalar);
     ArmPIDController.setFF(kFF * cosineScalar);
     ArmPIDController.setReference(
         StartupPosition + kdefaultheight, CANSparkMax.ControlType.kPosition);
