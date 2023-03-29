@@ -139,7 +139,6 @@ public class RobotContainer {
     var visionThread = new Thread(() -> m_visionSubsystem.apriltagVisionThreadProc());
     visionThread.setDaemon(true);
     visionThread.start();
-  
   }
 
   /**
