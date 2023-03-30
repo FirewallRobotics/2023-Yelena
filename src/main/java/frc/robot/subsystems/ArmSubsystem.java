@@ -76,6 +76,8 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
     ArmRetractCommand();
 
     StartupPosition = ArmEncoder.getPosition();
+    ArmEncoder.setZeroOffset(StartupPosition);
+    StartupPosition = 0;
   }
 
   public void GravityOffset(double kdefaultheight) {
