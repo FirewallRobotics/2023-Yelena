@@ -9,8 +9,6 @@ import edu.wpi.first.apriltag.AprilTagDetector;
 import edu.wpi.first.apriltag.AprilTagPoseEstimator;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.cscore.CvSink;
-import edu.wpi.first.cscore.CvSource;
-import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -233,14 +231,14 @@ public class VisionSubsystem extends SubsystemBase {
     var estimator = new AprilTagPoseEstimator(poseEstConfig);
 
     // Get the UsbCamera from CameraServer
-    UsbCamera camera = CameraServer.startAutomaticCapture();
+    // UsbCamera camera = CameraServer.startAutomaticCapture();
     // Set the resolution
-    camera.setResolution(640, 480);
+    // camera.setResolution(640, 480);
 
     // Get a CvSink. This will capture Mats from the camera
     CvSink cvSink = CameraServer.getVideo();
     // Setup a CvSource. This will send images back to the Dashboard
-    CvSource outputStream = CameraServer.putVideo("Detected", 640, 480);
+    // CvSource outputStream = CameraServer.putVideo("Detected", 640, 480);
 
     // Mats are very memory expensive. Lets reuse these.
     var mat = new Mat();
@@ -263,7 +261,7 @@ public class VisionSubsystem extends SubsystemBase {
       // in the source mat.  If there is an error notify the output.
       if (cvSink.grabFrame(mat) == 0) {
         // Send the output the error.
-        outputStream.notifyError(cvSink.getError());
+        // outputStream.notifyError(cvSink.getError());
         // skip the rest of the current iteration
         continue;
       }
@@ -281,6 +279,7 @@ public class VisionSubsystem extends SubsystemBase {
 
         // draw lines around the tag
         for (var i = 0; i <= 3; i++) {
+          System.out.println(i + " line executed");
           var j = (i + 1) % 4;
           var pt1 = new Point(detection.getCornerX(i), detection.getCornerY(i));
           var pt2 = new Point(detection.getCornerX(j), detection.getCornerY(j));
@@ -321,7 +320,7 @@ public class VisionSubsystem extends SubsystemBase {
       pubTags.set(tags.stream().mapToLong(Long::longValue).toArray());
 
       // Give the output stream a new image to display
-      outputStream.putFrame(mat);
+      // outputStream.putFrame(mat);
     }
 
     pubTags.close();

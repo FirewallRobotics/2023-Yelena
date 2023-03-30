@@ -83,6 +83,7 @@ public class Robot extends TimedRobot {
      * autonomousCommand = new ExampleCommand(); break; }
      */
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    inst.startServer();
     NetworkTable fmsinfo = inst.getTable("FMSInfo");
     NetworkTableEntry isRedAlliance = fmsinfo.getEntry("IsRedAlliance");
     boolean red_alliance = isRedAlliance.getBoolean(false);
@@ -132,6 +133,11 @@ public class Robot extends TimedRobot {
     CameraServer.startAutomaticCapture();
     robotState = inst.getEntry("RobotState/RobotStateValue");
     robotState.setString("init");
+
+    var visionThread =
+        new Thread(() -> m_robotContainer.m_visionSubsystem.apriltagVisionThreadProc());
+    visionThread.setDaemon(true);
+    visionThread.start();
   }
 
   /**
