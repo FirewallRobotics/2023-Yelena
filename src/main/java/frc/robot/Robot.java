@@ -83,6 +83,7 @@ public class Robot extends TimedRobot {
      * autonomousCommand = new ExampleCommand(); break; }
      */
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    inst.startServer();
     NetworkTable fmsinfo = inst.getTable("FMSInfo");
     NetworkTableEntry isRedAlliance = fmsinfo.getEntry("IsRedAlliance");
     boolean red_alliance = isRedAlliance.getBoolean(false);
