@@ -7,21 +7,35 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 
 public class ClawSubsystem extends SubsystemBase implements AutoCloseable {
-  public static DoubleSolenoid ClawSolenoid;
+  public static DoubleSolenoid CubeSolenoid;
+  public static DoubleSolenoid ConeSolenoid;
 
   public ClawSubsystem() {
-    ClawSolenoid =
+    CubeSolenoid =
         new DoubleSolenoid(
-            PneumaticsModuleType.CTREPCM, ArmConstants.kClawSolPort1, ArmConstants.kClawSolPort2);
+            PneumaticsModuleType.CTREPCM, ArmConstants.kCubeSolPort1, ArmConstants.kCubeSolPort2);
+    ConeSolenoid =
+        new DoubleSolenoid(
+            PneumaticsModuleType.CTREPCM, ArmConstants.kConeSolPort1, ArmConstants.kConeSolPort2);
   }
 
-  public static void ClawGrabCommand() {
-    ClawSolenoid.set(Value.kForward);
+  public static void GrabCubeCommand() {
+    CubeSolenoid.set(Value.kForward);
     System.out.println("Closing claw...");
   }
 
-  public static void ClawReleaseCommand() {
-    ClawSolenoid.set(Value.kReverse);
+  public static void DropCubeCommand() {
+    CubeSolenoid.set(Value.kReverse);
+    System.out.println("Opening claw...");
+  }
+
+  public static void GrabConeCommand() {
+    CubeSolenoid.set(Value.kForward);
+    System.out.println("Opening claw...");
+  }
+
+  public static void DropConeCommand() {
+    CubeSolenoid.set(Value.kReverse);
     System.out.println("Opening claw...");
   }
 
@@ -30,6 +44,6 @@ public class ClawSubsystem extends SubsystemBase implements AutoCloseable {
 
   @Override
   public void close() throws Exception {
-    ClawSolenoid.close();
+    CubeSolenoid.close();
   }
 }

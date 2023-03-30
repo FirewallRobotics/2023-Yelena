@@ -183,7 +183,7 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kRightBumper.value)
         .toggleOnTrue(
             Commands.startEnd(
-                ClawSubsystem::ClawGrabCommand, ClawSubsystem::ClawReleaseCommand, (m_robotClaw)));
+                ClawSubsystem::GrabCubeCommand, ClawSubsystem::DropCubeCommand, (m_robotClaw)));
 
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
         .toggleOnTrue(
@@ -853,7 +853,7 @@ public class RobotContainer {
         .andThen(swerveControllerCommand)
         .andThen(new ArmMaxHeightCommand(m_robotArm))
         .andThen(new ArmExtendCommand(m_robotArm))
-        .andThen(new ClawReleaseCommand(m_robotClaw))
+        .andThen(new DropCubeCommand(m_robotClaw))
         .andThen(new ArmRetractCommand(m_robotArm))
         .andThen(swerveControllerCommand2)
         .andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
@@ -989,7 +989,7 @@ public class RobotContainer {
         .andThen(swerveControllerCommand)
         .andThen(new ArmMaxHeightCommand(m_robotArm))
         .andThen(new ArmExtendCommand(m_robotArm))
-        .andThen(new ClawReleaseCommand(m_robotClaw))
+        .andThen(new DropCubeCommand(m_robotClaw))
         .andThen(new ArmRetractCommand(m_robotArm))
         .andThen(swerveControllerCommand2)
         .andThen(new AutoBalanceCommand(m_robotDrive));

@@ -180,15 +180,17 @@ public final class Constants {
     public static final double kMaxHeight = .077;
     public static final double kGrabbingHeight = .837;
     public static final double kDefaultHeight = 0;
-    public static final double kArmUpSpeed = .25;
-    public static final double kArmDownSpeed = -.2;
+    public static final double kArmUpSpeed = .5;
+    public static final double kArmDownSpeed = -.4;
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;
     public static final int kExtSolPort1 = 7;
     public static final int kExtSolPort2 = 4;
-    public static final int kClawSolPort1 = 2;
-    public static final int kClawSolPort2 = 3;
+    public static final int kCubeSolPort1 = 2;
+    public static final int kCubeSolPort2 = 3;
+    public static final int kConeSolPort1 = 0;
+    public static final int kConeSolPort2 = 0;
   }
 
   public static final class VisionConstants {
