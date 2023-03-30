@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.cscore.UsbCamera;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -83,6 +84,7 @@ public class Robot extends TimedRobot {
      * autonomousCommand = new ExampleCommand(); break; }
      */
     NetworkTableInstance inst = NetworkTableInstance.getDefault();
+    inst.startServer();
     NetworkTable fmsinfo = inst.getTable("FMSInfo");
     NetworkTableEntry isRedAlliance = fmsinfo.getEntry("IsRedAlliance");
     boolean red_alliance = isRedAlliance.getBoolean(false);
@@ -129,9 +131,11 @@ public class Robot extends TimedRobot {
     GridPosChooser.addOption("Blue Grid Position 1",  m_robotContainer.getAutonomousBlueGridPos1());
 
     GridPosChooser.addOption("Blue Grid Position 2",  m_robotContainer.getAutonomousBlueGridPos2());*/
-    CameraServer.startAutomaticCapture();
     robotState = inst.getEntry("RobotState/RobotStateValue");
     robotState.setString("init");
+    UsbCamera camera = CameraServer.startAutomaticCapture();
+    camera.setResolution(640, 480);
+    camera.setFPS(15);
   }
 
   /**

@@ -180,8 +180,8 @@ public final class Constants {
     public static final double kMaxHeight = .077;
     public static final double kGrabbingHeight = .837;
     public static final double kDefaultHeight = 0;
-    public static final double kArmUpSpeed = .25;
-    public static final double kArmDownSpeed = -.2;
+    public static final double kArmUpSpeed = .5;
+    public static final double kArmDownSpeed = -.4;
     public static final double kP = 0;
     public static final double kI = 0;
     public static final double kD = 0;
