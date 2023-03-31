@@ -193,7 +193,9 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
         .toggleOnTrue(
             Commands.startEnd(
-                ExtendingSubsystem::ArmExtendCommand, ExtendingSubsystem::ArmRetractCommand, (m_robotArm)));
+                ExtendingSubsystem::ArmExtendCommand,
+                ExtendingSubsystem::ArmRetractCommand,
+                (m_robotExt)));
 
     new JoystickButton(m_driverController, Button.kB.value)
         .onTrue(new BalanceGyroSetZeroCommand(m_robotDrive));

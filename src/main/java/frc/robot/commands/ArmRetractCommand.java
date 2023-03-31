@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ExtendingSubsystem;
 
 public class ArmRetractCommand extends CommandBase {
@@ -25,10 +24,5 @@ public class ArmRetractCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
-  }
-
-  @Override
-  public void end(boolean interupted) {
-    m_Ext.ArmRetractCommand();
   }
 }

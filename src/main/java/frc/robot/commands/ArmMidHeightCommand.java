@@ -28,5 +28,4 @@ public class ArmMidHeightCommand extends CommandBase {
     if (m_Arm.ArmEncoder.getPosition() == ArmConstants.kMidHeight) return true;
     else return false;
   }
-
 }

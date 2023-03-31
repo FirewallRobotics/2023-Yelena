@@ -5,7 +5,6 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 import com.revrobotics.SparkMaxPIDController;
-import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,7 +14,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   public static CANSparkMax MasterArmMotor;
   public static CANSparkMax MinionArmMotor;
   public static AbsoluteEncoder ArmEncoder;
-  public static DoubleSolenoid ExtendingSolenoid;
+  // public static DoubleSolenoid ExtendingSolenoid;
   private SparkMaxPIDController ArmPIDController;
   public double kP, kI, kD, kIz, kFF, kMaxOutput, kMinOutput;
 
@@ -177,7 +176,7 @@ public class ArmSubsystem extends SubsystemBase implements AutoCloseable {
   public void close() throws Exception {
     MasterArmMotor.close();
     MinionArmMotor.close();
-    ExtendingSolenoid.close();
-    // ArmEncoder.close();
+    // ExtendingSolenoid.close();
+
   }
 }
