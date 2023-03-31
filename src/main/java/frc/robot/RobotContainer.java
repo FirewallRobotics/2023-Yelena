@@ -400,7 +400,7 @@ public class RobotContainer {
               List.of(),
               // End 3 meters straight ahead of where we started, facing forward
               new Pose2d(
-                  AutoConstants.startingX1 - 3.1, AutoConstants.startingY1, new Rotation2d(0)),
+                  AutoConstants.startingX1 - 4.1, AutoConstants.startingY1, new Rotation2d(0)),
               config);
       // SmartDashboard.putData(DriveSubsystem.m_field);
 
@@ -419,7 +419,7 @@ public class RobotContainer {
               List.of(),
               // End 3 meters straight ahead of where we started, facing forward
               new Pose2d(
-                  AutoConstants.startingX4 + 3.1,
+                  AutoConstants.startingX4 + 4.1,
                   AutoConstants.startingY4,
                   new Rotation2d(Math.PI)),
               config);
@@ -468,6 +468,7 @@ public class RobotContainer {
         .withTimeout(0.2)
         .andThen(swerveControllerCommand)
         // .andThen(new ArmDownCommand(m_robotArm)).withTimeout(0.5)
+        .andThen(new BalanceGyroSetZeroCommand(m_robotDrive))
         .andThen(new AutoDriveToBalanceBackwardsCommand(m_robotDrive))
         .andThen(new AutoBalanceCommand(m_robotDrive));
   }
