@@ -29,8 +29,4 @@ public class ArmMidHeightCommand extends CommandBase {
     else return false;
   }
 
-  @Override
-  public void end(boolean interupted) {
-    m_Arm.ArmRetractCommand();
-  }
 }
