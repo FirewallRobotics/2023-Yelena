@@ -135,9 +135,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><a href="frc/robot/commands/ArmExtendCommand.html" title="class in frc.robot.commands"><span class="typeNameLink">ArmExtendCommand</span></a> - Class in <a href="frc/robot/commands/package-summary.html">frc.robot.commands</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="frc/robot/commands/ArmExtendCommand.html#%3Cinit%3E(frc.robot.subsystems.ArmSubsystem)">ArmExtendCommand(ArmSubsystem)</a></span> - Constructor for class frc.robot.commands.<a href="frc/robot/commands/ArmExtendCommand.html" title="class in frc.robot.commands">ArmExtendCommand</a></dt>
+<dt><span class="memberNameLink"><a href="frc/robot/commands/ArmExtendCommand.html#%3Cinit%3E(frc.robot.subsystems.ExtendingSubsystem)">ArmExtendCommand(ExtendingSubsystem)</a></span> - Constructor for class frc.robot.commands.<a href="frc/robot/commands/ArmExtendCommand.html" title="class in frc.robot.commands">ArmExtendCommand</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="frc/robot/subsystems/ArmSubsystem.html#ArmExtendCommand()">ArmExtendCommand()</a></span> - Static method in class frc.robot.subsystems.<a href="frc/robot/subsystems/ArmSubsystem.html" title="class in frc.robot.subsystems">ArmSubsystem</a></dt>
+<dt><span class="memberNameLink"><a href="frc/robot/subsystems/ExtendingSubsystem.html#ArmExtendCommand()">ArmExtendCommand()</a></span> - Static method in class frc.robot.subsystems.<a href="frc/robot/subsystems/ExtendingSubsystem.html" title="class in frc.robot.subsystems">ExtendingSubsystem</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="frc/robot/commands/ArmGrabHeightCommand.html" title="class in frc.robot.commands"><span class="typeNameLink">ArmGrabHeightCommand</span></a> - Class in <a href="frc/robot/commands/package-summary.html">frc.robot.commands</a></dt>
 <dd>&nbsp;</dd>
@@ -167,9 +167,9 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><a href="frc/robot/commands/ArmRetractCommand.html" title="class in frc.robot.commands"><span class="typeNameLink">ArmRetractCommand</span></a> - Class in <a href="frc/robot/commands/package-summary.html">frc.robot.commands</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="frc/robot/commands/ArmRetractCommand.html#%3Cinit%3E(frc.robot.subsystems.ArmSubsystem)">ArmRetractCommand(ArmSubsystem)</a></span> - Constructor for class frc.robot.commands.<a href="frc/robot/commands/ArmRetractCommand.html" title="class in frc.robot.commands">ArmRetractCommand</a></dt>
+<dt><span class="memberNameLink"><a href="frc/robot/commands/ArmRetractCommand.html#%3Cinit%3E(frc.robot.subsystems.ExtendingSubsystem)">ArmRetractCommand(ExtendingSubsystem)</a></span> - Constructor for class frc.robot.commands.<a href="frc/robot/commands/ArmRetractCommand.html" title="class in frc.robot.commands">ArmRetractCommand</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="frc/robot/subsystems/ArmSubsystem.html#ArmRetractCommand()">ArmRetractCommand()</a></span> - Static method in class frc.robot.subsystems.<a href="frc/robot/subsystems/ArmSubsystem.html" title="class in frc.robot.subsystems">ArmSubsystem</a></dt>
+<dt><span class="memberNameLink"><a href="frc/robot/subsystems/ExtendingSubsystem.html#ArmRetractCommand()">ArmRetractCommand()</a></span> - Static method in class frc.robot.subsystems.<a href="frc/robot/subsystems/ExtendingSubsystem.html" title="class in frc.robot.subsystems">ExtendingSubsystem</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="frc/robot/subsystems/ArmSubsystem.html" title="class in frc.robot.subsystems"><span class="typeNameLink">ArmSubsystem</span></a> - Class in <a href="frc/robot/subsystems/package-summary.html">frc.robot.subsystems</a></dt>
 <dd>&nbsp;</dd>
@@ -254,6 +254,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="frc/robot/subsystems/ArmSubsystem.html#close()">close()</a></span> - Method in class frc.robot.subsystems.<a href="frc/robot/subsystems/ArmSubsystem.html" title="class in frc.robot.subsystems">ArmSubsystem</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/robot/subsystems/ClawSubsystem.html#close()">close()</a></span> - Method in class frc.robot.subsystems.<a href="frc/robot/subsystems/ClawSubsystem.html" title="class in frc.robot.subsystems">ClawSubsystem</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/subsystems/ExtendingSubsystem.html#close()">close()</a></span> - Method in class frc.robot.subsystems.<a href="frc/robot/subsystems/ExtendingSubsystem.html" title="class in frc.robot.subsystems">ExtendingSubsystem</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/robot/subsystems/VisionSubsystem.html#cone">cone</a></span> - Variable in class frc.robot.subsystems.<a href="frc/robot/subsystems/VisionSubsystem.html" title="class in frc.robot.subsystems">VisionSubsystem</a></dt>
 <dd>&nbsp;</dd>
@@ -342,12 +344,6 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/robot/commands/ArmDownCommand.html#end(boolean)">end(boolean)</a></span> - Method in class frc.robot.commands.<a href="frc/robot/commands/ArmDownCommand.html" title="class in frc.robot.commands">ArmDownCommand</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="frc/robot/commands/ArmMaxHeightCommand.html#end(boolean)">end(boolean)</a></span> - Method in class frc.robot.commands.<a href="frc/robot/commands/ArmMaxHeightCommand.html" title="class in frc.robot.commands">ArmMaxHeightCommand</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="frc/robot/commands/ArmMidHeightCommand.html#end(boolean)">end(boolean)</a></span> - Method in class frc.robot.commands.<a href="frc/robot/commands/ArmMidHeightCommand.html" title="class in frc.robot.commands">ArmMidHeightCommand</a></dt>
-<dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="frc/robot/commands/ArmRetractCommand.html#end(boolean)">end(boolean)</a></span> - Method in class frc.robot.commands.<a href="frc/robot/commands/ArmRetractCommand.html" title="class in frc.robot.commands">ArmRetractCommand</a></dt>
-<dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/robot/commands/ArmUpCommand.html#end(boolean)">end(boolean)</a></span> - Method in class frc.robot.commands.<a href="frc/robot/commands/ArmUpCommand.html" title="class in frc.robot.commands">ArmUpCommand</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/robot/commands/AutoDriveToBalanceBackwardsCommand.html#end(boolean)">end(boolean)</a></span> - Method in class frc.robot.commands.<a href="frc/robot/commands/AutoDriveToBalanceBackwardsCommand.html" title="class in frc.robot.commands">AutoDriveToBalanceBackwardsCommand</a></dt>
@@ -408,7 +404,11 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/robot/commands/SetLEDProximityCommand.html#execute()">execute()</a></span> - Method in class frc.robot.commands.<a href="frc/robot/commands/SetLEDProximityCommand.html" title="class in frc.robot.commands">SetLEDProximityCommand</a></dt>
 <dd>&nbsp;</dd>
-<dt><span class="memberNameLink"><a href="frc/robot/subsystems/ArmSubsystem.html#ExtendingSolenoid">ExtendingSolenoid</a></span> - Static variable in class frc.robot.subsystems.<a href="frc/robot/subsystems/ArmSubsystem.html" title="class in frc.robot.subsystems">ArmSubsystem</a></dt>
+<dt><a href="frc/robot/subsystems/ExtendingSubsystem.html" title="class in frc.robot.subsystems"><span class="typeNameLink">ExtendingSubsystem</span></a> - Class in <a href="frc/robot/subsystems/package-summary.html">frc.robot.subsystems</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/subsystems/ExtendingSubsystem.html#%3Cinit%3E()">ExtendingSubsystem()</a></span> - Constructor for class frc.robot.subsystems.<a href="frc/robot/subsystems/ExtendingSubsystem.html" title="class in frc.robot.subsystems">ExtendingSubsystem</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/subsystems/ExtendingSubsystem.html#ExtSolenoid">ExtSolenoid</a></span> - Static variable in class frc.robot.subsystems.<a href="frc/robot/subsystems/ExtendingSubsystem.html" title="class in frc.robot.subsystems">ExtendingSubsystem</a></dt>
 <dd>&nbsp;</dd>
 </dl>
 <a id="I:F">
@@ -894,6 +894,8 @@ $('.navPadding').css('padding-top', $('.fixedNav').css("height"));
 <dt><span class="memberNameLink"><a href="frc/robot/subsystems/ClawSubsystem.html#periodic()">periodic()</a></span> - Method in class frc.robot.subsystems.<a href="frc/robot/subsystems/ClawSubsystem.html" title="class in frc.robot.subsystems">ClawSubsystem</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/robot/subsystems/DriveSubsystem.html#periodic()">periodic()</a></span> - Method in class frc.robot.subsystems.<a href="frc/robot/subsystems/DriveSubsystem.html" title="class in frc.robot.subsystems">DriveSubsystem</a></dt>
+<dd>&nbsp;</dd>
+<dt><span class="memberNameLink"><a href="frc/robot/subsystems/ExtendingSubsystem.html#periodic()">periodic()</a></span> - Method in class frc.robot.subsystems.<a href="frc/robot/subsystems/ExtendingSubsystem.html" title="class in frc.robot.subsystems">ExtendingSubsystem</a></dt>
 <dd>&nbsp;</dd>
 <dt><span class="memberNameLink"><a href="frc/robot/subsystems/VisionSubsystem.html#periodic()">periodic()</a></span> - Method in class frc.robot.subsystems.<a href="frc/robot/subsystems/VisionSubsystem.html" title="class in frc.robot.subsystems">VisionSubsystem</a></dt>
 <dd>&nbsp;</dd>

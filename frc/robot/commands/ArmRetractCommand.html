@@ -27,7 +27,7 @@
     catch(err) {
     }
 //-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10};
+var data = {"i0":10,"i1":10,"i2":10};
 var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
 var altColor = "altColor";
 var rowColor = "rowColor";
@@ -196,7 +196,7 @@ extends edu.wpi.first.wpilibj2.command.CommandBase</pre>
 <th class="colLast" scope="col">Description</th>
 </tr>
 <tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(frc.robot.subsystems.ArmSubsystem)">ArmRetractCommand</a></span>&#8203;(<a href="../subsystems/ArmSubsystem.html" title="class in frc.robot.subsystems">ArmSubsystem</a>&nbsp;subsystem)</code></th>
+<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(frc.robot.subsystems.ExtendingSubsystem)">ArmRetractCommand</a></span>&#8203;(<a href="../subsystems/ExtendingSubsystem.html" title="class in frc.robot.subsystems">ExtendingSubsystem</a>&nbsp;subsystem)</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 </table>
@@ -219,20 +219,15 @@ extends edu.wpi.first.wpilibj2.command.CommandBase</pre>
 </tr>
 <tr id="i0" class="altColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#end(boolean)">end</a></span>&#8203;(boolean&nbsp;interupted)</code></th>
+<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#execute()">execute</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
 <tr id="i1" class="rowColor">
 <td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#execute()">execute</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>void</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initialize()">initialize</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
 </tr>
-<tr id="i3" class="rowColor">
+<tr id="i2" class="altColor">
 <td class="colFirst"><code>boolean</code></td>
 <th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isFinished()">isFinished</a></span>()</code></th>
 <td class="colLast">&nbsp;</td>
@@ -257,7 +252,7 @@ extends edu.wpi.first.wpilibj2.command.CommandBase</pre>
 <!--   -->
 </a>
 <h3>Methods inherited from interface&nbsp;edu.wpi.first.wpilibj2.command.Command</h3>
-<code>alongWith, andThen, andThen, asProxy, beforeStarting, beforeStarting, cancel, deadlineWith, finallyDo, getInterruptionBehavior, handleInterrupt, hasRequirement, ignoringDisable, isScheduled, perpetually, raceWith, repeatedly, runsWhenDisabled, schedule, unless, until, withInterrupt, withInterruptBehavior, withName, withTimeout</code></li>
+<code>alongWith, andThen, andThen, asProxy, beforeStarting, beforeStarting, cancel, deadlineWith, end, finallyDo, getInterruptionBehavior, handleInterrupt, hasRequirement, ignoringDisable, isScheduled, perpetually, raceWith, repeatedly, runsWhenDisabled, schedule, unless, until, withInterrupt, withInterruptBehavior, withName, withTimeout</code></li>
 </ul>
 </li>
 </ul>
@@ -275,13 +270,13 @@ extends edu.wpi.first.wpilibj2.command.CommandBase</pre>
 <!--   -->
 </a>
 <h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(frc.robot.subsystems.ArmSubsystem)">
+<a id="&lt;init&gt;(frc.robot.subsystems.ExtendingSubsystem)">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>ArmRetractCommand</h4>
-<pre>public&nbsp;ArmRetractCommand&#8203;(<a href="../subsystems/ArmSubsystem.html" title="class in frc.robot.subsystems">ArmSubsystem</a>&nbsp;subsystem)</pre>
+<pre>public&nbsp;ArmRetractCommand&#8203;(<a href="../subsystems/ExtendingSubsystem.html" title="class in frc.robot.subsystems">ExtendingSubsystem</a>&nbsp;subsystem)</pre>
 </li>
 </ul>
 </li>
@@ -315,19 +310,10 @@ extends edu.wpi.first.wpilibj2.command.CommandBase</pre>
 <a id="isFinished()">
 <!--   -->
 </a>
-<ul class="blockList">
+<ul class="blockListLast">
 <li class="blockList">
 <h4>isFinished</h4>
 <pre class="methodSignature">public&nbsp;boolean&nbsp;isFinished()</pre>
-</li>
-</ul>
-<a id="end(boolean)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>end</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;end&#8203;(boolean&nbsp;interupted)</pre>
 </li>
 </ul>
 </li>
