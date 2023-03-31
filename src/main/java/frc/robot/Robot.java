@@ -141,7 +141,6 @@ public class Robot extends TimedRobot {
     // server = CameraServer.getServer();
     camera2.setResolution(640, 480);
     camera2.setFPS(15);
-
   }
 
   /**
