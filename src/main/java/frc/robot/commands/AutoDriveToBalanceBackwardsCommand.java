@@ -15,9 +15,9 @@ public class AutoDriveToBalanceBackwardsCommand extends CommandBase {
 
   private double driveToBalanceSpeed = Constants.AutoConstants.kDriveToBalanceSpeedMultiplier;
   private double driveGyroAngleRange = Constants.AutoConstants.kDriveToBalanceGyroAngleRange;
-  //private double driveToBalanceDelay = Constants.AutoConstants.kDriveToBalanceDelay;
+  // private double driveToBalanceDelay = Constants.AutoConstants.kDriveToBalanceDelay;
   private boolean onBalance = false;
-  //private int timer = 0;
+  // private int timer = 0;
 
   public AutoDriveToBalanceBackwardsCommand(DriveSubsystem d_subsystem) {
     m_drive = d_subsystem;
