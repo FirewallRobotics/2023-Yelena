@@ -28,6 +28,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.ArmSubsystem;
 import frc.robot.subsystems.ClawSubsystem;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.ExtendingSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.VisionSubsystem;
 import java.util.List;
@@ -46,6 +47,7 @@ public class RobotContainer {
   private final ArmSubsystem m_robotArm = new ArmSubsystem();
   public final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
   private final ClawSubsystem m_robotClaw = new ClawSubsystem();
+  private final ExtendingSubsystem m_robotExt = new ExtendingSubsystem();
 
   // The driver's controller
   /// Joystick m_driverJoystick = new Joystick(OIConstants.kDriverJoystickPort);
@@ -191,7 +193,9 @@ public class RobotContainer {
     new JoystickButton(m_driverController, Button.kLeftBumper.value)
         .toggleOnTrue(
             Commands.startEnd(
-                ArmSubsystem::ArmExtendCommand, ArmSubsystem::ArmRetractCommand, (m_robotArm)));
+                ExtendingSubsystem::ArmExtendCommand,
+                ExtendingSubsystem::ArmRetractCommand,
+                (m_robotExt)));
 
     new JoystickButton(m_driverController, Button.kB.value)
         .onTrue(new BalanceGyroSetZeroCommand(m_robotDrive));
@@ -855,9 +859,9 @@ public class RobotContainer {
     return new BalanceGyroSetZeroCommand(m_robotDrive)
         .andThen(swerveControllerCommand)
         .andThen(new ArmMaxHeightCommand(m_robotArm))
-        .andThen(new ArmExtendCommand(m_robotArm))
+        .andThen(new ArmExtendCommand(m_robotExt))
         .andThen(new ClawReleaseCommand(m_robotClaw))
-        .andThen(new ArmRetractCommand(m_robotArm))
+        .andThen(new ArmRetractCommand(m_robotExt))
         .andThen(swerveControllerCommand2)
         .andThen(() -> m_robotDrive.drive(0, 0, 0, false, false));
     // .andThen(new DriveAdjustCommand(m_robotDrive))
@@ -991,9 +995,9 @@ public class RobotContainer {
     return new BalanceGyroSetZeroCommand(m_robotDrive)
         .andThen(swerveControllerCommand)
         .andThen(new ArmMaxHeightCommand(m_robotArm))
-        .andThen(new ArmExtendCommand(m_robotArm))
+        .andThen(new ArmExtendCommand(m_robotExt))
         .andThen(new ClawReleaseCommand(m_robotClaw))
-        .andThen(new ArmRetractCommand(m_robotArm))
+        .andThen(new ArmRetractCommand(m_robotExt))
         .andThen(swerveControllerCommand2)
         .andThen(new AutoBalanceCommand(m_robotDrive));
   }

@@ -28,9 +28,4 @@ public class ArmMaxHeightCommand extends CommandBase {
     if (m_Arm.ArmEncoder.getPosition() == ArmConstants.kMaxHeight) return true;
     else return false;
   }
-
-  @Override
-  public void end(boolean interupted) {
-    m_Arm.ArmRetractCommand();
-  }
 }

@@ -1,7 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ArmSubsystem;
+import frc.robot.subsystems.ExtendingSubsystem;
 
 public class ArmExtendCommand extends CommandBase {
 
@@ -9,16 +9,16 @@ public class ArmExtendCommand extends CommandBase {
   public void initialize() {}
 
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
-  private final ArmSubsystem m_Arm;
+  private final ExtendingSubsystem m_Ext;
 
-  public ArmExtendCommand(ArmSubsystem subsystem) {
-    m_Arm = subsystem;
+  public ArmExtendCommand(ExtendingSubsystem subsystem) {
+    m_Ext = subsystem;
     addRequirements(subsystem);
   }
 
   @Override
   public void execute() {
-    m_Arm.ArmExtendCommand();
+    m_Ext.ArmExtendCommand();
   }
 
   @Override
