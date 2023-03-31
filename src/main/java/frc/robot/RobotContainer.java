@@ -45,7 +45,7 @@ public class RobotContainer {
   public final DriveSubsystem m_robotDrive = new DriveSubsystem();
   private final LEDSubsystem m_LEDSubsystem = new LEDSubsystem();
   private final ArmSubsystem m_robotArm = new ArmSubsystem();
-  private final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
+  public final VisionSubsystem m_visionSubsystem = new VisionSubsystem();
   private final ClawSubsystem m_robotClaw = new ClawSubsystem();
   private final ExtendingSubsystem m_robotExt = new ExtendingSubsystem();
 

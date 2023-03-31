@@ -133,6 +133,7 @@ public class Robot extends TimedRobot {
     GridPosChooser.addOption("Blue Grid Position 2",  m_robotContainer.getAutonomousBlueGridPos2());*/
     robotState = inst.getEntry("RobotState/RobotStateValue");
     robotState.setString("init");
+
     UsbCamera camera1 = CameraServer.startAutomaticCapture(0);
     camera1.setResolution(640, 480);
     camera1.setFPS(15);
@@ -140,6 +141,7 @@ public class Robot extends TimedRobot {
     // server = CameraServer.getServer();
     camera2.setResolution(640, 480);
     camera2.setFPS(15);
+
   }
 
   /**
