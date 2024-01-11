@@ -1,9 +1,9 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.*;
 
-public class AutoGetCubeCommand extends CommandBase {
+public class AutoGetCubeCommand extends Command {
   private DriveSubsystem m_drive;
   private VisionSubsystem m_vision;
   private boolean isFinished = false;

@@ -4,11 +4,11 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class AutoDriveToBalanceBackwardsCommand extends CommandBase {
+public class AutoDriveToBalanceBackwardsCommand extends Command {
 
   private DriveSubsystem m_drive;
   private boolean isFinished = false;

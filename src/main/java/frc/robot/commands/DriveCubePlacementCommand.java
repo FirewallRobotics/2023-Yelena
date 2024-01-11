@@ -4,11 +4,11 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.*;
 
-public class DriveCubePlacementCommand extends CommandBase {
+public class DriveCubePlacementCommand extends Command {
 
   private DriveSubsystem m_drivetrain;
   private VisionSubsystem m_vision;
